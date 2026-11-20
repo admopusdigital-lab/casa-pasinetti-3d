@@ -808,7 +808,7 @@ class Component extends DCLogic {
     };
     // light stone cladding / render with faint panel joints
     const PL = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#e2d9c9'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#d9d9d6'; g.fillRect(0, 0, w, h);
       tint(g, w, h, 5, 0.55, 96, 160); tint(g, w, h, 24, 0.45, 102, 154);
       speckle(g, w, h, 20000, ['rgba(255,255,255,.12)', 'rgba(60,58,55,.07)', 'rgba(120,115,108,.07)'], 0.7, 1.6);
       hg.fillStyle = grey(180); hg.fillRect(0, 0, w, h);
@@ -818,21 +818,21 @@ class Component extends DCLogic {
     }, 2.6);
     // grey speckled granite panels (ground and first floor, as in the official renders)
     const STN = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#5c5e60'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#7b7e80'; g.fillRect(0, 0, w, h);
       hg.fillStyle = grey(60); hg.fillRect(0, 0, w, h);
-      blocks(g, hg, w, h, 4, 2, false, 3, () => { const t = 0.96 + rnd() * 0.06; return rgb(178 * t, 176 * t, 172 * t); }, 1);
+      blocks(g, hg, w, h, 4, 2, false, 3, () => { const t = 0.96 + rnd() * 0.06; return rgb(190 * t, 192 * t, 193 * t); }, 1);
       tint(g, w, h, 14, 0.3, 110, 146);
       speckle(g, w, h, 30000, ['rgba(60,58,56,.4)', 'rgba(90,88,86,.35)', 'rgba(250,250,250,.45)', 'rgba(160,150,140,.3)'], 0.6, 1.5);
       speckle(hg, w, h, 16000, [grey(185), grey(215)], 0.6, 1.3);
     }, 2.2);
     // long-format brick with recessed mortar
     const BRK = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#a39a90'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#aaa6a2'; g.fillRect(0, 0, w, h);
       hg.fillStyle = grey(60); hg.fillRect(0, 0, w, h);
-      const pal = [[138, 62, 47], [126, 55, 42], [146, 70, 53], [118, 52, 41], [132, 60, 46], [150, 76, 58], [112, 50, 40], [141, 66, 50]];
+      const pal = [[112, 92, 87], [104, 85, 81], [121, 100, 94], [96, 79, 76], [109, 91, 87], [126, 106, 99], [91, 75, 72], [116, 96, 90]];
       blocks(g, hg, w, h, 16, 3, true, 4, () => { const p = pal[(rnd() * pal.length) | 0], t = 0.9 + rnd() * 0.18; return rgb(p[0] * t, p[1] * t, p[2] * t); }, 2);
       tint(g, w, h, 28, 0.35, 104, 152);
-      speckle(g, w, h, 12000, ['rgba(0,0,0,.12)', 'rgba(255,220,200,.05)', 'rgba(35,12,6,.1)'], 0.7, 1.6);
+      speckle(g, w, h, 12000, ['rgba(0,0,0,.12)', 'rgba(230,220,220,.05)', 'rgba(40,28,30,.1)'], 0.7, 1.6);
       speckle(hg, w, h, 9000, [grey(170), grey(225)], 0.7, 1.5);
     }, 3.6);
     const WOOD = pbr(256, 256, (g, hg, w, h) => {
@@ -1097,25 +1097,25 @@ class Component extends DCLogic {
     const std = (o) => new THREE.MeshStandardMaterial(o);
     const phy = (o) => new THREE.MeshPhysicalMaterial(Object.assign({ ior: 1.52, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 }, o));
     const MAT = {
-      plaster: std({ color: 0xf6efe4, map: T.plaster, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
+      plaster: std({ color: 0xf1f1ef, map: T.plaster, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
       stone: std({ map: T.stone, normalMap: T.stoneN, normalScale: new THREE.Vector2(1.2, 1.2), roughness: 0.82 }),
-      brick: std({ color: 0xd8e2de, map: T.brick, normalMap: T.brickN, normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.9 }),
+      brick: std({ color: 0xf0eced, map: T.brick, normalMap: T.brickN, normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.9 }),
       inner: std({ color: 0xe6dccb, roughness: 0.92 }),
       slab: std({ map: T.slab, normalMap: T.slabN, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.85 }),
-      frame: std({ color: 0x353739, roughness: 0.45, metalness: 0.5 }),
+      frame: std({ color: 0x45484b, roughness: 0.5, metalness: 0.45 }),
       glass: phy({ map: T.curtain, color: 0xb4bcc4, roughness: 0.06, metalness: 0.55 }),
       glassLit: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.15 }),
       glassLitB: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.15 }),
       glassLitC: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.15 }),
       glassDim: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 0.38, roughness: 0.15, metalness: 0.5 }),
       light: std({ color: 0xfff0d8, emissive: 0xffd6a0, emissiveIntensity: 1.0, roughness: 1 }),
-      rail: std({ color: 0x252422, alphaMap: T.rail, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.5, metalness: 0.5 }),
+      rail: std({ color: 0x34363a, alphaMap: T.rail, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.5, metalness: 0.5 }),
       paving: std({ map: T.paving, normalMap: T.pavingN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
       grass: std({ map: T.grass, normalMap: T.grassN, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 1 }),
       asphalt: std({ map: T.asphalt, normalMap: T.asphaltN, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.92 }),
       walk: std({ map: T.walk, normalMap: T.walkN, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.93 }),
       fol: (() => {
-        const m = std({ map: T.fol, alphaTest: 0.42, side: THREE.DoubleSide, roughness: 0.82, metalness: 0, color: 0xf2f4ec });
+        const m = std({ map: T.fol, alphaTest: 0.42, side: THREE.DoubleSide, roughness: 0.82, metalness: 0, color: 0xd9e0cf });
         m.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <normal_fragment_begin>', THREE.ShaderChunk.normal_fragment_begin.replace(/normal \*= faceDirection;/g, '')); };
         return m;
       })(),
@@ -1140,6 +1140,7 @@ class Component extends DCLogic {
       zebra: std({ color: 0xe8e5de, roughness: 0.8 }),
       alu: std({ color: 0x8c8f92, roughness: 0.38, metalness: 0.55 }),
       perg: std({ color: 0x4a4641, roughness: 0.38, metalness: 0.6 }),
+      pergL: std({ color: 0xd2d2cf, roughness: 0.5, metalness: 0.25 }),
       flowerP: std({ color: 0xd98cb3, roughness: 0.8 }),
       flowerW: std({ color: 0xf3efe7, roughness: 0.8 }),
       flowerL: std({ color: 0x9a86cf, roughness: 0.8 }),
@@ -1243,15 +1244,15 @@ class Component extends DCLogic {
       geo.translate(x, y, z);
       put(gk, mk, geo);
     };
-    const blob = (gk, mk, x, y, z, r, sy) => {
-      const geo = new THREE.IcosahedronGeometry(r, 1);
+    const blob = (gk, mk, x, y, z, r, sy, det) => {
+      const geo = new THREE.IcosahedronGeometry(r, det === undefined ? 1 : det);
       geo.scale(1, sy || 0.8, 1);
       geo.translate(x, y, z);
       put(gk, mk, geo);
     };
     const FLW = ['flowerP', 'flowerW', 'flowerL', 'flowerW'];
     const flowers = (gk, x, y, z, spread, n) => {
-      for (let i = 0; i < n; i++) blob(gk, FLW[(rnd() * FLW.length) | 0], x + (rnd() - 0.5) * spread, y + rnd() * 0.25, z + (rnd() - 0.5) * spread * 0.6, 0.13 + rnd() * 0.1, 0.9);
+      for (let i = 0; i < n; i++) blob(gk, FLW[(rnd() * FLW.length) | 0], x + (rnd() - 0.5) * spread, y + rnd() * 0.25, z + (rnd() - 0.5) * spread * 0.6, 0.13 + rnd() * 0.1, 0.9, 0);
     };
     const cyl = (gk, mk, x, y0, y1, z, r) => {
       const geo = new THREE.CylinderGeometry(r * 0.8, r, y1 - y0, 6);
@@ -1434,9 +1435,9 @@ class Component extends DCLogic {
     const clusters = (gk, x0, x1, y, z, depth, opt) => {
       let c = x0 + 0.4 + rnd() * 1.2;
       while (c < x1 - 0.6) {
-        const len = 1.0 + rnd() * 1.3, e = Math.min(x1, c + len);
+        const len = 1.5 + rnd() * 1.4, e = Math.min(x1, c + len);
         plantBed(gk, c, e, y, z, depth, opt);
-        c = e + 2.2 + rnd() * 3.2;
+        c = e + 0.9 + rnd() * 1.4;
       }
     };
     const oliveRow = (gk, a0, a1, y, c, axis) => {
@@ -1452,10 +1453,10 @@ class Component extends DCLogic {
 
     // a few planters per loggia (the renders show potted plants, not a continuous hedge)
     const pots = (gk, x0, x1, y, zc, dir) => {
-      const L = x1 - x0, n = Math.max(1, Math.round(L / 3.4));
+      const L = x1 - x0, n = Math.max(1, Math.round(L / 2.4));
       for (let i = 0; i < n; i++) {
-        if (n > 2 && rnd() < 0.18) continue;
-        const c = x0 + (i + 0.5) * L / n + (rnd() - 0.5) * 0.5, hl = 0.4 + rnd() * 0.3;
+        if (n > 2 && rnd() < 0.08) continue;
+        const c = x0 + (i + 0.5) * L / n + (rnd() - 0.5) * 0.4, hl = 0.45 + rnd() * 0.3;
         plantBed(gk, Math.max(x0, c - hl), Math.min(x1, c + hl), y, zc, 0.46, { h: 0.42, trail: dir, tall: 0.85, topiary: 0.2, flowers: 0.5, step: 0.34 });
       }
     };
@@ -1479,7 +1480,7 @@ class Component extends DCLogic {
         }
         box(gk, 'frame', x1 - 0.135, x1 - 0.065, yb + 0.2, yt - 0.62, Math.min(zb, zb + dir * 0.06), Math.max(zb, zb + dir * 0.06));
         rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.1, fz - dir * 0.05, dir);
-        if (rnd() < 0.42) pots(gk, x0 + 0.3, x1 - 0.3, yb + 0.2, zb + dir * 0.4, dir);
+        if (rnd() < 0.88) pots(gk, x0 + 0.3, x1 - 0.3, yb + 0.2, zb + dir * 0.4, dir);
         return;
       }
       quadY(gk, 'light', x0 + 0.4, x1 - 0.4, Math.min(fz, zb) + 0.3, Math.max(fz, zb) - 0.3, yt - 0.345, true);
@@ -1487,7 +1488,7 @@ class Component extends DCLogic {
       const pw = (x1 - x0) / n;
       for (let i = 0; i < n; i++) pane(gk, x0 + i * pw + 0.3, x0 + (i + 1) * pw - 0.3, yb + 0.22, yt - 0.62, zb + dir * 0.015, dir, { mull: 0.8 });
       rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.2, fz - dir * 0.08, dir);
-      if (rnd() < 0.38) pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir);
+      if (rnd() < 0.85) pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir);
     };
     const surround = (gk, mk, x0, x1, y0, y1, fz, dir) => {
       const s = 0.13, o = 0.08, zz = fz + dir * 0.09;
@@ -1533,7 +1534,7 @@ class Component extends DCLogic {
         rail(gk, a, b, yb + 0.16, yb + 1.2, bz - dir * 0.04, dir);
         railX(gk, Math.min(fz, bz), Math.max(fz, bz), yb + 0.16, yb + 1.2, a + 0.03, -1);
         railX(gk, Math.min(fz, bz), Math.max(fz, bz), yb + 0.16, yb + 1.2, b - 0.03, 1);
-        if (rnd() < 0.34) pots(gk, a + 0.2, b - 0.2, yb + 0.16, bz - dir * 0.35, dir);
+        if (rnd() < 0.8) pots(gk, a + 0.2, b - 0.2, yb + 0.16, bz - dir * 0.35, dir);
       }
     };
     const windowZOld = (gk, w, yb, yt, fz, dir, mk) => {
@@ -1701,7 +1702,7 @@ class Component extends DCLogic {
       const fzE = f <= 4 ? ZF : frontZ(f, 'E');
       const zEnd = (f >= 2 && f <= 5) ? ZF - LD : fzE;
       box(gk, f <= 1 ? 'stone' : 'plaster', X1, X1 + 0.05, yb, yt, ZB, zEnd);
-      if (zEnd < fzE) { railX(gk, zEnd, fzE, yb + 0.2, yb + 1.2, X1 - 0.03, 1); box(gk, 'plaster', X1 - 0.3, X1 + 0.05, yt - 0.34, yt, zEnd, fzE); }
+      if (zEnd < fzE) { railX(gk, zEnd, fzE, yb + 0.2, yb + 1.2, X1 - 0.03, 1); box(gk, 'plaster', X1 - 0.3, X1 + 0.05, yt - 0.34, yt, zEnd, fzE); iso(f * 31 + 7, () => plantBed(gk, zEnd + 0.15, fzE - 0.25, yb + 0.2, X1 - 0.4, 0.42, { axis: 'z', h: 0.4, trail: 1, tall: 0.85, topiary: 0.15, flowers: 0.55, step: 0.32 })); }
       box(gk, f <= 1 ? 'stone' : 'brick', X0 - 0.05, X0, yb, yt, ZBA(f), ZF);
       if (f >= 1) {
         const ws = [[-5.4, -4.0], [-2.4, -1.0], [0.6, 2.0]].concat(f <= 1 || f === 6 ? [[3.4, 4.8]] : []);
@@ -1767,17 +1768,26 @@ class Component extends DCLogic {
     box('roof', 'slab', -25.9, X1 + 0.2, LV[7], ROOF, ZB - 0.25, 5.2);
     BAYS6.forEach((b) => box('roof', 'slab', b[0] - 0.1, b[1] + 0.1, LV[7], ROOF, 5.2, 6.75));
     box('roof', 'slab', X0 - 0.2, -25.9, LV[7], ROOF, ZBA(6) - 0.25, ZF + 0.25);
-    for (let x = -25.7; x < 30.9; x += 0.5) { if (BAYS6.some((b) => x > b[0] - 0.2 && x < b[1] + 0.2)) continue; box('roof', 'slab', x, x + 0.07, LV[7] - 0.26, LV[7], 5.2, 6.62); }
-    box('roof', 'slab', -25.9, X1 + 0.2, LV[7] - 0.3, LV[7] + 0.05, 6.62, 6.8);
+    // white render canopy (renders W958 frontale / close-up terrazzo): solid outer band that carries the roof-edge planting,
+    // deep fascia with an upstand, slatted soffit over the two end terraces and a solid soffit between the glass bays
+    const CAN_SOLID = [[BAYS6[0][1], BAYS6[1][0]]];
+    for (let x = -25.7; x < 30.9; x += 0.42) {
+      if (BAYS6.some((b) => x > b[0] - 0.2 && x < b[1] + 0.2) || CAN_SOLID.some((r) => x > r[0] - 0.1 && x < r[1] + 0.1)) continue;
+      box('roof', 'plaster', x, x + 0.09, LV[7] - 0.3, LV[7], 5.2, 5.98);
+    }
+    CAN_SOLID.forEach((r) => box('roof', 'plaster', r[0], r[1], LV[7] - 0.05, ROOF, 5.2, 5.98));
+    box('roof', 'plaster', -25.9, X1 + 0.2, LV[7] - 0.05, ROOF, 5.98, 6.86);
+    box('roof', 'plaster', -25.9, X1 + 0.2, LV[7] - 0.1, ROOF + 0.16, 6.86, 7.02);
+    box('roof', 'plaster', X1 + 0.02, X1 + 0.2, LV[7] - 0.1, ROOF + 0.16, ZB - 0.25, 6.86);
     const RTX0 = -25.9, RTX1 = 29.0, RTS = 4.9;
     quadY('roof', 'paving', RTX0, RTX1, ZB, RTS, ROOF + 0.005);
-    BAYS6.forEach((b) => quadY('roof', 'paving', b[0], b[1], RTS, 6.4, ROOF + 0.005));
+    BAYS6.forEach((b) => quadY('roof', 'paving', b[0], b[1], RTS, 5.95, ROOF + 0.005));
     quadY('roof', 'roofF', X0, RTX0, ZBA(6), ZF, ROOF + 0.005);
     quadY('roof', 'roofF', RTX1, X1, ZB, 5.2, ROOF + 0.005);
     rail('roof', RTX0, RTX1, ROOF, ROOF + 1.1, ZB - 0.1, -1);
     railX('roof', ZB - 0.1, RTS, ROOF, ROOF + 1.1, RTX1, 1);
     railX('roof', ZB - 0.1, RTS, ROOF, ROOF + 1.1, RTX0, -1);
-    { let a = RTX0; BAYS6.forEach((b) => { rail('roof', a, b[0], ROOF, ROOF + 1.1, RTS, 1); rail('roof', b[0], b[1], ROOF, ROOF + 1.1, 6.4, 1); railX('roof', RTS, 6.4, ROOF, ROOF + 1.1, b[0], -1); railX('roof', RTS, 6.4, ROOF, ROOF + 1.1, b[1], 1); a = b[1]; }); rail('roof', a, RTX1, ROOF, ROOF + 1.1, RTS, 1); }
+    { let a = RTX0; BAYS6.forEach((b) => { rail('roof', a, b[0], ROOF, ROOF + 1.1, RTS, 1); rail('roof', b[0], b[1], ROOF, ROOF + 1.1, 5.95, 1); railX('roof', RTS, 5.95, ROOF, ROOF + 1.1, b[0], -1); railX('roof', RTS, 5.95, ROOF, ROOF + 1.1, b[1], 1); a = b[1]; }); rail('roof', a, RTX1, ROOF, ROOF + 1.1, RTS, 1); }
     const chair = (gk, x, y, z, rot) => {
       const c = Math.cos(rot), sn = Math.sin(rot);
       const P = (dx, dz) => [x + dx * c - dz * sn, z + dx * sn + dz * c];
@@ -1795,7 +1805,7 @@ class Component extends DCLogic {
     // bioclimatic pergola: posts on a grid, deep perimeter beams, tilted louvres (or a solid roof from `solidFrom`)
     const pergola = (gk, x0, x1, z0, z1, yB, yT, o) => {
       o = o || {};
-      const PM = 'perg', t = 0.1, bd = 0.34;
+      const PM = o.mat || 'pergL', t = 0.1, bd = 0.34;
       const xs = o.posts || [x0, x1];
       const zs = o.wall ? [z0] : [z0, z1];
       xs.forEach((x) => zs.forEach((z) => { box(gk, PM, x - t, x + t, yB, yT, z - t, z + t); box(gk, PM, x - t - 0.06, x + t + 0.06, yB, yB + 0.02, z - t - 0.06, z + t + 0.06); }));
@@ -1893,13 +1903,16 @@ class Component extends DCLogic {
       armchair('roof', b[2], yR, 2.7, 1); armchair('roof', b[2] + 1.5, yR, 2.7, 1);
     });
     // planters along the parapets, olive trees on the open west terrace
-    oliveRow('roof', -19.9, -11.6, ROOF, 4.2, 'x');
-    oliveRow('roof', 21.2, 28.6, ROOF, 4.35, 'x');
-    oliveRow('roof', ZB + 0.3, 4.4, ROOF, 28.55, 'z');
-    oliveRow('roof', RTX0 + 0.3, -20.3, ROOF, ZB + 0.45, 'x');
-    oliveRow('roof', -11.4, -3.0, ROOF, 4.25, 'x');
-    oliveRow('roof', 3.8, 14.1, ROOF, 4.25, 'x');
-    [[-23.6, -3.6], [-23.6, 2.4]].forEach((q) => { box('roof', 'planter', q[0] - 0.6, q[0] + 0.6, ROOF, ROOF + 0.6, q[1] - 0.6, q[1] + 0.6); tree('roof', q[0], ROOF + 0.6, q[1], 3.2, 1.0, 'olive'); });
+    const edgeGarden = { h: 0.3, tall: 0.95, flowers: 0.62, step: 0.3, topiary: 0.14, trail: 1 };
+    for (let x = -25.6; x < 30.7; x += 4.6) {
+      plantBed('roof', x, Math.min(30.7, x + 4.45), ROOF, 6.42, 0.8, edgeGarden);
+      for (let fx = x + 0.4; fx < Math.min(30.5, x + 4.3); fx += 0.7 + rnd() * 0.6) flowers('roof', fx, ROOF + 0.55 + rnd() * 0.25, 6.5, 0.6, 5 + ((rnd() * 5) | 0));
+    }
+    const lowBed = { h: 0.42, tall: 0.75, flowers: 0.5, step: 0.36, topiary: 0.22 };
+    [[-19.9, -11.6, 4.3], [21.2, 28.6, 4.35], [-11.4, -3.0, 4.3], [3.8, 14.1, 4.3]].forEach((r) => plantBed('roof', r[0], r[1], ROOF, r[2], 0.6, lowBed));
+    plantBed('roof', ZB + 0.3, 4.4, ROOF, 28.55, 0.6, Object.assign({ axis: 'z' }, lowBed));
+    plantBed('roof', RTX0 + 0.3, -20.3, ROOF, ZB + 0.45, 0.6, lowBed);
+    [[-23.6, -3.6], [-23.6, 2.4]].forEach((q) => tropical('roof', q[0], ROOF, q[1], 1.15));
     // festoon lights strung over the pool between cores B and C, parasols by the loungers, pool wall lights
     const wire = (gk, p, q) => {
       const d = new THREE.Vector3(q[0] - p[0], q[1] - p[1], q[2] - p[2]), L = d.length();
