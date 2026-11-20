@@ -1523,8 +1523,21 @@ class Component extends DCLogic {
       const n = Math.max(1, Math.round((x1 - x0) / 2.0));
       const pw = (x1 - x0) / n;
       for (let i = 0; i < n; i++) pane(gk, x0 + i * pw + 0.3, x0 + (i + 1) * pw - 0.3, yb + 0.22, yt - 0.62, zb + dir * 0.015, dir, { mull: 0.8 });
-      rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.2, fz - dir * 0.08, dir);
-      if (rnd() < 0.85) { pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir); spill(gk, x0 + 0.2, x1 - 0.2, yb + 1.2, fz, dir); }
+      if (dir === 1) {
+        // street side: the balcony slab cantilevers 1.25 m out of the box frame (renders W958 frontale / laterale),
+        // bar railing on three sides, planters along the front edge
+        const zo = fz + 1.5;
+        box(gk, 'plaster', x0 - 0.06, x1 + 0.06, yb - 0.26, yb + 0.2, fz + 0.22, zo);
+        box(gk, 'soffit', x0 + 0.02, x1 - 0.02, yb - 0.27, yb - 0.26, fz + 0.22, zo - 0.03);
+        box(gk, 'soffit', x0, x1, yb - 0.275, yb - 0.265, zo - 0.07, zo - 0.04);
+        rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.2, zo - 0.05, 1);
+        railX(gk, fz + 0.22, zo - 0.05, yb + 0.2, yb + 1.2, x0 + 0.03, -1);
+        railX(gk, fz + 0.22, zo - 0.05, yb + 0.2, yb + 1.2, x1 - 0.03, 1);
+        if (rnd() < 0.85) { pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, zo - 0.4, 1); spill(gk, x0 + 0.2, x1 - 0.2, yb + 1.2, zo, 1); }
+      } else {
+        rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.2, fz - dir * 0.08, dir);
+        if (rnd() < 0.85) { pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir); spill(gk, x0 + 0.2, x1 - 0.2, yb + 1.2, fz, dir); }
+      }
     };
     const surround = (gk, mk, x0, x1, y0, y1, fz, dir) => {
       const s = 0.13, o = 0.08, zz = fz + dir * 0.09;
