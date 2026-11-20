@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<base href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Casa Pasinetti — Gobbi Consultoria</title>
+<meta name="description" content="75 residências ao lado da Fondazione Prada, Milão: maquete 3D interativa, unidades, valores de pré-lançamento, áreas comuns e interiores. Apresentado por Gobbi Consultoria.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Casa Pasinetti · Milão">
+<meta property="og:description" content="75 residências ao lado da Fondazione Prada, Milão: maquete 3D interativa, unidades, valores de pré-lançamento, áreas comuns e interiores. Apresentado por Gobbi Consultoria.">
+<meta name="theme-color" content="#F6F1E9">
+<link rel="icon" type="image/png" href="assets/img/favicon.png">
+<link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+<link rel="preload" href="assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/instrument-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400 900;font-display:swap;src:url(assets/fonts/bodoni-moda.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/instrument-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/instrument-sans-500.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/instrument-sans-600.woff2) format('woff2')}
+</style>
+<style>
+body{margin:0;background:#F6F1E9}
+a{color:#6B4A35}a:hover{color:#3A2418}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #6B4A35;outline-offset:2px}
+@keyframes pspin{to{transform:rotate(360deg)}}
+@keyframes preal{from{opacity:0;transform:scale(1.035)}to{opacity:1;transform:scale(1)}}
+@keyframes prealui{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pviews{scrollbar-width:none}.pviews::-webkit-scrollbar{display:none}.pviews>button{flex:none}
+@media (max-width:720px){
+.ph{display:grid!important;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:6px 12px!important;padding:10px 16px 0!important;position:sticky;top:0;z-index:30;background:rgba(246,241,233,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.phl{display:contents!important}
+.plogo{grid-column:1;grid-row:1;gap:10px!important;min-width:0}
+.plogo img{height:32px!important}
+.pex{font-size:9px!important;letter-spacing:.16em!important;max-width:86px!important}
+.phr{grid-column:2;grid-row:1;flex-wrap:nowrap!important}
+.pcta{display:none!important}
+.plang button{min-width:40px!important;min-height:36px!important;padding:0 8px!important}
+.pnav{grid-column:1/-1;grid-row:2;flex-wrap:nowrap!important;overflow-x:auto;gap:0 22px!important;margin:0 -16px;padding:0 16px;border-top:1px solid #E3D9CC;scrollbar-width:none;-webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+.pnav::-webkit-scrollbar{display:none}
+.pnav>a{flex:none;white-space:nowrap;padding:11px 0!important}
+}
+html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px}}
+</style>
+<noscript><style>#dc-root{display:none}</style></noscript>
+</head>
+<body>
+<noscript><p style="font:16px/1.5 sans-serif;padding:24px;color:#3A2A20">Ative o JavaScript para ver a maquete do Casa Pasinetti.</p></noscript>
+<template id="dc-tpl">
+
+<div lang="{{t.code}}" style="min-height: 100vh; background: #F6F1E9; color: #3A2A20; font-family: 'Instrument Sans', 'Helvetica Neue', Helvetica, sans-serif; display: flex; flex-direction: column">
+
+<header class="ph" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 14px clamp(16px, 3vw, 32px); border-bottom: 1px solid #E3D9CC">
+<div class="phl" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px">
+<div class="plogo" style="display: flex; align-items: center; gap: 14px"><a href="#maquete" aria-label="Gobbi Consultoria" style="display: block; padding: 4px 0; line-height: 0"><img src="/_blob/d8f188a70a38fae9b526f1d81c229fd4" alt="Gobbi Consultoria" width="134" height="40" style="display: block; width: auto; height: 40px"></a><span style="align-self: stretch; width: 1px; margin: 6px 0; background: #D9CCBC"></span><span class="pex" style="font: 600 10px/1.35 'Instrument Sans', sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: #5C4636; max-width: 120px">{{t.presentedBy}}</span></div>
+<nav class="pnav" aria-label="{{t.navAria}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; font-size: 14px">
+<a href="#maquete" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navModel}}</a>
+<a href="#projeto" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navProject}}</a>
+<a href="#vida" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navLife}}</a>
+<a href="#interiores" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navInt}}</a>
+<a href="#bairro" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navArea}}</a>
+<a href="#galeria" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navGallery}}</a>
+</nav>
+</div>
+<div class="phr" style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px">
+<div class="plang" role="group" aria-label="{{t.langAria}}" style="display: flex; gap: 2px; padding: 2px; border: 1px solid #D2C4B3; border-radius: 999px">
+<sc-for list="{{langs}}" as="lg" hint-placeholder-count="3">
+<button type="button" lang="{{lg.code}}" aria-pressed="{{lg.pressed}}" aria-label="{{lg.name}}" onClick="{{lg.pick}}" style="min-width: 44px; min-height: 38px; padding: 0 10px; border: 0; border-radius: 999px; font: 600 12px/1 'Instrument Sans', sans-serif; letter-spacing: 0.08em; cursor: pointer; {{lg.style}}">{{lg.label}}</button>
+</sc-for>
+</div>
+<a class="pcta" href="{{visitHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 20px; border: 1px solid #6B4A35; border-radius: 999px; color: #6B4A35; text-decoration: none; font: 600 14px/1 'Instrument Sans', sans-serif">{{t.cta}}</a>
+</div>
+</header>
+
+<main id="maquete" style="display: flex; flex-wrap: wrap; align-items: stretch">
+
+<section aria-label="{{t.navModel}}" style="flex: 999 1 640px; min-width: 0; display: flex; flex-direction: column">
+
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 20px; padding: 12px clamp(16px, 3vw, 32px); border-bottom: 1px solid #E3D9CC">
+<div role="group" aria-label="{{t.typeAria}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 6px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50; margin-right: 6px">{{t.typology}}</span>
+<sc-for list="{{typeChips}}" as="c" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{c.pressed}}" onClick="{{c.pick}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 999px; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer; {{c.style}}">{{c.label}}<span style="font-size: 11px; opacity: 0.7">{{c.count}}</span></button>
+</sc-for>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 20px">
+<label style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 14px; color: #3A2A20; white-space: nowrap">
+<input type="checkbox" checked="{{onlyAvail}}" onChange="{{toggleAvail}}" style="width: 18px; height: 18px; margin: 0; accent-color: #6B4A35">
+{{t.onlyAvail}}
+</label>
+<label style="display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 14px; color: #3A2A20; white-space: nowrap">
+<input type="checkbox" checked="{{statusOn}}" onChange="{{toggleMode}}" style="width: 18px; height: 18px; margin: 0; accent-color: #6B4A35">
+{{t.colorize}}
+</label>
+</div>
+</div>
+
+<div ref="{{stageRef}}" style="position: relative; flex: 1 0 auto; min-height: clamp(540px, 54vw, 790px); max-height: 980px; overflow: hidden; background: {{ov.bg}}">
+<canvas ref="{{canvasRef}}" role="img" aria-label="{{t.canvasAria}}" style="position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: pan-y"></canvas>
+
+<sc-if value="{{realV.on}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-label="{{realV.title}}" style="position: absolute; inset: 0; z-index: 5; overflow: hidden; background: #EEE6DA; animation: preal 0.75s cubic-bezier(.2,.7,.2,1) 0.85s both">
+<img src="{{realV.src}}" alt="{{realV.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block">
+<span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 9, 8, 0.45) 0%, rgba(10, 9, 8, 0) 26%, rgba(10, 9, 8, 0) 58%, rgba(10, 9, 8, 0.78) 100%); pointer-events: none"></span>
+<button type="button" onClick="{{realClose}}" style="position: absolute; top: clamp(14px, 2.2vw, 24px); right: clamp(14px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.92); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); font: 600 13px/1 'Instrument Sans', sans-serif; cursor: pointer; animation: prealui 0.5s ease 1.3s both"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"></path><path d="M3.3 7.5L12 12l8.7-4.5M12 12v9"></path></svg>{{t.realBack}}</button>
+<div style="position: absolute; left: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 2.6vw, 28px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; animation: prealui 0.5s ease 1.3s both">
+<div style="display: flex; flex-direction: column; gap: 6px; max-width: 560px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #F1E6D4">Casa Pasinetti · {{realV.count}}</span>
+<span style="font: 500 clamp(28px, 3.4vw, 44px)/1.02 'Bodoni Moda', 'Didot', Georgia, serif; color: #FFFFFF">{{realV.title}}</span>
+<span style="font-size: 14px; line-height: 1.5; color: #E8E3DA">{{realV.desc}}</span>
+</div>
+<sc-if value="{{realV.multi}}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; gap: 8px">
+<button type="button" aria-label="{{t.prev}}" onClick="{{realPrev}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.9); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button type="button" aria-label="{{t.next}}" onClick="{{realNext}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.9); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+</sc-if>
+</div>
+</div>
+</sc-if>
+<sc-if value="{{loading}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; background: {{ov.bg}}; pointer-events: none">
+<div style="display: flex; flex-direction: column; align-items: center; gap: 14px; color: {{ov.hint}}; font-size: 14px">
+<span style="width: 28px; height: 28px; border-radius: 50%; border: 2px solid #D2C4B3; border-top-color: #6B4A35; animation: pspin 0.9s linear infinite"></span>
+{{t.loading}}
+</div>
+</div>
+</sc-if>
+<sc-if value="{{glErr}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; inset: 0; z-index: 3; display: grid; place-items: center; padding: 24px; background: #EEE6DA; text-align: center">
+<p style="margin: 0; max-width: 420px; font-size: 15px; line-height: 1.5; color: #56463A">{{t.glErr}}</p>
+</div>
+</sc-if>
+
+<div style="position: absolute; z-index: 2; left: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); max-width: min(560px, 70%); display: flex; flex-direction: column; gap: 8px; pointer-events: none; text-shadow: 0 1px 14px rgba(8, 18, 36, 0.38)">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: {{ov.eyebrow}}">{{t.eyebrow}}</span>
+<h1 style="margin: 0; font: 500 clamp(32px, 4.6vw, 66px)/0.95 'Bodoni Moda', 'Didot', Georgia, serif; letter-spacing: -0.01em; color: {{ov.title}}"><span style="display: block; margin: 0 0 0.04em 0.04em; font-size: 0.46em; line-height: 1; letter-spacing: 0.01em">Casa</span>Pasinetti</h1>
+<sc-if value="{{subOn}}" hint-placeholder-val="{{ true }}">
+<p style="margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: {{ov.sub}}">{{t.sub}}</p>
+</sc-if>
+<sc-if value="{{hovInfo.on}}" hint-placeholder-val="{{ false }}">
+<div style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: rgba(251, 248, 242, 0.94); border: 1px solid #D2C4B3; font-size: 13px; color: #3A2A20">
+<span style="width: 8px; height: 8px; border-radius: 50%; {{hovInfo.dot}}"></span>
+<span style="font: 500 17px/1 'Bodoni Moda', Georgia, serif">{{hovInfo.code}}</span>
+<span>{{hovInfo.line}}</span>
+</div>
+</sc-if>
+<sc-if value="{{hintOn}}" hint-placeholder-val="{{ true }}">
+<span style="margin-top: 6px; font-size: 13px; color: {{ov.hint}}">{{t.hint}}</span>
+</sc-if>
+</div>
+
+<sc-if value="{{garageOn}}" hint-placeholder-val="{{ false }}">
+<div style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); width: min(340px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; border-radius: 16px; background: rgba(251, 248, 242, 0.95); border: 1px solid #D2C4B3; animation: prealui 0.5s ease 0.2s both">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #6B4A35">−3,12 · −5,98</span>
+<span style="font: 500 26px/1.05 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D">{{t.garageTitle}}</span>
+<span style="font-size: 13px; line-height: 1.5; color: #625246">{{t.garageDesc}}</span>
+<button type="button" onClick="{{garageBack}}" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; margin-top: 2px; padding: 0 16px; border-radius: 999px; border: 1px solid #D2C4B3; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>{{t.garageBack}}</button>
+</div>
+</sc-if>
+<sc-if value="{{focusOn}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{exitFocus}}" style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.94); color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>{{t.backToBuilding}}</button>
+</sc-if>
+
+<div style="position: absolute; z-index: 2; left: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 2.4vw, 24px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px; pointer-events: none">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px">
+<sc-if value="{{wide}}" hint-placeholder-val="{{ true }}">
+<span aria-live="polite" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #E3D9CC; font-size: 12px; color: #56463A; font-variant-numeric: tabular-nums"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6B4A35" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>{{sunLine}}</span>
+</sc-if>
+<sc-if value="{{showLegend}}" hint-placeholder-val="{{ false }}">
+<ul aria-label="{{t.legendAria}}" style="display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0; padding: 12px 16px; list-style: none; border-radius: 12px; background: rgba(251, 248, 242, 0.92); border: 1px solid #E3D9CC; font-size: 13px; color: #56463A">
+<li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #D4B571"></span>{{t.disp}} <span style="color: #715E4F">{{counts.disp}}</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #8FA7C0"></span>{{t.res}} <span style="color: #715E4F">{{counts.res}}</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #8A857C"></span>{{t.vend}} <span style="color: #715E4F">{{counts.vend}}</span></li>
+<li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #D46B3D"></span>{{t.selected}}</li>
+</ul>
+</sc-if>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; max-width: 100%; pointer-events: auto">
+<div role="group" aria-label="{{t.lightAria}}" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 3px 14px 3px 3px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #D2C4B3; color: #3A2A20">
+<button type="button" onClick="{{togglePlay}}" aria-label="{{playLabel}}" title="{{playLabel}}" style="display: grid; place-items: center; flex: none; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: #4B2A1D; color: #FBF8F2; cursor: pointer">
+<sc-if value="{{notPlaying}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"></path></svg></sc-if>
+<sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"></path></svg></sc-if>
+</button>
+<select aria-label="{{t.dateAria}}" value="{{month}}" onChange="{{setMonth}}" style="min-height: 38px; padding: 0 10px; border: 0; border-radius: 999px; background: #EEE6DA; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">
+<option value="mar">{{t.months.mar}}</option>
+<option value="jun">{{t.months.jun}}</option>
+<option value="set">{{t.months.set}}</option>
+<option value="dez">{{t.months.dez}}</option>
+</select>
+<input type="range" min="4.5" max="23.5" step="0.25" value="{{hour}}" aria-label="{{t.hourAria}}" aria-valuetext="{{hourText}}" onInput="{{setHour}}" onChange="{{setHour}}" style="width: clamp(110px, 14vw, 170px); margin: 0; accent-color: #6B4A35; cursor: pointer">
+<span style="min-width: 42px; font: 600 13px/1 'Instrument Sans', sans-serif; font-variant-numeric: tabular-nums; color: #4B2A1D">{{hourText}}</span>
+</div>
+<div role="group" aria-label="{{t.viewAria}}" class="pviews" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #D2C4B3; max-width: 100%; box-sizing: border-box; overflow-x: auto; pointer-events: auto">
+<button type="button" onClick="{{realOpen}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; font: 600 13px/1 'Instrument Sans', sans-serif; white-space: nowrap; cursor: pointer"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>{{t.realBtn}}</button>
+<button type="button" onClick="{{viewStreet}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.street}}</button>
+<button type="button" onClick="{{viewGarden}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.garden}}</button>
+<button type="button" onClick="{{viewAir}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.aerial}}</button>
+<button type="button" onClick="{{viewGarage}}" aria-pressed="{{garageOn}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; {{garageBtnStyle}} font: 500 13px/1 'Instrument Sans', sans-serif; white-space: nowrap; cursor: pointer">{{t.garageBtn}}</button>
+<button type="button" onClick="{{viewSun}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #6B4A35; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>{{t.sunView}}</button>
+</div>
+<sc-if value="{{wide}}" hint-placeholder-val="{{ true }}">
+<div role="group" aria-label="{{t.rotAria}}" style="display: flex; gap: 6px">
+<button type="button" aria-label="{{t.rotL}}" onClick="{{rotL}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6"></path><path d="M4 4v4.5h4.5"></path></svg></button>
+<button type="button" aria-label="{{t.rotR}}" onClick="{{rotR}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v4.5h-4.5"></path></svg></button>
+<button type="button" aria-label="{{t.zoomOut}}" onClick="{{zoomOut}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="{{t.zoomIn}}" onClick="{{zoomIn}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+</div>
+</sc-if>
+</div>
+</div>
+
+</div>
+</section>
+
+<aside id="unidade" aria-label="{{t.selectedUnit}}" style="flex: 1 1 400px; min-width: 0; box-sizing: border-box; padding: 24px clamp(16px, 2.4vw, 28px) 32px; display: flex; flex-direction: column; gap: 32px; box-shadow: -1px 0 0 #E3D9CC">
+
+<sc-if value="{{hasCard}}" hint-placeholder-val="{{ true }}">
+<section aria-live="polite" style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50">{{t.selectedUnit}}</span>
+<span style="display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; font: 600 12px/1 'Instrument Sans', sans-serif; {{card.stStyle}}"><span style="width: 8px; height: 8px; border-radius: 50%; {{card.dot}}"></span>{{card.stLabel}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 16px">
+<h2 style="margin: 0; font: 500 64px/0.86 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; font-variant-numeric: lining-nums">{{card.code}}</h2>
+<div style="display: flex; flex-direction: column; gap: 4px; padding-bottom: 4px">
+<span style="font-size: 16px; font-weight: 600; color: #3A2A20">{{card.line}}</span>
+<span style="font-size: 14px; color: #715E4F">{{card.typo}}</span>
+</div>
+</div>
+<dl style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 20px; margin: 0; padding: 18px 0; border-top: 1px solid #E3D9CC; border-bottom: 1px solid #E3D9CC">
+<div style="display: flex; flex-direction: column; gap: 6px"><dt style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #735F50">{{t.estArea}}</dt><dd style="margin: 0; font-size: 17px; color: #3A2A20">{{card.area}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><dt style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #735F50">{{card.extLabel}}</dt><dd style="margin: 0; font-size: 17px; color: #3A2A20">{{card.ext}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><dt style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #735F50">{{t.floor}}</dt><dd style="margin: 0; font-size: 17px; color: #3A2A20">{{card.floor}}</dd></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><dt style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #735F50">{{t.aspect}}</dt><dd style="margin: 0; font-size: 17px; color: #3A2A20">{{card.expo}}</dd></div>
+</dl>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50">{{card.planTitle}}</span>
+<button type="button" aria-label="{{card.planOpenLabel}}" onClick="{{card.planOpen}}" style="display: block; width: 100%; padding: 0; border: 1px solid #E3D9CC; border-radius: 12px; overflow: hidden; background: #FFFFFF; cursor: zoom-in">
+<img src="{{card.planSrc}}" alt="{{card.planAlt}}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: contain; background: #FFFFFF">
+</button>
+<span style="font-size: 14px; line-height: 1.5; color: #56463A; text-wrap: pretty">{{card.planDesc}}</span>
+<span style="font-size: 12px; line-height: 1.45; color: #7F6D5E">{{card.planNote}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50">{{card.priceLabel}}</span>
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px">
+<span style="font: 500 46px/1 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; font-variant-numeric: lining-nums; {{card.priceStyle}}">{{card.price}}</span>
+<span style="font-size: 14px; color: #715E4F">{{card.vat}}</span>
+</div>
+<span style="font-size: 14px; color: #715E4F">{{card.sub}}</span>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; padding: 14px 16px; border-radius: 12px; border: 1px solid #E3D9CC">
+<div style="display: flex; flex-direction: column; gap: 6px; min-width: 0">
+<span style="display: inline-flex; align-items: center; gap: 8px; font: 600 11px/1.3 'Instrument Sans', sans-serif; letter-spacing: 0.14em; text-transform: uppercase; color: #735F50"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6B4A35" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>{{card.sunTitle}}</span>
+<span style="font-size: 15px; color: #3A2A20; font-variant-numeric: tabular-nums">{{card.sunValue}}</span>
+<span style="font-size: 12px; line-height: 1.45; color: #7F6D5E">{{t.sunNote}}</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding: 16px; border-radius: 12px; background: #FFFDF8; border: 1px solid #E3D9CC">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50">{{t.payTitle}}</span>
+<sc-for list="{{card.pay}}" as="p" hint-placeholder-count="4">
+<div style="display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; align-items: baseline; gap: 10px; font-size: 14px">
+<span style="font-weight: 600; color: #6B4A35">{{p.pct}}</span>
+<span style="color: #56463A">{{p.label}}</span>
+<span style="color: #3A2A20; font-variant-numeric: tabular-nums; white-space: nowrap; text-align: right">{{p.value}}</span>
+</div>
+</sc-for>
+<span style="margin-top: 2px; font-size: 12px; line-height: 1.45; color: #7F6D5E">{{t.payNote}}</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<sc-if value="{{card.isLink}}" hint-placeholder-val="{{ true }}">
+<a href="{{card.href}}" target="_blank" rel="noopener" style="display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 20px; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; text-decoration: none; font: 600 15px/1 'Instrument Sans', sans-serif">{{card.cta}}</a>
+</sc-if>
+<sc-if value="{{card.isSold}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{similar}}" style="display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 20px; border: 0; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; font: 600 15px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.similar}}</button>
+</sc-if>
+<button type="button" onClick="{{locate}}" style="display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 20px; border: 1px solid #D2C4B3; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 14px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.locate}}</button>
+<a href="#interiores" style="align-self: center; padding: 6px 4px; color: #6B4A35; font-size: 14px; text-underline-offset: 3px">{{t.seeInteriors}}</a>
+</div>
+</section>
+</sc-if>
+
+<sc-if value="{{noCard}}" hint-placeholder-val="{{ false }}">
+<p style="margin: 0; font-size: 15px; line-height: 1.5; color: #715E4F">{{t.empty}}</p>
+</sc-if>
+
+<section aria-labelledby="andares" style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px">
+<h3 id="andares" style="margin: 0; font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #735F50">{{t.explore}}</h3>
+<sc-if value="{{isIso}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{allFloors}}" style="min-height: 44px; padding: 0 4px; border: 0; background: transparent; color: #6B4A35; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer; text-decoration: underline; text-underline-offset: 3px">{{t.backToBuilding}}</button>
+</sc-if>
+</div>
+<div role="group" aria-label="{{t.floorsAria}}" style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
+<sc-for list="{{floors}}" as="fl" hint-placeholder-count="7">
+<button type="button" aria-pressed="{{fl.pressed}}" aria-label="{{fl.aria}}" onClick="{{fl.pick}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 70px; padding: 8px 0; border: 1px solid; border-radius: 10px; cursor: pointer; font: inherit; {{fl.rowStyle}}">
+<span style="font: 500 25px/1 'Bodoni Moda', Georgia, serif; {{fl.numStyle}}">{{fl.num}}</span>
+<span style="font-size: 11px; color: #715E4F; white-space: nowrap; font-variant-numeric: tabular-nums">{{fl.meta}}</span>
+</button>
+</sc-for>
+</div>
+<span style="font-size: 13px; line-height: 1.5; color: #715E4F">{{floorHint}}</span>
+<sc-if value="{{isIso}}" hint-placeholder-val="{{ false }}">
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px">
+<sc-for list="{{isoUnits}}" as="iu" hint-placeholder-count="8">
+<button type="button" aria-pressed="{{iu.pressed}}" aria-label="{{iu.aria}}" onClick="{{iu.pick}}" style="display: flex; flex-direction: column; align-items: flex-start; gap: 5px; min-height: 76px; padding: 10px 12px; border: 1px solid; border-radius: 10px; text-align: left; cursor: pointer; font: inherit; color: #3A2A20; {{iu.style}}">
+<span style="display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%">
+<span style="font: 500 19px/1 'Bodoni Moda', Georgia, serif">{{iu.code}}</span>
+<span style="width: 8px; height: 8px; border-radius: 50%; {{iu.dot}}"></span>
+</span>
+<span style="font-size: 12px; color: #715E4F">{{iu.sub}}</span>
+<span style="font-size: 13px; font-weight: 600; {{iu.priceStyle}}">{{iu.price}}</span>
+</button>
+</sc-for>
+</div>
+</sc-if>
+</section>
+
+</aside>
+</main>
+
+<section id="projeto" aria-labelledby="projeto-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px)">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 48px">
+<div style="flex: 1 1 520px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{t.prEyebrow}}</span>
+<h2 id="projeto-t" style="margin: 0; font: 500 clamp(34px, 4.2vw, 56px)/1.02 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{t.prTitle}}</h2>
+</div>
+<p style="flex: 1 1 360px; margin: 0; font-size: 17px; line-height: 1.6; color: #625246; text-wrap: pretty">{{t.prText}}</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr)); gap: 16px">
+
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 16px; background: #FFFDF8; border: 1px solid #E3D9CC">
+<h3 style="margin: 0; font: 500 26px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{t.hiTitle}}</h3>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 14px; font-size: 15px; line-height: 1.5; color: #56463A">
+<sc-for list="{{highlights}}" as="h" hint-placeholder-count="4">
+<li style="display: grid; grid-template-columns: 20px minmax(0, 1fr); gap: 10px"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#6B4A35" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 2px"><path d="M5 12l4.5 4.5L19 7"></path></svg><span>{{h.text}}</span></li>
+</sc-for>
+</ul>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 16px; background: #FFFDF8; border: 1px solid #E3D9CC">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<h3 style="margin: 0; font: 500 26px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{t.tbTitle}}</h3>
+<span style="font-size: 13px; color: #715E4F; white-space: nowrap">{{t.tbNote}}</span>
+</div>
+<div style="display: flex; flex-direction: column">
+<sc-for list="{{table}}" as="tb" hint-placeholder-count="4">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; padding: 14px 0; border-top: 1px solid #E3D9CC">
+<div style="display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; font-weight: 600; color: #3A2A20">{{tb.line}}</span>
+<span style="font-size: 13px; color: #715E4F">{{tb.typo}}</span>
+</div>
+<div style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px">
+<span style="font-size: 12px; color: #715E4F">{{tb.from}}</span>
+<span style="font: 500 22px/1 'Bodoni Moda', Georgia, serif; color: #4B2A1D; font-variant-numeric: lining-nums">{{tb.price}}</span>
+</div>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 16px; background: #FFFDF8; border: 1px solid #E3D9CC">
+<h3 style="margin: 0; font: 500 26px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{t.pfTitle}}</h3>
+<div aria-hidden="true" style="display: flex; height: 40px; border-radius: 8px; overflow: hidden; font: 600 12px/1 'Instrument Sans', sans-serif; color: #3A2A20">
+<span style="width: 20%; display: grid; place-items: center; background: #4B2A1D; color: #FBF8F2">20%</span>
+<span style="width: 10%; display: grid; place-items: center; background: #8A6B55; color: #FBF8F2; border-left: 2px solid #FFFDF8">10%</span>
+<span style="width: 10%; display: grid; place-items: center; background: #B9A08A; color: #2E2018; border-left: 2px solid #FFFDF8">10%</span>
+<span style="width: 60%; display: grid; place-items: center; background: #E9DED0; color: #3A2A20; border-left: 2px solid #FFFDF8">60%</span>
+</div>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; font-size: 15px; color: #56463A">
+<sc-for list="{{payPlan}}" as="pp" hint-placeholder-count="4">
+<li style="display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 8px"><span style="font-weight: 600; color: #6B4A35">{{pp.pct}}</span><span>{{pp.text}}</span></li>
+</sc-for>
+</ol>
+</div>
+
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(460px, 100%), 1fr)); gap: 16px">
+<div style="display: flex; flex-direction: column; gap: 22px; padding: clamp(24px, 3vw, 40px); border-radius: 16px; background: #4B2A1D; color: #F4EFE7">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #D9C6B4">{{gx.cEy}}</span>
+<h3 style="margin: 0; font: 500 clamp(24px, 2.4vw, 32px)/1.15 'Bodoni Moda', Georgia, serif; color: #FBF8F2; text-wrap: balance">{{gx.cTitle}}</h3>
+<ol style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px">
+<sc-for list="{{gx.pillarsN}}" as="pl" hint-placeholder-count="3">
+<li style="display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid #8A6B55"><span style="font: 500 15px/1 'Bodoni Moda', Georgia, serif; color: #D9C6B4">{{pl.n}}</span><span style="font-size: 17px; line-height: 1.3; color: #FBF8F2">{{pl.text}}</span></li>
+</sc-for>
+</ol>
+<span style="font: italic 500 20px/1.2 'Bodoni Moda', Georgia, serif; color: #D9C6B4">{{gx.cLead}}</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 20px; font-size: 15px; line-height: 1.4; color: #F4EFE7">
+<sc-for list="{{gx.benefits}}" as="bn" hint-placeholder-count="8">
+<li style="display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#D9C6B4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 2px"><path d="M5 12l4.5 4.5L19 7"></path></svg><span>{{bn}}</span></li>
+</sc-for>
+</ul>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px; padding: clamp(24px, 3vw, 40px); border-radius: 16px; background: #FFFDF8; border: 1px solid #E3D9CC">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{gx.mEy}}</span>
+<h3 style="margin: 0; font: 500 clamp(24px, 2.4vw, 32px)/1.15 'Bodoni Moda', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{gx.mTitle}}</h3>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #56463A; text-wrap: pretty">{{gx.mText}}</p>
+<ul style="margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px 20px; font-size: 15px; line-height: 1.4; color: #3A2A20">
+<sc-for list="{{gx.mPoints}}" as="mp" hint-placeholder-count="8">
+<li style="display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B4A35" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-top: 2px"><path d="M5 12l4.5 4.5L19 7"></path></svg><span>{{mp}}</span></li>
+</sc-for>
+</ul>
+<div style="display: flex; flex-direction: column; gap: 12px; margin-top: 4px; padding: 18px 20px; border-radius: 12px; background: #F4EEE5; border: 1px solid #D9C6B4">
+<span style="font: 500 20px/1.15 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{gx.optTitle}}</span>
+<span style="font-size: 15px; line-height: 1.5; color: #3A2A20">{{gx.optText}}</span>
+<ul style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 15px; line-height: 1.4; color: #3A2A20">
+<sc-for list="{{gx.opts}}" as="op" hint-placeholder-count="3">
+<li style="display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 8px"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#6B4A35" stroke-width="1.8" stroke-linecap="round" aria-hidden="true" style="margin-top: 2px"><circle cx="12" cy="12" r="5"></circle></svg><span>{{op}}</span></li>
+</sc-for>
+</ul>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 24px">
+<h3 style="margin: 0; font: 500 26px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{gx.palTitle}}</h3>
+<span style="font-size: 13px; color: #715E4F">{{gx.palNote}}</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr)); border-radius: 14px; overflow: hidden; border: 1px solid #E3D9CC">
+<sc-for list="{{gx.palette}}" as="sw" hint-placeholder-count="5">
+<div style="height: 120px; display: flex; align-items: flex-end; padding: 14px; background: {{sw.hex}}; color: {{sw.fg}}; font: 600 13px/1 'Instrument Sans', sans-serif; letter-spacing: 0.06em">{{sw.hex}}</div>
+</sc-for>
+</div>
+</div>
+
+</div>
+</section>
+
+<section id="vida" aria-labelledby="vida-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px)">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3.4vw, 44px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 48px">
+<div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{t.amEyebrow}}</span>
+<h2 id="vida-t" style="margin: 0; font: 500 clamp(32px, 3.8vw, 50px)/1.04 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{t.amTitle}}</h2>
+</div>
+<p style="flex: 1 1 360px; margin: 0; font-size: 16px; line-height: 1.6; color: #625246; text-wrap: pretty">{{t.amText}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); grid-auto-rows: clamp(210px, 21vw, 300px); grid-auto-flow: dense; gap: 14px">
+<sc-for list="{{amen}}" as="am" hint-placeholder-count="8">
+<button type="button" aria-label="{{am.aria}}" onClick="{{am.pick}}" style="position: relative; display: block; min-width: 0; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #FFFDF8; cursor: zoom-in; text-align: left; font: inherit; color: inherit; {{am.cell}}">
+<img src="{{am.img}}" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
+<span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 9, 8, 0) 38%, rgba(10, 9, 8, 0.82) 100%)"></span>
+<span style="position: absolute; top: 14px; right: 14px; padding: 6px 10px; border-radius: 999px; background: rgba(251, 248, 242, 0.9); font: 600 11px/1 'Instrument Sans', sans-serif; letter-spacing: 0.06em; color: #3A2A20">{{am.count}}</span>
+<span style="position: absolute; left: 18px; right: 18px; bottom: 16px; display: flex; flex-direction: column; gap: 6px">
+<span style="font: 500 26px/1.05 'Bodoni Moda', Georgia, serif; color: #FFFFFF">{{am.title}}</span>
+<span style="font-size: 13px; line-height: 1.45; color: #E6E1D8">{{am.desc}}</span>
+</span>
+</button>
+</sc-for>
+</div>
+<div style="display: flex; flex-direction: column; gap: 14px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{planCommonTitle}}</span>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(420px, 100%), 1fr)); gap: 14px">
+<sc-for list="{{planCommon}}" as="pc" hint-placeholder-count="2">
+<button type="button" aria-label="{{pc.aria}}" onClick="{{pc.pick}}" style="display: flex; flex-direction: column; gap: 10px; padding: 14px; border: 1px solid #E3D9CC; border-radius: 14px; background: #FFFDF8; cursor: zoom-in; text-align: left; font: inherit; color: inherit">
+<img src="{{pc.src}}" alt="{{pc.label}}" loading="lazy" style="display: block; width: 100%; aspect-ratio: 3 / 1; object-fit: contain; border-radius: 8px; background: #FBF8F2">
+<span style="font: 500 20px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{pc.label}}</span>
+</button>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<section id="interiores" aria-labelledby="interiores-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px); background: #EEE6DA">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(28px, 3.4vw, 44px)">
+<div style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px 48px">
+<div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 16px; min-width: 0">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{t.inEyebrow}}</span>
+<h2 id="interiores-t" style="margin: 0; font: 500 clamp(32px, 3.8vw, 50px)/1.04 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{t.inTitle}}</h2>
+<p style="margin: 0; max-width: 620px; font-size: 16px; line-height: 1.6; color: #625246">{{t.inText}}</p>
+</div>
+<div role="group" aria-label="{{t.styleAria}}" style="display: flex; gap: 2px; padding: 3px; border: 1px solid #D2C4B3; border-radius: 999px">
+<sc-for list="{{styleTabs}}" as="st" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{st.pressed}}" onClick="{{st.pick}}" style="min-height: 42px; padding: 0 20px; border: 0; border-radius: 999px; font: 500 14px/1 'Instrument Sans', sans-serif; cursor: pointer; {{st.style}}">{{st.label}}</button>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<sc-for list="{{inImgs}}" as="ii" hint-placeholder-count="4">
+<button type="button" aria-label="{{ii.aria}}" onClick="{{ii.pick}}" style="display: block; min-width: 0; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #FFFDF8; cursor: zoom-in; {{ii.cell}}">
+<img src="{{ii.src}}" alt="{{ii.alt}}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover">
+</button>
+</sc-for>
+</div>
+<span style="font-size: 14px; color: #715E4F">{{styleNote}}</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 18px 20px; border: 1px solid #D2C4B3; border-radius: 16px; background: #FFFDF8">
+<span style="flex: 1 1 220px; font: 500 22px/1.15 'Bodoni Moda', Georgia, serif; color: #4B2A1D">Interiores 3D</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#smart" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Smart</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#maquete" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Comfort</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#exclusive" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Exclusive</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#luxury" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Luxury</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#academia" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #4B2A1D; color: #4B2A1D; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Fitness</a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 22px; padding-top: clamp(20px, 3vw, 36px); border-top: 1px solid #E3D9CC">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 40px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{t.fnEyebrow}}</span>
+<h3 style="margin: 0; font: 500 clamp(26px, 2.8vw, 36px)/1.08 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{t.fnTitle}}</h3>
+</div>
+<p style="flex: 0 1 420px; margin: 0; font-size: 15px; line-height: 1.55; color: #715E4F">{{t.fnText}}</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr)); gap: 22px 14px">
+<sc-for list="{{fins}}" as="fn" hint-placeholder-count="9">
+<div style="display: flex; flex-direction: column; gap: 10px; min-width: 0">
+<img src="{{fn.img}}" alt="" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 10px; background: #FFFDF8">
+<span style="font: 600 10.5px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.16em; text-transform: uppercase; color: #6B4A35">{{fn.cat}}</span>
+<span style="font-size: 14px; line-height: 1.45; color: #3A2A20">{{fn.prod}}</span>
+<span style="font-size: 12.5px; color: #735F50">{{fn.brand}}</span>
+</div>
+</sc-for>
+</div>
+</div>
+</div>
+</section>
+
+<section id="bairro" aria-labelledby="bairro-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px)">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 40px 64px">
+<div style="flex: 1 1 380px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+<span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.18em; text-transform: uppercase; color: #735F50">{{t.mapEyebrow}}</span>
+<h2 id="bairro-t" style="margin: 0; font: 500 clamp(32px, 3.8vw, 50px)/1.04 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D">{{t.mapTitle}}</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #625246">{{t.mapIntro}}</p>
+<ol style="margin: 8px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column">
+<sc-for list="{{pois}}" as="po" hint-placeholder-count="5">
+<li style="display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid #E3D9CC">
+<span style="display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; border: 1px solid #6B4A35; font: 600 12px/1 'Instrument Sans', sans-serif; color: #6B4A35">{{po.n}}</span>
+<span style="display: flex; flex-direction: column; gap: 3px; min-width: 0"><span style="font-size: 15px; font-weight: 600; color: #3A2A20">{{po.name}}</span><span style="font-size: 13px; color: #715E4F">{{po.km}} · <a href="{{po.route}}" target="_blank" rel="noopener" style="color: #6B4A35; text-underline-offset: 3px">{{t.route}}</a></span></span>
+<span style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px"><span style="font: 500 21px/1 'Bodoni Moda', Georgia, serif; color: #4B2A1D; white-space: nowrap">{{po.walk}} <span style="font: 500 12px 'Instrument Sans', sans-serif; color: #715E4F">{{t.walkSub}}</span></span><span style="font-size: 12px; color: #715E4F; white-space: nowrap">{{po.bike}}</span></span>
+</li>
+</sc-for>
+</ol>
+<a href="{{mapHref}}" target="_blank" rel="noopener" style="align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 20px; border: 1px solid #6B4A35; border-radius: 999px; color: #6B4A35; text-decoration: none; font: 600 14px/1 'Instrument Sans', sans-serif"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"></path><circle cx="12" cy="10" r="2.4"></circle></svg>{{t.openMap}}</a>
+<span style="font-size: 12px; line-height: 1.5; color: #735F50">{{t.mapNote}}</span>
+</div>
+<div style="flex: 1 1 440px; min-width: 0; max-width: 640px; display: flex; flex-direction: column; gap: 16px">
+<figure role="img" aria-label="{{t.mapAria}}" style="margin: 0">
+<div style="position: relative; width: 100%; aspect-ratio: 4 / 3; overflow: hidden; border-radius: 16px; background: #EEE6DA; border: 1px solid #E3D9CC">
+<svg viewBox="215 20 560 420" preserveAspectRatio="xMidYMid slice" style="position: absolute; inset: 0; width: 100%; height: 100%" aria-hidden="true">
+<image href="/_blob/7518ed725a3801d39c547b57b11253a7" x="215" y="20" width="560" height="420" preserveAspectRatio="none"></image>
+<rect x="215" y="20" width="560" height="420" fill="#FBF8F2" fill-opacity="0.06"></rect>
+<circle cx="463" cy="365" r="57.4" fill="#D46B3D" fill-opacity="0.10" stroke="#6B4A35" stroke-opacity="0.75" stroke-width="0.8" stroke-dasharray="none"></circle>
+<circle cx="463" cy="365" r="114.8" fill="none" stroke="#6B4A35" stroke-opacity="0.55" stroke-width="0.8" stroke-dasharray="none"></circle>
+<circle cx="463" cy="365" r="172.2" fill="none" stroke="#6B4A35" stroke-opacity="0.42" stroke-width="0.8" stroke-dasharray="none"></circle>
+<circle cx="463" cy="365" r="229.6" fill="none" stroke="#6B4A35" stroke-opacity="0.32" stroke-width="0.8" stroke-dasharray="4 3"></circle>
+<circle cx="463" cy="365" r="344.4" fill="none" stroke="#6B4A35" stroke-opacity="0.24" stroke-width="0.8" stroke-dasharray="4 3"></circle>
+<path d="M505,56 L573,110 L619,154 L656,175 L736,237 L780,267" fill="none" stroke="#C99A12" stroke-width="1.4" stroke-dasharray="5 3" stroke-linecap="round"></path>
+<circle cx="505" cy="56" r="2.8" fill="#EEE6DA" stroke="#C99A12" stroke-width="1.2"></circle>
+<circle cx="619" cy="154" r="2.8" fill="#EEE6DA" stroke="#C99A12" stroke-width="1.2"></circle>
+<circle cx="736" cy="237" r="2.8" fill="#EEE6DA" stroke="#C99A12" stroke-width="1.2"></circle>
+<text x="730" y="250" text-anchor="end" font-family="Instrument Sans, Helvetica, sans-serif" font-size="7.5" font-weight="600" fill="#7E5F00" paint-order="stroke" stroke="#EEE6DA" stroke-width="3">M3 Brenta</text>
+<line x1="463" y1="365" x2="550" y2="193" stroke="#6B4A35" stroke-opacity="0.5" stroke-width="0.9" stroke-dasharray="2 3"></line>
+<line x1="463" y1="365" x2="619" y2="154" stroke="#6B4A35" stroke-opacity="0.5" stroke-width="0.9" stroke-dasharray="2 3"></line>
+<line x1="463" y1="365" x2="333" y2="108" stroke="#6B4A35" stroke-opacity="0.5" stroke-width="0.9" stroke-dasharray="2 3"></line>
+<line x1="463" y1="365" x2="505" y2="56" stroke="#6B4A35" stroke-opacity="0.5" stroke-width="0.9" stroke-dasharray="2 3"></line>
+<line x1="463" y1="365" x2="391" y2="36" stroke="#6B4A35" stroke-opacity="0.5" stroke-width="0.9" stroke-dasharray="2 3"></line>
+<text x="268" y="184" transform="rotate(-23.8 268 184)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Viale Tibaldi</text>
+<text x="392" y="158.5" transform="rotate(-2.5 392 158.5)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Viale Isonzo</text>
+<text x="680" y="64" transform="rotate(-60 680 64)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Viale Umbria</text>
+<text x="712" y="203" transform="rotate(36.5 712 203)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Corso Lodi</text>
+<text x="294" y="268" transform="rotate(-90 294 268)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Via Carlo Bazzi</text>
+<text x="483" y="250" transform="rotate(84 483 250)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Via Ripamonti</text>
+<text x="626" y="286" transform="rotate(-12 626 286)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Viale Ortles</text>
+<text x="290" y="44" transform="rotate(0 290 44)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="500" letter-spacing="0.3" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">Viale Sabotino</text>
+<text x="560" y="184" transform="rotate(-2 560 184)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="7" font-weight="500" letter-spacing="0.3" fill="#56463A" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">{{t.olympic}}</text>
+<text x="520.4" y="368.0" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="3.5">5 min</text>
+<text x="577.8" y="368.0" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="3.5">10 min</text>
+<text x="635.2" y="368.0" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="3.5">15 min</text>
+<text x="692.6" y="368.0" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="3.5">20 min</text>
+<text x="726.8" y="146.6" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="3.5">30 min</text>
+<path d="M232 30 L237 46 L232 42.5 L227 46 Z" fill="#4B2A1D"></path><text x="232" y="57" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="8" font-weight="600" fill="#4B2A1D" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">N</text>
+<path d="M228 428 V431 H321.3 V428" fill="none" stroke="#56463A" stroke-width="0.9"></path><text x="326.3" y="431.5" font-family="Instrument Sans, Helvetica, sans-serif" font-size="7.5" fill="#56463A" paint-order="stroke" stroke="#F6F1E9" stroke-width="3">500 m</text>
+</svg>
+<sc-for list="{{poiDots}}" as="pd" hint-placeholder-count="5">
+<span style="position: absolute; display: flex; align-items: center; gap: 8px; {{pd.style}}">
+<span style="flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EEE6DA; border: 1px solid #6B4A35; font: 600 11px/1 'Instrument Sans', sans-serif; color: #6B4A35">{{pd.n}}</span>
+<span style="padding: 2px 6px; border-radius: 6px; background: rgba(251, 248, 242, 0.92); font-size: 12px; color: #3A2A20; white-space: nowrap; {{pd.labelStyle}}">{{pd.short}}</span>
+</span>
+</sc-for>
+<span style="position: absolute; left: 44.29%; top: 82.14%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 50%; background: #D46B3D; box-shadow: 0 0 0 6px rgba(212, 107, 61, 0.22), 0 0 0 14px rgba(212, 107, 61, 0.08)"></span>
+<span style="position: absolute; left: 44.29%; top: 82.14%; transform: translate(-50%, 16px); padding: 2px 6px; border-radius: 6px; background: rgba(251, 248, 242, 0.92); font: 500 14px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D; white-space: nowrap">{{t.you}}</span>
+</div>
+</figure>
+<figure role="img" aria-label="{{t.insetAria}}" style="margin: 0; display: flex; flex-direction: column; gap: 8px">
+<div style="position: relative; width: 100%; aspect-ratio: 1040 / 560; overflow: hidden; border-radius: 12px; border: 1px solid #E3D9CC; background: #EEE6DA">
+<svg viewBox="260 160 1040 560" preserveAspectRatio="xMidYMid slice" style="position: absolute; inset: 0; width: 100%; height: 100%" aria-hidden="true">
+<image href="/_blob/bbbfe08c94c894f35636a6fbb6e2dc77" x="0" y="0" width="1600" height="798" preserveAspectRatio="none"></image>
+<path d="M553.2,512.8 L746.8,492.7 L747.1,558.1 L559,567 Z" fill="#D46B3D" fill-opacity="0.55" stroke="#B4532A" stroke-width="3" stroke-linejoin="round"></path>
+<text x="652" y="544" transform="rotate(0 652 544)" text-anchor="middle" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="30" font-weight="500" fill="#3A2418" paint-order="stroke" stroke="#FBF8F2" stroke-width="6">Casa Pasinetti</text>
+<text x="640" y="410" transform="rotate(-7 640 410)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="500" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">Via Gallura</text>
+<text x="820" y="588" transform="rotate(-6.5 820 588)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="500" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">Via Antonio Pasinetti</text>
+<text x="912" y="345" transform="rotate(86 912 345)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="500" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">Via Giuseppe Ripamonti</text>
+<text x="318" y="352" transform="rotate(50 318 352)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="500" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">Via dei Fontanili</text>
+<text x="1150" y="312" transform="rotate(-14 1150 312)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="500" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">Via Barletta</text>
+<text x="400" y="476" transform="rotate(0 400 476)" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="19" font-weight="500" fill="#625246" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">P.za E. Chiaradia</text>
+<line x1="653.0" y1="562.5" x2="664.2" y2="641.7" stroke="#6B4A35" stroke-width="3"></line>
+<path d="M664.2 641.7 l-10 -14 l20 0 z" transform="rotate(-8.0 664.2 641.7)" fill="#6B4A35"></path>
+<text x="680" y="650" font-family="Instrument Sans, Helvetica, sans-serif" font-size="24" font-weight="600" fill="#6B4A35" paint-order="stroke" stroke="#F6F1E9" stroke-width="6">{{t.insetFacade}}</text>
+<path d="M296 182 L306 212 L296 206 L286 212 Z" fill="#4B2A1D"></path><text x="296" y="236" text-anchor="middle" font-family="Instrument Sans, Helvetica, sans-serif" font-size="18" font-weight="600" fill="#4B2A1D" paint-order="stroke" stroke="#F6F1E9" stroke-width="5">N</text>
+<path d="M1050 692 V700 H1189 V692" fill="none" stroke="#45352B" stroke-width="2.4"></path><text x="1199" y="703" font-family="Instrument Sans, Helvetica, sans-serif" font-size="20" fill="#45352B" paint-order="stroke" stroke="#F6F1E9" stroke-width="5">50 m</text>
+</svg>
+</div>
+<figcaption style="font-size: 12px; line-height: 1.5; color: #735F50">{{t.insetCap}}</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section id="galeria" aria-labelledby="galeria-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px)">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; margin-bottom: 8px">
+<h2 id="galeria-t" style="margin: 0; font: 500 clamp(30px, 3.6vw, 44px)/1.05 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D">{{t.glTitle}}</h2>
+<span style="font-size: 13px; color: #735F50">{{t.galNote}}</span>
+</div>
+<button type="button" aria-label="{{galHero.aria}}" onClick="{{galHero.pick}}" style="display: block; width: 100%; padding: 0; border: 0; border-radius: 12px; overflow: hidden; background: #FFFDF8; cursor: zoom-in">
+<img src="{{galHero.src}}" alt="{{galHero.alt}}" style="display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover">
+</button>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(min(260px, calc(50% - 8px)), 1fr)); grid-auto-rows: clamp(130px, 13vw, 200px); grid-auto-flow: dense; gap: 16px">
+<sc-for list="{{galItems}}" as="gi" hint-placeholder-count="7">
+<button type="button" aria-label="{{gi.aria}}" onClick="{{gi.pick}}" style="display: block; width: 100%; min-width: 0; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background: #FFFDF8; cursor: zoom-in; {{gi.cell}}"><img src="{{gi.src}}" alt="{{gi.alt}}" loading="lazy" style="display: block; width: 100%; height: 100%; object-fit: cover"></button>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="cta-t" style="border-top: 1px solid #C9B8AA; padding: clamp(48px, 7vw, 88px) clamp(16px, 3vw, 32px); background: #D6C7BD">
+<div style="max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px 48px">
+<div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
+<div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 14px">
+<span style="font: 600 10px/1 'Instrument Sans', sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #5C4636">{{t.presentedBy}}</span>
+<img src="/_blob/d8f188a70a38fae9b526f1d81c229fd4" alt="Gobbi Consultoria" width="161" height="48" style="display: block; width: auto; height: 48px">
+</div>
+<h2 id="cta-t" style="margin: 0; font: 500 clamp(30px, 3.6vw, 46px)/1.05 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{t.ctaTitle}}</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4F3E33">{{t.ctaText}}</p>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<a href="{{visitHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; text-decoration: none; font: 600 15px/1 'Instrument Sans', sans-serif">{{t.ctaWa}}</a>
+<a href="#maquete" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 999px; border: 1px solid #4B2A1D; color: #4B2A1D; text-decoration: none; font: 500 15px/1 'Instrument Sans', sans-serif">{{t.ctaUnits}}</a>
+</div>
+</div>
+</section>
+
+<footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 20px clamp(16px, 3vw, 32px); border-top: 1px solid #E3D9CC; font-size: 12px; line-height: 1.6; color: #735F50">
+<span>{{t.foot1}}</span>
+<span>{{t.foot2}}</span>
+</footer>
+
+<sc-if value="{{lb.open}}" hint-placeholder-val="{{ false }}">
+<div role="dialog" aria-modal="true" aria-label="{{lb.alt}}" style="position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 64px 16px 24px; background: rgba(246, 241, 233, 0.97)">
+<button type="button" aria-label="{{t.close}}" onClick="{{lbClose}}" style="position: absolute; top: 12px; right: 12px; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: #FFFDF8; color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"></path></svg></button>
+<img src="{{lb.src}}" alt="{{lb.alt}}" style="display: block; max-width: min(1400px, 100%); max-height: calc(100vh - 160px); object-fit: contain; border-radius: 8px">
+<div style="display: flex; align-items: center; gap: 12px; color: #625246; font-size: 14px">
+<button type="button" aria-label="{{t.prev}}" onClick="{{lbPrev}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: #FFFDF8; color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<span style="display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 160px; text-align: center"><span style="font: 500 18px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D">{{lb.title}}</span><span style="font-size: 13px; color: #715E4F">{{lb.count}}</span></span>
+<button type="button" aria-label="{{t.next}}" onClick="{{lbNext}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: #FFFDF8; color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+</div>
+</div>
+</sc-if>
+
+</div>
+</template>
+<div id="dc-root"></div>
+<script type="application/json" id="dc-assets">{"0645be9b152708a30d543e2c28af4985": "assets/img/f/restorante-tif-2.webp", "0c0c6e82cf9176b125667dcad1373ba2": "assets/img/f/socialloungelaunge-4.webp", "0de95e190f3940ffa6f2a50a0383ff9e": "assets/img/f/restorante-tif-6.webp", "0fd0994988bfe727b8ba11ff732aae23": "assets/img/f/ingresso.webp", "125fa4129813b768aa852cdfa448f08e": "assets/img/f/ext-rooftop-corner.webp", "12e8e951c25ca993c9aa5a05fd9a36ea": "assets/img/f/ext-garden-lounge.webp", "18d59da60e6f8f628e30500365ea2b90": "assets/img/f/sociallounge-render1.webp", "1db39d4cadc4266c381299c6a168c06f": "assets/img/t/fin-palette.webp", "1e864adf9a8942be563d57f5597635e2": "assets/img/t/cam-06.webp", "22389378b3cc8003de8dba358efab0fa": "assets/img/f/ingresso-5.webp", "23a150f7a1a1c77c2d8cc18307442e4b": "assets/img/t/fin-scaldasalviette.webp", "2e071a955f4dc0cc950225d1bd765f37": "assets/img/t/ext-garden-lounge.webp", "2f4a2be2f856e244c6ef35da66d727a4": "assets/img/t/palestra-4.webp", "3072e1ed77a1c63636e913b8d629667c": "assets/img/t/ext-street-elevation.webp", "30c900b10537f565c0e14bb5efc14841": "assets/img/t/apt-chiara-view06.webp", "37d8623671ab1b6412670df7828e8acb": "assets/img/r-dia.webp", "3e7a9e32a015f7a904653fc27d48a5c6": "assets/img/f/yoga-2.webp", "434e1fa9d82596cf85f915cc2561e460": "assets/img/t/restorante-tif-2.webp", "44133447cfcc0bd0ac93b62c63c2afaf": "assets/img/t/ingresso.webp", "451f8f9a82f4a0dcfdb685e6f6a16743": "assets/img/f/tv-1cam.webp", "4ba79d403d8504906558a92e7dc31a66": "assets/img/f/sociallounge-1.webp", "4ec36e5a29adc8ea8d5d00e47359c411": "assets/img/f/cam-06.webp", "504d50447ad226550f029504fbaba156": "assets/img/t/palestra-2.webp", "50e358764f7352cbcfc034636dec029e": "assets/img/t/apt-chiara-view02.webp", "51852021ba686fccce0258ed4fcfd91b": "assets/img/f/salotto-ingresso.webp", "5324335dfffed861f67b03e5cdbac58c": "assets/img/r-jardim.webp", "54143c2d01f47e97aab4544aa1f2029b": "assets/img/f/apt-chiara-view06.webp", "56bf7b30960e3572d0f56cbb1def13dc": "assets/img/t/restorante-tif-6.webp", "58e8f58db7c7811a7f418b22c22b7843": "assets/img/t/yoga-9.webp", "5b18d3f2249b2703202b09cc0642af1f": "assets/img/f/co-working5.webp", "607c24dd42b892c3877a59120f30e53f": "assets/img/t/apt-chiara-view04.webp", "61ed938e0e082381a1cb584da6f41862": "assets/img/t/ingresso-8.webp", "62b81befe31c662efe9fb2401064110c": "assets/img/t/ext-garden-fitness.webp", "62feca341880e63cdc7332e0bc711232": "assets/img/f/apt-chiara-view01.webp", "6490d03698b17681fe91a4177e8f6751": "assets/img/t/sociallounge-1.webp", "64a88e5bf3a779e89cb015a6811fd51d": "assets/img/f/yoga-6.webp", "6547c1b8e22c4862867f12a218200b98": "assets/img/t/apt-brown-view06.webp", "68738a13aa144bdf93f747572487650f": "assets/img/t/apt-chiara-view01.webp", "6a27fd51bf99f239e4427677a08fe93a": "assets/img/t/fin-rubinetteria.webp", "6a625cc3315301ef56e35b2798e1b145": "assets/img/f/yoga-4.webp", "7518ed725a3801d39c547b57b11253a7": "assets/img/mapa-bairro-creme.webp", "77ceb3af188ea1caa4b6214d8b75f3fa": "assets/img/f/yoga-9.webp", "781d154b5242460f7beb104c8f68b2c5": "assets/img/f/apt-chiara-view04.webp", "799e2f5f45e390b6971d97ac21a537b9": "assets/img/t/yoga-4.webp", "7cb8331a931e3a0d2f7bd5308dedd9be": "assets/img/t/fin-tessuti.webp", "7f233c07f01047b3ba4366ea77dc194d": "assets/img/t/fin-porte.webp", "8987a794b2f881e2c094c8b78530f60e": "assets/img/t/fin-gres.webp", "8ea21e80dcc49e609824ec35a7fae8a7": "assets/img/t/tv-1cam.webp", "8eba094fd895fef05a68d024d0305f43": "assets/img/r-rua-noite.webp", "8fca8d809dc5606b82378cef8db0157a": "assets/img/t/ingresso-7.webp", "97cb31ee0a04b22e2ac0b6fd2315d9db": "assets/img/t/piscina--bar.webp", "98b6c46057f9fe86c823a16f6e7ad0ae": "assets/img/t/fin-legni.webp", "9a1d6e46e2d98c43ecc390b0fd8cee2c": "assets/img/f/ingresso-7.webp", "a3b6ebc253c0bfe6018c56c876083461": "assets/img/t/fin-parquet.webp", "a4f7aaf1af9163461ac9431bc29b2403": "assets/img/t/fin-lavabi.webp", "a60591c0fc9a44eff7822500bee1c397": "assets/img/t/ext-rooftop-corner.webp", "a6b8066115735768477a6c90d2681243": "assets/img/f/piscina--bar.webp", "a73f27a950abf44dcdce2d14ef8105a3": "assets/img/t/sociallounge-a2.webp", "a8c88dfb2f9cdea46a93ec4698a205ce": "assets/img/f/sociallounge-a2.webp", "a997c45a8bec6bc11916b5740301f3c7": "assets/img/f/ext-street-dusk.webp", "ae14cda810fec9db0309e4151e36fdcc": "assets/img/f/ingresso-4.webp", "b143839246a9fc1d0d1bb5166feb31d3": "assets/img/t/ingresso-4.webp", "b1e6a9423df314873bf80e667bba8843": "assets/img/t/fin-sanitari.webp", "b242c1cf20dd3a7442677cfd9fdfdc9e": "assets/img/f/ext-garden-fitness.webp", "b24a9287e973b6ba3da05dc1fe607686": "assets/img/t/yoga-2.webp", "b43301932149c96642fad18653dcb1ab": "assets/img/f/palestra-4.webp", "b60008410008cae8878874ab7abc6a46": "assets/img/t/ext-street-dusk.webp", "ba2440d084bcf1a16bce2ad7e3f09ba4": "assets/img/t/co-working5.webp", "bbbfe08c94c894f35636a6fbb6e2dc77": "assets/img/mapa-quarteirao-creme.webp", "bf6b105fed70fca07a95934d72ac2186": "assets/img/t/fin-doccia.webp", "c4f72fd37ff9da68d10be10c9a52c88f": "assets/img/f/ingresso-8.webp", "c634218ef5b8b4ba3a7df93549177b9b": "assets/img/t/sociallounge-a1.webp", "c9f829e8d9639feb296f2080ab815cd4": "assets/img/f/apt-brown-view06.webp", "cbcf57ac9d2f003b077a564633964122": "assets/img/t/salotto-ingresso.webp", "cbe44b78184861b39cac17d960f3db30": "assets/img/r-esquina-por-do-sol.webp", "ccb6e27080ad9c335f0cfae02619b2da": "assets/img/t/yoga-6.webp", "cdc48cb3b4a1946db0b66667bb63e108": "assets/img/f/piscina.webp", "d89515d8978082aa155eb5b694274abf": "assets/img/t/piscina.webp", "d8f188a70a38fae9b526f1d81c229fd4": "assets/img/gobbi-logo-marrom.png", "d9b94a38b6b2b11c938057d113e80d23": "assets/img/f/sociallounge-a1.webp", "e1bcfc3e257d5e676ec629d58a303c6f": "assets/img/t/socialloungelaunge-4.webp", "e7c94d049b29581106b78f7f1910e28e": "assets/img/t/ingresso-5.webp", "f216fc67e0b0c44a6a6daffd9c70fc9a": "assets/img/f/apt-chiara-view02.webp", "f810cfee345cadb0dcdecd1adce7dcf6": "assets/img/f/ext-street-elevation.webp", "f9060f0ee0088040d0eb4f7eff3e5590": "assets/img/f/palestra-2.webp", "fa944482a0e55944fb509bb8e5a367e1": "assets/img/t/sociallounge-render1.webp"}</script>
+<!-- Configuração (WhatsApp, valores, câmbio): assets/js/config.js -->
+<script src="assets/js/config.js?v=52"></script>
+<script src="assets/js/three.min.js?v=49"></script>
+<script src="assets/js/runtime.js?v=49"></script>
+<script src="assets/js/casa-pasinetti.js?v=54"></script>
+<script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href').slice(1);e.preventDefault();var el=id&&document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'',location.pathname+location.search+(id?'#'+id:''));},true);</script>
+</body>
+</html>
