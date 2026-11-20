@@ -841,6 +841,13 @@ class Component extends DCLogic {
       blocks(g, hg, w, h, 8, 1, false, 2, () => { const t = 0.86 + rnd() * 0.24; return rgb(150 * t, 116 * t, 84 * t); }, 1);
       for (let i = 0; i < 900; i++) { const y = rnd() * h; g.fillStyle = 'rgba(70,45,25,' + (0.08 + rnd() * 0.15).toFixed(2) + ')'; g.fillRect(rnd() * w, y, 8 + rnd() * 40, 0.8); }
     }, 2);
+    const WAL = pbr(256, 256, (g, hg, w, h) => {
+      g.fillStyle = '#4a3528'; g.fillRect(0, 0, w, h);
+      hg.fillStyle = grey(70); hg.fillRect(0, 0, w, h);
+      blocks(g, hg, w, h, 1, 4, false, 2, () => { const t = 0.9 + rnd() * 0.18; return rgb(112 * t, 80 * t, 58 * t); }, 1);
+      for (let i = 0; i < 1400; i++) { const x = rnd() * w; g.fillStyle = 'rgba(45,28,18,' + (0.08 + rnd() * 0.2).toFixed(2) + ')'; g.fillRect(x, rnd() * h, 0.8 + rnd() * 0.8, 10 + rnd() * 60); }
+      for (let i = 0; i < 300; i++) { g.fillStyle = 'rgba(170,130,95,' + (0.05 + rnd() * 0.1).toFixed(2) + ')'; g.fillRect(rnd() * w, rnd() * h, 0.8, 20 + rnd() * 50); }
+    }, 1.5);
     // limestone paving slabs
     const PAV = pbr(512, 512, (g, hg, w, h) => {
       g.fillStyle = '#8f887c'; g.fillRect(0, 0, w, h);
@@ -901,7 +908,7 @@ class Component extends DCLogic {
     T.plaster = PL.map; T.plasterN = PL.normal; T.stone = STN.map; T.stoneN = STN.normal; T.brick = BRK.map; T.brickN = BRK.normal;
     T.paving = PAV.map; T.pavingN = PAV.normal; T.walk = WLK.map; T.walkN = WLK.normal; T.asphalt = ASP.map; T.asphaltN = ASP.normal;
     T.grass = GRS.map; T.grassN = GRS.normal; T.context = CTX.map; T.contextN = CTX.normal; T.slab = SLB.map; T.slabN = SLB.normal;
-    T.leaf = LEAF.map; T.leafN = LEAF.normal; T.wood = WOOD.map; T.woodN = WOOD.normal;
+    T.leaf = LEAF.map; T.leafN = LEAF.normal; T.wood = WOOD.map; T.woodN = WOOD.normal; T.wal = WAL.map; T.walN = WAL.normal;
     // foliage atlas (4 x 2 cells, transparent): leaves dark/mid/light, pink, white, lavender, grasses, olive
     T.fol = (() => {
       const c = mk2d(1024, 512), g = c.getContext('2d');
@@ -1145,7 +1152,18 @@ class Component extends DCLogic {
       flowerP: std({ color: 0xd98cb3, roughness: 0.8 }),
       flowerW: std({ color: 0xf3efe7, roughness: 0.8 }),
       flowerL: std({ color: 0x9a86cf, roughness: 0.8 }),
-      water: std({ color: 0x2a5f68, emissive: 0x2a9fb5, emissiveIntensity: 0.0, roughness: 0.06, metalness: 0.12 }),
+      porc: std({ map: T.paving, normalMap: T.pavingN, normalScale: new THREE.Vector2(0.5, 0.5), color: 0xcdbfb0, roughness: 0.72 }),
+      walnut: std({ map: T.wal, normalMap: T.walN, normalScale: new THREE.Vector2(0.5, 0.5), color: 0xffffff, roughness: 0.5 }),
+      bronze: std({ color: 0x8a7150, roughness: 0.32, metalness: 0.85 }),
+      poolWall: std({ color: 0x2c2d2f, roughness: 0.5, metalness: 0.1 }),
+      stoneW: std({ normalMap: T.plasterN, normalScale: new THREE.Vector2(0.8, 0.8), color: 0xb3a493, roughness: 0.82 }),
+      stoneT: std({ normalMap: T.plasterN, normalScale: new THREE.Vector2(0.6, 0.6), color: 0xd2c3ae, roughness: 0.6 }),
+      trav: std({ map: T.plaster, normalMap: T.plasterN, normalScale: new THREE.Vector2(1.4, 1.4), color: 0xe8dcc6, roughness: 0.7 }),
+      taupe: std({ color: 0x8c7b6b, roughness: 0.95 }),
+      rope: std({ color: 0x6b6258, roughness: 0.9 }),
+      oak: std({ color: 0xc2a586, roughness: 0.72 }),
+      parapetT: std({ color: 0x9a8a7a, roughness: 0.92 }),
+      water: std({ color: 0x4d6e68, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.3, 0.3), emissive: 0x2a9fb5, emissiveIntensity: 0.0, roughness: 0.05, metalness: 0.4 }),
       deck: std({ map: T.wood, normalMap: T.woodN, roughness: 0.75 }),
       cushion: std({ color: 0xece6db, roughness: 0.95 }),
       roofT: std({ normalMap: T.tilesN, normalScale: new THREE.Vector2(0.9, 0.9), color: 0xbab1a8, roughness: 0.9 }),
@@ -1171,7 +1189,7 @@ class Component extends DCLogic {
       tail: std({ color: 0x3a0806, emissive: 0xc0160c, emissiveIntensity: 0.55, roughness: 0.3 }),
       tram: std({ color: 0x77736d, roughness: 0.35, metalness: 0.7 })
     };
-    const TILE = { gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
+    const TILE = { porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
     const NO_SHADOW = { gLamp: 1, gExit: 1, gAisle: 1, gStripe: 1, tail: 1, water: 1, zebra: 1, rail: 1, light: 1, glassLit: 1, glassLitB: 1, glassLitC: 1, glassDim: 1, glass: 1, grass: 1, asphalt: 1, walk: 1, paving: 1, board: 1, plinth: 1, brass: 1 };
 
     // ---------------------------------------------------------------- geometry buckets
@@ -1476,6 +1494,13 @@ class Component extends DCLogic {
       const zb = fz - dir * LD;
       box(gk, 'slab', x0, x1, yb, yb + 0.2, fz, zb);
       box(gk, mk, x0, x1, yt - 0.34, yt, fz, zb);
+      // projecting box frame (renders W958 laterale / frontale): side cheeks and a deep slab nose stand proud of the
+      // facade so every loggia reads as a framed box; a dark drip groove under the nose
+      { const cw = 0.24, zf = fz + dir * 0.22, za = Math.min(fz, zf), zz = Math.max(fz, zf);
+        box(gk, mk, x0 - cw, x0, yb - 0.16, yt, za, zz);
+        box(gk, mk, x1, x1 + cw, yb - 0.16, yt, za, zz);
+        box(gk, mk, x0, x1, yb - 0.16, yb + 0.2, za, zz);
+        box(gk, 'soffit', x0, x1, yb - 0.17, yb - 0.16, zf - dir * 0.07, zf - dir * 0.04); }
       if (o.deep) {
         // recessed loggia: warm soffit downlights, dark frame on the back wall, lit interior per apartment
         const zc = (fz + zb) / 2, nd = Math.max(1, Math.round((x1 - x0) / 1.6));
@@ -1730,9 +1755,13 @@ class Component extends DCLogic {
           const z0 = 0.05, z1 = 2.55, xo = X1 + 1.5;
           box(gk, 'plaster', X1 + 0.05, xo, yb - 0.08, yb + 0.2, z0, z1);
           box(gk, 'soffit', X1 + 0.05, xo - 0.05, yb - 0.1, yb - 0.08, z0 + 0.05, z1 - 0.05);
-          railX(gk, z0 + 0.03, z1 - 0.03, yb + 0.2, yb + 1.15, xo - 0.04, 1);
-          rail(gk, X1 + 0.06, xo - 0.04, yb + 0.2, yb + 1.15, z0 + 0.04, -1);
-          rail(gk, X1 + 0.06, xo - 0.04, yb + 0.2, yb + 1.15, z1 - 0.04, 1);
+          // framed box: render cheeks on both sides, the next floor's slab (or its own roof on floor 5) closes the top
+          box(gk, 'plaster', X1 + 0.05, xo, yb + 0.2, yt - 0.08, z0, z0 + 0.2);
+          box(gk, 'plaster', X1 + 0.05, xo, yb + 0.2, yt - 0.08, z1 - 0.2, z1);
+          if (f === 5) box(gk, 'plaster', X1 + 0.05, xo, yt - 0.08, yt + 0.2, z0, z1);
+          box(gk, 'soffit', X1 + 0.05, xo - 0.04, yt - 0.1, yt - 0.08, z0 + 0.2, z1 - 0.2);
+          quadY(gk, 'light', (X1 + xo) / 2 - 0.08, (X1 + xo) / 2 + 0.08, (z0 + z1) / 2 - 0.08, (z0 + z1) / 2 + 0.08, yt - 0.105, true);
+          railX(gk, z0 + 0.2, z1 - 0.2, yb + 0.2, yb + 1.15, xo - 0.06, 1);
           iso(f * 53 + 11, () => {
             plantBed(gk, z0 + 0.2, z1 - 1.0, yb + 0.2, xo - 0.32, 0.4, { axis: 'z', h: 0.38, trail: 1, tall: 0.85, topiary: 0.2, flowers: 0.55, step: 0.3 });
             const c = z0 + 0.45 + rnd() * 0.5; cards(gk, xo + 0.05, yb + 0.85, c, 0.06, 0.32, 0.3, 26, CELLS.leaf, 0.12, 0.24);
@@ -1803,8 +1832,8 @@ class Component extends DCLogic {
     box('roof', 'plaster', -25.9, X1 + 0.2, LV[7] - 0.1, ROOF + 0.16, 6.86, 7.02);
     box('roof', 'plaster', X1 + 0.02, X1 + 0.2, LV[7] - 0.1, ROOF + 0.16, ZB - 0.25, 6.86);
     const RTX0 = -25.9, RTX1 = 29.0, RTS = 4.9;
-    quadY('roof', 'paving', RTX0, RTX1, ZB, RTS, ROOF + 0.005);
-    BAYS6.forEach((b) => quadY('roof', 'paving', b[0], b[1], RTS, 5.95, ROOF + 0.005));
+    quadY('roof', 'porc', RTX0, RTX1, ZB, RTS, ROOF + 0.005);
+    BAYS6.forEach((b) => quadY('roof', 'porc', b[0], b[1], RTS, 5.95, ROOF + 0.005));
     quadY('roof', 'roofF', X0, RTX0, ZBA(6), ZF, ROOF + 0.005);
     quadY('roof', 'roofF', RTX1, X1, ZB, 5.2, ROOF + 0.005);
     rail('roof', RTX0, RTX1, ROOF, ROOF + 1.1, ZB - 0.1, -1);
@@ -1828,7 +1857,7 @@ class Component extends DCLogic {
     // bioclimatic pergola: posts on a grid, deep perimeter beams, tilted louvres (or a solid roof from `solidFrom`)
     const pergola = (gk, x0, x1, z0, z1, yB, yT, o) => {
       o = o || {};
-      const PM = o.mat || 'pergL', t = 0.1, bd = 0.34;
+      const PM = o.mat || 'perg', t = 0.1, bd = 0.34;
       const xs = o.posts || [x0, x1];
       const zs = o.wall ? [z0] : [z0, z1];
       xs.forEach((x) => zs.forEach((z) => { box(gk, PM, x - t, x + t, yB, yT, z - t, z + t); box(gk, PM, x - t - 0.06, x + t + 0.06, yB, yB + 0.02, z - t - 0.06, z + t + 0.06); }));
@@ -1861,38 +1890,83 @@ class Component extends DCLogic {
       pane('roof', c[0] + 0.5, c[0] + 1.7, ROOF + 0.05, ROOF + 2.35, RCZ1 + 0.012, 1, { lit: true });
     });
     const yR = ROOF + 0.02;
+    // walnut-clad core face with bronze fins (renders: tall timber wall beside the pool and behind the bar); axis x = face normal
+    const cladX = (gk, x, dir, z0, z1, y0, y1) => {
+      const xa = x + dir * 0.005, xb = x + dir * 0.05;
+      box(gk, 'walnut', Math.min(xa, xb), Math.max(xa, xb), y0, y1, z0, z1);
+      const n = Math.max(2, Math.round((z1 - z0) / 1.35));
+      for (let i = 0; i <= n; i++) { const z = z0 + (z1 - z0) * i / n, xf = x + dir * 0.11; box(gk, 'bronze', Math.min(xa, xf), Math.max(xa, xf), y0, y1, z - 0.06, z + 0.06); }
+      box(gk, 'bronze', Math.min(xa, x + dir * 0.09), Math.max(xa, x + dir * 0.09), y1 - 0.06, y1, z0, z1);
+    };
+    const palm = (gk, x, y, z, h) => {
+      const tx = x + (rnd() - 0.5) * 0.3, tz = z + (rnd() - 0.5) * 0.3;
+      limb(gk, 'trunk', x, y, z, tx, y + h, tz, 0.08, 0.055);
+      // arching crown: a flat, slightly domed spread of leaf cards around the trunk top, drooping at the rim
+      cards(gk, tx, y + h + 0.05, tz, 0.55, 0.16, 0.55, 26, CELLS.light, 0.3, 0.5, { upright: true });
+      cards(gk, tx, y + h - 0.12, tz, 1.15, 0.2, 1.15, 52, CELLS.leaf, 0.32, 0.55);
+    };
+    const tulipTable = (gk, x, y, z, r) => {
+      const top = new THREE.CylinderGeometry(r, r, 0.05, 32); top.translate(x, y + 0.745, z); put(gk, 'stoneT', top);
+      const ped = new THREE.CylinderGeometry(0.1, 0.36, 0.72, 24); ped.translate(x, y + 0.36, z); put(gk, 'stoneT', ped);
+    };
+    const ropeChair = (gk, x, y, z, rot) => {
+      const c = Math.cos(rot), sn = Math.sin(rot), P = (dx, dz) => [x + dx * c + dz * sn, z - dx * sn + dz * c];
+      const R2 = (mk, dx, dz, w, d, y0, y1) => { const q = P(dx, dz); rotBox(gk, mk, q[0], q[1], w, d, y0, y1, rot); };
+      [[-0.27, -0.24], [0.27, -0.24], [-0.27, 0.22], [0.27, 0.22]].forEach((l) => R2('oak', l[0], l[1], 0.06, 0.06, y, y + 0.42));
+      R2('oak', 0, 0, 0.62, 0.56, y + 0.38, y + 0.44);
+      R2('rope', 0, -0.25, 0.6, 0.07, y + 0.44, y + 0.8);
+      R2('oak', -0.3, 0, 0.06, 0.56, y + 0.44, y + 0.66); R2('oak', 0.3, 0, 0.06, 0.56, y + 0.44, y + 0.66);
+      R2('cushion', 0, 0.02, 0.5, 0.46, y + 0.44, y + 0.53);
+      R2('cushion', 0, -0.17, 0.46, 0.12, y + 0.53, y + 0.74);
+    };
     // cafe pergola (A-B)
     {
       const x0 = -13.7, x1 = -2.7, z0 = -6.45, z1 = 1.9;
       pergola('roof', x0, x1, z0, z1, ROOF, ROOF + 3.2, { posts: [-13.45, -8.2, -2.95] });
-      box('roof', 'frame', x0, x0 + 0.65, yR, yR + 0.92, -4.6, 0.35);
-      box('roof', 'slab', x0, x0 + 0.7, yR + 0.92, yR + 0.97, -4.6, 0.35);
-      box('roof', 'trunk', x0, x0 + 0.3, yR + 1.5, yR + 2.4, -4.4, 0.15);
+      cladX('roof', x0, 1, RCZ0, RCZ1, ROOF, RCY);
+      [-3.9, -2.3, -0.7].forEach((zc) => { box('roof', 'bronze', x0 + 0.05, x0 + 0.1, yR + 1.55, yR + 2.55, zc - 0.74, zc + 0.74); box('roof', 'walnut', x0 + 0.1, x0 + 0.13, yR + 1.6, yR + 2.5, zc - 0.69, zc + 0.69); });
+      box('roof', 'poolWall', x0 + 0.05, x0 + 0.7, yR, yR + 0.92, -4.6, 0.35);
+      box('roof', 'trav', x0 + 0.7, x0 + 1.25, yR, yR + 1.05, -4.6, 0.35);
+      box('roof', 'poolWall', x0 + 0.6, x0 + 1.3, yR + 1.05, yR + 1.1, -4.65, 0.4);
       box('roof', 'slab', -12.25, -11.75, yR, yR + 1.08, -4.1, -0.3);
       box('roof', 'slab', -12.35, -11.65, yR + 1.08, yR + 1.14, -4.15, -0.25);
       box('roof', 'light', -12.3, -11.7, yR + 0.02, yR + 0.06, -4.08, -0.32);
       for (let z = -3.7; z < -0.5; z += 0.8) { cyl('roof', 'frame', -11.3, yR, yR + 0.74, z, 0.03); const st = new THREE.CylinderGeometry(0.2, 0.2, 0.07, 18); st.translate(-11.3, yR + 0.78, z); put('roof', 'cushion', st); }
-      [-9.8, -7.4, -4.9].forEach((x) => [-5.6, -3.0, -0.5].forEach((z) => table('roof', x, yR, z, 0.5, 4)));
+      [-9.6, -7.0, -4.4].forEach((x) => [-5.5, -2.9, -0.4].forEach((z) => { tulipTable('roof', x, yR, z, 0.55); [0, 1, 2, 3].forEach((k) => { const a = k * Math.PI / 2 + 0.785; ropeChair('roof', x + Math.cos(a) * 0.9, yR, z + Math.sin(a) * 0.9, Math.PI / 2 - a); }); }));
       plantBed('roof', -4.8, 0.5, yR, -3.95, 0.6, { axis: 'z', h: 0.45, tall: 0.9, flowers: 0.4, step: 0.55 });
       plantBed('roof', -19.9, -14.0, yR, -5.7, 0.9, { h: 0.45, tall: 0.9, flowers: 0.5, step: 0.55 });
     }
     // swimming pool (B-C): raised dark tank, stone coping, lit edge; loungers on the garden side
     {
-      const px0 = 3.9, px1 = 14.3, pz0 = -3.7, pz1 = -0.5, yW = ROOF + 0.6;
-      box('roof', 'deck', 3.6, 14.3, ROOF, ROOF + 0.06, -6.6, 0.55);
-      box('roof', 'planter', px0 - 0.3, px1 + 0.3, ROOF, yW - 0.05, pz0 - 0.3, pz1 + 0.3);
-      box('roof', 'slab', px0 - 0.3, px1 + 0.3, yW - 0.05, yW + 0.03, pz0 - 0.3, pz0);
-      box('roof', 'slab', px0 - 0.3, px1 + 0.3, yW - 0.05, yW + 0.03, pz1, pz1 + 0.3);
-      box('roof', 'slab', px0 - 0.3, px0, yW - 0.05, yW + 0.03, pz0, pz1);
-      box('roof', 'slab', px1, px1 + 0.3, yW - 0.05, yW + 0.03, pz0, pz1);
-      quadY('roof', 'water', px0, px1, pz0, pz1, yW - 0.02);
-      box('roof', 'light', px0 - 0.28, px1 + 0.28, ROOF + 0.07, ROOF + 0.11, pz1 + 0.3, pz1 + 0.34);
-      [4.6, 6.7, 8.8, 10.9, 13.0].forEach((x) => {
-        const r = -0.28, z = -5.75;
-        rotBox('roof', 'trunk', x, z, 0.8, 1.95, ROOF + 0.06, ROOF + 0.28, r);
-        rotBox('roof', 'cushion', x, z + 0.1, 0.74, 1.6, ROOF + 0.28, ROOF + 0.38, r);
-        rotBox('roof', 'cushion', x - Math.sin(r) * 0.75, z - Math.cos(r) * 0.75, 0.74, 0.42, ROOF + 0.38, ROOF + 0.62, r);
+      const px0 = 4.0, px1 = 14.0, pz0 = -3.25, pz1 = -0.45, yW = ROOF + 0.95;
+      box('roof', 'porc', 3.6, 14.3, ROOF, ROOF + 0.03, -6.6, 0.55);
+      box('roof', 'poolWall', px0 - 0.12, px1 + 0.12, ROOF, yW, pz0 - 0.12, pz0);
+      box('roof', 'poolWall', px0 - 0.12, px1 + 0.12, ROOF, yW, pz1, pz1 + 0.12);
+      box('roof', 'poolWall', px0 - 0.12, px0, ROOF, yW, pz0, pz1);
+      box('roof', 'poolWall', px1, px1 + 0.12, ROOF, yW, pz0, pz1);
+      box('roof', 'poolWall', px0, px1, ROOF, yW - 1.4 + 0.95, pz0, pz1);
+      quadY('roof', 'water', px0, px1, pz0, pz1, yW - 0.015);
+      // two floating porcelain steps along the street-side wall, LED line in the shadow gap under each
+      [[ROOF + 0.1, ROOF + 0.36, 1.3, px0 + 2.2, px1 + 0.12], [ROOF + 0.44, ROOF + 0.68, 0.66, px0 + 3.1, px1 + 0.12]].forEach((st) => {
+        const zf = pz1 + 0.12 + st[2];
+        box('roof', 'stoneW', st[3], st[4], st[0], st[1], pz1 + 0.12, zf);
+        box('roof', 'light', st[3] + 0.08, st[4] - 0.02, st[0] - 0.05, st[0] - 0.02, zf - 0.16, zf - 0.1);
+        quadY('roof', 'light', st[3] + 0.05, st[4], zf - 0.04, zf + 0.07, st[0] === ROOF + 0.1 ? ROOF + 0.034 : ROOF + 0.362);
+        box('roof', 'poolWall', st[3] + 0.25, st[4] - 0.1, st[0] - 0.08, st[0], pz1 + 0.12, zf - 0.3);
       });
+      // daybeds against the taupe parapet on the garden side, small round side tables between them
+      [4.7, 6.75, 8.8, 10.85, 12.9].forEach((x, i) => {
+        const z = -5.25;
+        box('roof', 'taupe', x - 0.45, x + 0.45, ROOF + 0.03, ROOF + 0.3, z - 0.97, z + 0.97);
+        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.3, ROOF + 0.42, z - 0.9, z + 0.94);
+        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.42, ROOF + 0.72, z - 0.94, z - 0.72);
+        box('roof', 'cushion', x - 0.3, x + 0.3, ROOF + 0.42, ROOF + 0.54, z - 0.7, z - 0.48);
+        if (i < 4) { const t = new THREE.CylinderGeometry(0.2, 0.2, 0.04, 20); t.translate(x + 1.02, ROOF + 0.5, z - 0.6); put('roof', 'bronze', t); cyl('roof', 'bronze', x + 1.02, ROOF + 0.03, ROOF + 0.48, z - 0.6, 0.025); }
+      });
+      box('roof', 'parapetT', 3.6, 14.3, ROOF, ROOF + 0.95, -6.6, -6.35);
+      iso(77, () => { plantBed('roof', 3.7, 14.2, ROOF + 0.95, -6.5, 0.25, { h: 0.05, tall: 0.75, flowers: 0.15, step: 0.38, topiary: 0.1 }); for (let x = 4.6; x < 14; x += 2.2 + rnd() * 1.0) palm('roof', x, ROOF + 0.95, -6.55, 1.5 + rnd() * 0.9); });
+      cladX('roof', 3.6, 1, RCZ0, RCZ1, ROOF, RCY);
+      cladX('roof', 14.3, -1, RCZ0, RCZ1, ROOF, RCY);
     }
     // lounge pergola around core C
     {
