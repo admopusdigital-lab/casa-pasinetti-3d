@@ -1938,7 +1938,7 @@ class Component extends DCLogic {
     }
     // swimming pool (B-C): raised dark tank, stone coping, lit edge; loungers on the garden side
     {
-      const px0 = 4.0, px1 = 14.0, pz0 = -3.25, pz1 = -0.45, yW = ROOF + 0.95;
+      const px0 = 3.9, px1 = 14.3, pz0 = -3.7, pz1 = -0.5, yW = ROOF + 0.95;
       box('roof', 'porc', 3.6, 14.3, ROOF, ROOF + 0.03, -6.6, 0.55);
       box('roof', 'poolWall', px0 - 0.12, px1 + 0.12, ROOF, yW, pz0 - 0.12, pz0);
       box('roof', 'poolWall', px0 - 0.12, px1 + 0.12, ROOF, yW, pz1, pz1 + 0.12);
@@ -1956,15 +1956,15 @@ class Component extends DCLogic {
       });
       // daybeds against the taupe parapet on the garden side, small round side tables between them
       [4.7, 6.75, 8.8, 10.85, 12.9].forEach((x, i) => {
-        const z = -5.25;
-        box('roof', 'taupe', x - 0.45, x + 0.45, ROOF + 0.03, ROOF + 0.3, z - 0.97, z + 0.97);
-        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.3, ROOF + 0.42, z - 0.9, z + 0.94);
-        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.42, ROOF + 0.72, z - 0.94, z - 0.72);
-        box('roof', 'cushion', x - 0.3, x + 0.3, ROOF + 0.42, ROOF + 0.54, z - 0.7, z - 0.48);
+        const z = -5.52;
+        box('roof', 'taupe', x - 0.45, x + 0.45, ROOF + 0.03, ROOF + 0.3, z - 0.9, z + 0.9);
+        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.3, ROOF + 0.42, z - 0.84, z + 0.87);
+        box('roof', 'taupe', x - 0.42, x + 0.42, ROOF + 0.42, ROOF + 0.72, z - 0.88, z - 0.66);
+        box('roof', 'cushion', x - 0.3, x + 0.3, ROOF + 0.42, ROOF + 0.54, z - 0.64, z - 0.42);
         if (i < 4) { const t = new THREE.CylinderGeometry(0.2, 0.2, 0.04, 20); t.translate(x + 1.02, ROOF + 0.5, z - 0.6); put('roof', 'bronze', t); cyl('roof', 'bronze', x + 1.02, ROOF + 0.03, ROOF + 0.48, z - 0.6, 0.025); }
       });
-      box('roof', 'parapetT', 3.6, 14.3, ROOF, ROOF + 0.95, -6.6, -6.35);
-      iso(77, () => { plantBed('roof', 3.7, 14.2, ROOF + 0.95, -6.5, 0.25, { h: 0.05, tall: 0.75, flowers: 0.15, step: 0.38, topiary: 0.1 }); for (let x = 4.6; x < 14; x += 2.2 + rnd() * 1.0) palm('roof', x, ROOF + 0.95, -6.55, 1.5 + rnd() * 0.9); });
+      box('roof', 'parapetT', 3.6, 14.3, ROOF, ROOF + 0.95, -6.74, -6.5);
+      iso(77, () => { plantBed('roof', 3.7, 14.2, ROOF + 0.95, -6.62, 0.24, { h: 0.05, tall: 0.75, flowers: 0.15, step: 0.38, topiary: 0.1 }); for (let x = 4.6; x < 14; x += 2.2 + rnd() * 1.0) palm('roof', x, ROOF + 0.95, -6.62, 1.5 + rnd() * 0.9); });
       cladX('roof', 3.6, 1, RCZ0, RCZ1, ROOF, RCY);
       cladX('roof', 14.3, -1, RCZ0, RCZ1, ROOF, RCY);
     }
