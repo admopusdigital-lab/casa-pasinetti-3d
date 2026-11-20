@@ -1087,6 +1087,27 @@ class Component extends DCLogic {
       speckle(g, w, h, 5000, ['rgba(0,0,0,.12)', 'rgba(255,240,220,.08)'], 0.7, 1.6);
     }, 4);
     T.tiles = TIL.map; T.tilesN = TIL.normal;
+    // flat roofs of the neighbours: grey gravel on a membrane with tar seams (seen from above in every overview)
+    const GRV = pbr(256, 256, (g, hg, w, h) => {
+      g.fillStyle = '#a49e93'; g.fillRect(0, 0, w, h);
+      tint(g, w, h, 6, 0.5, 100, 156); tint(g, w, h, 22, 0.35, 104, 152);
+      speckle(g, w, h, 11000, ['#8b857a', '#c2bcb0', '#b2aca0', '#79746a', '#d0cbc0'], 0.8, 1.9);
+      hg.fillStyle = grey(128); hg.fillRect(0, 0, w, h); speckle(hg, w, h, 11000, [grey(88), grey(182)], 0.8, 1.7);
+      g.strokeStyle = 'rgba(58,54,48,.32)'; g.lineWidth = 2;
+      for (let k = 0; k < 3; k++) { const y = (k + 0.5) * h / 3 + (rnd() - 0.5) * 10; g.beginPath(); g.moveTo(0, y); g.lineTo(w, y); g.stroke(); }
+    }, 1.6);
+    T.gravel = GRV.map; T.gravelN = GRV.normal;
+    // plane-tree bark: the camouflage of a platanus, olive-grey, cream and green-grey flakes
+    T.planeBark = tex(256, 512, (g, w, h) => {
+      g.fillStyle = '#b4ae96'; g.fillRect(0, 0, w, h);
+      const cols = ['#8c876a', '#a29b7c', '#cdc8b0', '#79785f', '#d9d3b9', '#95906f', '#6f7158'];
+      for (let i = 0; i < 170; i++) {
+        g.fillStyle = cols[(rnd() * cols.length) | 0];
+        const x = rnd() * w, y = rnd() * h, rx = 8 + rnd() * 26, ry = 10 + rnd() * 38, a = rnd() * 0.6;
+        [-w, 0, w].forEach((dx) => { g.beginPath(); g.ellipse(x + dx, y, rx, ry, a, 0, 6.283); g.fill(); });
+      }
+      speckle(g, w, h, 4000, ['rgba(40,36,28,.12)', 'rgba(255,255,240,.1)'], 0.8, 1.6);
+    });
     // warm lobby seen through the entrance glass (cam-06): chandeliers, timber walls, travertine floor
     T.lobby = tex(512, 512, (g, w, h) => {
       const bg = g.createLinearGradient(0, 0, 0, h);
@@ -1184,14 +1205,18 @@ class Component extends DCLogic {
       water: std({ color: 0x4d6e68, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.3, 0.3), emissive: 0x2a9fb5, emissiveIntensity: 0.0, roughness: 0.05, metalness: 0.4 }),
       deck: std({ map: T.wood, normalMap: T.woodN, roughness: 0.75 }),
       cushion: std({ color: 0xece6db, roughness: 0.95 }),
-      roofT: std({ normalMap: T.tilesN, normalScale: new THREE.Vector2(0.9, 0.9), color: 0xbab1a8, roughness: 0.9 }),
+      roofT: std({ map: T.tiles, normalMap: T.tilesN, normalScale: new THREE.Vector2(0.9, 0.9), color: 0xf1e7df, roughness: 0.9 }),   // clay coppi, as on Milanese roofs
       ctx0: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xdacdb8, roughness: 0.92 }),
       ctx1: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xcfb28c, roughness: 0.92 }),
       ctx2: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xc3bfb8, roughness: 0.92 }),
       ctx3: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd2bd99, roughness: 0.92 }),
       ctx4: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xc1977f, roughness: 0.92 }),
       shop: std({ map: T.shop, roughness: 0.7 }),
-      roofF: std({ color: 0xcfc9bf, roughness: 0.93 }),
+      roofF: std({ map: T.gravel, normalMap: T.gravelN, normalScale: new THREE.Vector2(0.7, 0.7), color: 0xffffff, roughness: 0.95 }),
+      trunkP: std({ map: T.planeBark, roughness: 0.9 }),
+      roofM: std({ map: T.gravel, normalMap: T.gravelN, normalScale: new THREE.Vector2(0.7, 0.7), color: 0x9a958c, roughness: 0.96 }),
+      rim: std({ color: 0xa3a7ab, roughness: 0.32, metalness: 0.85 }),
+      headL: std({ color: 0xd9dde0, roughness: 0.15, metalness: 0.4 }),
       lobbyGlass: phy({ color: 0x0f0b08, emissive: 0xffffff, emissiveMap: T.lobby, emissiveIntensity: 0.95, roughness: 0.12, metalness: 0.35 }),
       plaque: std({ map: T.plaque, roughness: 0.3, metalness: 0.8 }),
       gFloor: std({ map: T.slab, normalMap: T.slabN, normalScale: new THREE.Vector2(0.25, 0.25), color: 0x8a8a88, roughness: 0.5 }),
@@ -1256,7 +1281,7 @@ class Component extends DCLogic {
       m.customProgramCacheKey = () => 'pzRoomGlass';
     };
     ['glass', 'glassLit', 'glassLitB', 'glassLitC', 'glassDim'].forEach((k) => roomGlass(MAT[k]));
-    const TILE = { porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
+    const TILE = { roofF: 3, roofM: 3, porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
     const NO_SHADOW = { gLamp: 1, gExit: 1, gAisle: 1, gStripe: 1, tail: 1, water: 1, zebra: 1, rail: 1, light: 1, glassLit: 1, glassLitB: 1, glassLitC: 1, glassDim: 1, glass: 1, grass: 1, asphalt: 1, walk: 1, paving: 1, board: 1, plinth: 1, brass: 1 };
 
     // ---------------------------------------------------------------- geometry buckets
@@ -1520,20 +1545,21 @@ class Component extends DCLogic {
     };
     // olive: short leaning trunk with a flared, furrowed foot, three curved limbs, a wide umbrella crown of silver clumps;
     // plane / broadleaf: straight trunk, four limbs, a tall rounded crown
-    const tree = (gk, x, y, z, h, r, kind) => {
+    const tree = (gk, x, y, z, h, r, kind, lite) => {
       const olive = kind === 'olive', lean = rnd() * 6.283, lx = Math.cos(lean), lz = Math.sin(lean);
       const th = h * (olive ? 0.32 : 0.46), tr0 = olive ? Math.max(0.07, h * 0.05) : Math.max(0.09, r * 0.085), tr1 = tr0 * (olive ? 0.66 : 0.72);
       const off = olive ? 0.32 * h / 5 : 0.12;
       const F = V3(x + lx * off, y + th, z + lz * off);
-      tube(gk, 'trunk', [V3(x, y - 0.05, z), V3(x + lx * off * 0.15 + (rnd() - 0.5) * 0.08, y + th * 0.35, z + lz * off * 0.15 + (rnd() - 0.5) * 0.08), V3(x + lx * off * 0.6, y + th * 0.72, z + lz * off * 0.6), F], tr0, tr1, olive ? 0.22 : 0.07, olive ? 0.55 : 0.35, 14, olive ? 10 : 8);
+      const bk = kind === 'plane' ? 'trunkP' : 'trunk';
+      tube(gk, bk, [V3(x, y - 0.05, z), V3(x + lx * off * 0.15 + (rnd() - 0.5) * 0.08, y + th * 0.35, z + lz * off * 0.15 + (rnd() - 0.5) * 0.08), V3(x + lx * off * 0.6, y + th * 0.72, z + lz * off * 0.6), F], tr0, tr1, olive ? 0.22 : 0.07, olive ? 0.55 : 0.35, 14, olive ? 10 : 8);
       // crown = many small clumps with gaps between them (an irregular silhouette, not a ball): one at each limb end, two
       // more around it, a crown top and a little inner fill; card normals point out of their own clump, so light varies
       const k = olive ? 3 : 4, cells = olive ? CELLS.olive : CELLS.leaf, crownY = y + th + (h - th) * (olive ? 0.42 : 0.5);
-      const cl = (cx, cy, cz, rr) => cards(gk, cx, cy, cz, rr, rr * (olive ? 0.62 : 0.78), rr, Math.round(30 * rr + 8), cells, r * 0.26, r * 0.46);
+      const cl = (cx, cy, cz, rr) => cards(gk, cx, cy, cz, rr, rr * (olive ? 0.62 : 0.78), rr, Math.round((30 * rr + 8) * (lite ? 0.55 : 1)), cells, r * (lite ? 0.32 : 0.26), r * (lite ? 0.56 : 0.46));
       for (let i = 0; i < k; i++) {
         const a = lean + i / k * 6.283 + (rnd() - 0.5) * 0.7, ca = Math.cos(a), sa = Math.sin(a);
         const E = V3(F.x + ca * r * 0.6, crownY + (rnd() - 0.4) * r * 0.35, F.z + sa * r * 0.6);
-        tube(gk, 'trunk', [F, F.clone().lerp(E, 0.5).add(V3(0, 0.22 * r, 0)), E], tr1 * 0.6, tr1 * 0.24, 0.08, 0, 8, 6);
+        tube(gk, bk, [F, F.clone().lerp(E, 0.5).add(V3(0, 0.22 * r, 0)), E], tr1 * 0.6, tr1 * 0.24, 0.08, 0, 8, 6);
         cl(E.x, E.y + r * 0.06, E.z, r * 0.44);
         for (let q = 0; q < 2; q++) { const b = a + (q ? 0.55 : -0.55) + (rnd() - 0.5) * 0.3, d = r * (0.42 + rnd() * 0.3); cl(F.x + Math.cos(b) * d, E.y + (rnd() - 0.3) * r * 0.45, F.z + Math.sin(b) * d, r * (0.3 + rnd() * 0.1)); }
       }
@@ -2223,6 +2249,11 @@ class Component extends DCLogic {
         uv.setXY(i, hz / bw, (q.getY(i) - y0) / fh);
       }
     };
+    const segBox = (gk, mk, a, b, y0, y1, t) => {
+      const dx = b[0] - a[0], dz = b[1] - a[1], L = Math.hypot(dx, dz);
+      const g = new THREE.BoxGeometry(L + t, y1 - y0, t); g.rotateY(-Math.atan2(dz, dx)); g.translate((a[0] + b[0]) / 2, (y0 + y1) / 2, (a[1] + b[1]) / 2);
+      if (TILE[mk]) worldUV(g, TILE[mk]); put(gk, mk, g);
+    };
     const outset = (pts, d) => {
       const c = pts.reduce((a, p) => [a[0] + p[0] / pts.length, a[1] + p[1] / pts.length], [0, 0]);
       return pts.map((p) => [p[0] + Math.sign(p[0] - c[0]) * d, p[1] + Math.sign(p[1] - c[1]) * d]);
@@ -2259,7 +2290,16 @@ class Component extends DCLogic {
       const mk = o.mk || ['ctx0', 'ctx1', 'ctx2', 'ctx3', 'ctx4', 'ctx0', 'ctx1'][bldN++ % 7];
       const gGk = o.groundGk || gk, shops = o.shops !== false && h > 7;
       const y0 = shops ? GROUND_H : 0;
-      if (shops) prism(gGk, 'shop', pts, -0.02, GROUND_H, facadeUV(BAY_W, GROUND_H, 0));
+      if (shops) {
+        // the shop storey is also what stays when the storeys above fade: give it a real roof (membrane, parapet, plant)
+        prism(gGk, 'shop', pts, -0.02, GROUND_H, facadeUV(BAY_W, GROUND_H, 0));
+        prism(gGk, 'roofM', pts, GROUND_H + 0.22, GROUND_H + 0.26);
+        pts.forEach((a, i) => { const b = pts[(i + 1) % pts.length]; segBox(gGk, 'slab', a, b, GROUND_H + 0.22, GROUND_H + 0.62, 0.22); });
+        const c = pts.reduce((q, p) => [q[0] + p[0] / pts.length, q[1] + p[1] / pts.length], [0, 0]);
+        const nU = 1 + ((rnd() * 3) | 0);
+        for (let k = 0; k < nU; k++) { const ux = c[0] + (rnd() - 0.5) * 6, uz = c[1] + (rnd() - 0.5) * 4; box(gGk, 'curb', ux - 0.6, ux + 0.6, GROUND_H + 0.26, GROUND_H + 1.0, uz - 0.45, uz + 0.45); box(gGk, 'frame', ux - 0.5, ux + 0.5, GROUND_H + 1.0, GROUND_H + 1.03, uz - 0.35, uz + 0.35); }
+        if (rnd() < 0.6) { const sx = c[0] + (rnd() - 0.5) * 4, sz = c[1] + (rnd() - 0.5) * 3; box(gGk, 'slab', sx - 1.0, sx + 1.0, GROUND_H + 0.26, GROUND_H + 0.6, sz - 0.7, sz + 0.7); box(gGk, 'carGlass', sx - 0.9, sx + 0.9, GROUND_H + 0.6, GROUND_H + 0.64, sz - 0.6, sz + 0.6); }
+      }
       if (h <= 7) { prism(gk, mk, pts, -0.02, h, facadeUV(BAY_W, FLOOR_H, 0.2)); }
       else {
         const n = Math.max(1, Math.floor((h - y0 - 0.5) / FLOOR_H)), yw = y0 + n * FLOOR_H;
@@ -2294,20 +2334,22 @@ class Component extends DCLogic {
     bld('site', R(50, 64, -24, -12), 6.5, 'f', { shops: false });
     // north side on Via Gallura (fades out when the camera looks from the garden side)
     const GF = GAL1 + 2.0;
-    bld('ctxN', W(-26.5, GF, -38), 21, 'f', { mk: 'ctx3' });
-    bld('ctxN', R(-38, -14, GF, -27), 19, 'g', { mk: 'ctx1' });
-    bld('ctxN', R(-14, 6, GF, -27.5), 22, 'g', { mk: 'ctx0' });
-    bld('ctxN', R(6, 22, GF, -28), 17, 'g', { mk: 'ctx2' });
-    bld('ctxN', R(22, 40, GF, -27), 20, 'f', { mk: 'ctx4' });
-    bld('ctxN', R(40, 60, GF, -27.5), 18, 'g', { mk: 'ctx1' });
-    bld('ctxN', R(60, RIP0 - 2.5, GF, -26), 24, 'g', { mk: 'ctx0' });
+    bld('ctxN', W(-26.5, GF, -38), 21, 'f', { mk: 'ctx3', groundGk: 'site' });
+    bld('ctxN', R(-38, -14, GF, -27), 19, 'g', { mk: 'ctx1', groundGk: 'site' });
+    bld('ctxN', R(-14, 6, GF, -27.5), 22, 'g', { mk: 'ctx0', groundGk: 'site' });
+    bld('ctxN', R(6, 22, GF, -28), 17, 'g', { mk: 'ctx2', groundGk: 'site' });
+    bld('ctxN', R(22, 40, GF, -27), 20, 'f', { mk: 'ctx4', groundGk: 'site' });
+    bld('ctxN', R(40, 60, GF, -27.5), 18, 'g', { mk: 'ctx1', groundGk: 'site' });
+    bld('ctxN', R(60, RIP0 - 2.5, GF, -26), 24, 'g', { mk: 'ctx0', groundGk: 'site' });
     bld('ctxN', R(-28, -12, -26.5, -22.4), 4.5, 'f', { shops: false, mk: 'ctx3' });
     bld('ctxN', R(-6, 10, -27.5, -22.6), 3.5, 'f', { shops: false, mk: 'ctx4' });
     bld('ctxN', R(14, 22, -28, -23.2), 6, 'f', { shops: false, mk: 'ctx0' });
     // south side of Via Pasinetti: shops stay (cut section), the storeys above fade when the camera is on the street side
     const SB = 21.4, SF = 33.4;
     // footprints stay on the plinth as a cut site model; the volumes fade when the camera is on the street side
-    const foot = (pts) => prism('site', 'slab', pts, -0.02, 0.32);
+    const foot = (pts) => { prism('site', 'roofM', pts, -0.02, 0.3); pts.forEach((a, i) => segBox('site', 'slab', a, pts[(i + 1) % pts.length], 0.3, 0.46, 0.2)); };
+    // south side: a kept shop storey would hide the street and the project's base from the hero camera, so these neighbours
+    // stay cut at the ground as textured footprints (gravel slab with a low outline); the north side keeps its shop storey
     const south = (x0, x1, z0, z1, h, roof, mk) => { const pts = x0 === null ? W(z0, z1, x1) : R(x0, x1, z0, z1); foot(pts); bld('ctxS', pts, h, roof, { mk: mk }); };
     south(null, -24, SB, SF, 14.5, 'g', 'ctx1');
     south(-24, -6, SB, SF, 12.5, 'g', 'ctx0');
@@ -2332,13 +2374,8 @@ class Component extends DCLogic {
     quadY('site', 'paving', 50, 66, -26.5, -24.2, 0.01);
     quadY('site', 'grass', -10, 36, SF + 0.4, SF + 4.6, 0.01);
     // light trees: street rows, the Chiaradia park and the inner courtyards
-    const treeLite = (gk, x, y, z, h, r) => {
-      const th = h * 0.5;
-      limb(gk, 'trunk', x, y, z, x, y + th, z, Math.max(0.1, r * 0.06), Math.max(0.07, r * 0.04));
-      const cy = y + th + (h - th) * 0.42;
-      for (let i = 0; i < 3; i++) { const a = i * 2.09 + rnd(); cards(gk, x + Math.cos(a) * r * 0.35, cy + (rnd() - 0.4) * r * 0.4, z + Math.sin(a) * r * 0.35, r * 0.62, r * 0.5, r * 0.62, Math.round(14 * r + 6), CELLS.leaf, r * 0.42, r * 0.7); }
-      cards(gk, x, cy + r * 0.3, z, r * 0.7, r * 0.45, r * 0.7, Math.round(12 * r + 6), CELLS.leaf, r * 0.42, r * 0.7);
-    };
+    // street rows, the Chiaradia park and the courtyards: the same plane trees, with a lighter card budget
+    const treeLite = (gk, x, y, z, h, r) => tree(gk, x, y, z, h, r, 'plane', true);
     for (let z = -37; z < 6; z += 8.5) { treeLite('site', RIP0 - 1.3, 0.15, z, 11, 3.0); treeLite('site', RIP1 + 1.8, 0.15, z + 4, 11, 3.0); }
     [[-6, 0.4], [-20, 0.3], [-33, 0.45]].forEach((q) => { treeLite('site', xW(q[0]) - 20, 0.08, q[0], 9 + q[1] * 4, 2.8); treeLite('site', xW(q[0] + 6) - 23.5, 0.08, q[0] + 6, 8, 2.5); });
     [[26, -24.5], [32, -25.2], [38.5, -24.2], [44, -15], [58, -26.4], [66, -19]].forEach((q) => treeLite(q[1] < -24.8 && q[0] > 22 ? 'ctxN' : 'site', q[0], 0.02, q[1], 8, 2.4));
@@ -2490,14 +2527,43 @@ class Component extends DCLogic {
     [-56, 52, 84].forEach((x) => lamp(x, 9.0, 1));
     // street life on Via Pasinetti: parallel-parked cars on both curbs (kept clear of the entrance and the garage ramp),
     // plane trees in grated pits beyond the building, bollards along the building-side curb, bike racks by the entrance
+    // parked cars with a real silhouette: the side profile (bonnet, wheel arches, boot) extruded with rounded edges in the paint
+    // colour, a narrower glasshouse (tumblehome) in dark glass, a roof skin, tyres with light alloy rims, lamps and mirrors.
+    // Two body styles (hatchback, saloon) built once and placed by copy.
+    const CARS = (() => {
+      const ext = (shape, depth, bev) => {
+        const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 1, curveSegments: 5 });
+        g.translate(0, 0, -depth / 2); return g;
+      };
+      const make = (L, beltF, beltR, roofF, roofR, roofY, bootY) => {
+        const hL = L / 2, ax = hL - 0.82, wr = 0.33, ar = 0.4;
+        const body = new THREE.Shape();
+        body.moveTo(-hL + 0.06, 0.36); body.quadraticCurveTo(-hL - 0.02, 0.52, -hL + 0.01, 0.74); body.quadraticCurveTo(-hL + 0.04, bootY, -hL + 0.24, bootY + 0.02);
+        body.lineTo(hL - 0.95, beltF); body.quadraticCurveTo(hL - 0.25, beltF - 0.04, hL - 0.04, 0.72); body.quadraticCurveTo(hL + 0.03, 0.54, hL - 0.06, 0.36);
+        body.lineTo(ax + ar, 0.36); body.absarc(ax, wr, ar, 0, Math.PI, false); body.lineTo(-ax + ar, 0.36); body.absarc(-ax, wr, ar, 0, Math.PI, false); body.lineTo(-hL + 0.06, 0.36);
+        const gh = new THREE.Shape();
+        gh.moveTo(-hL + roofR, beltR - 0.02); gh.quadraticCurveTo(-hL + roofR + 0.18, roofY - 0.06, -hL + roofR + 0.5, roofY); gh.lineTo(roofF, roofY + 0.01);
+        gh.quadraticCurveTo(roofF + 0.28, roofY - 0.04, hL - 0.98, beltF - 0.02); gh.lineTo(-hL + roofR, beltR - 0.02);
+        const rf = new THREE.Shape();
+        rf.moveTo(-hL + roofR + 0.46, roofY - 0.025); rf.lineTo(roofF + 0.02, roofY - 0.015); rf.lineTo(roofF + 0.02, roofY + 0.03); rf.lineTo(-hL + roofR + 0.46, roofY + 0.02); rf.lineTo(-hL + roofR + 0.46, roofY - 0.025);
+        const g = { paint: [ext(body, 1.7, 0.04), ext(rf, 1.44, 0.015)], glass: [ext(gh, 1.38, 0.05)], tyre: [], rim: [], lamp: [], tail: [] };
+        [[ax, 1], [-ax, 1], [ax, -1], [-ax, -1]].forEach((w) => {
+          const t = new THREE.CylinderGeometry(wr, wr, 0.22, 20); t.rotateX(Math.PI / 2); t.translate(w[0], wr, w[1] * 0.78); g.tyre.push(t);
+          const r = new THREE.CylinderGeometry(0.2, 0.2, 0.226, 14); r.rotateX(Math.PI / 2); r.translate(w[0], wr, w[1] * 0.78); g.rim.push(r);
+        });
+        [-0.58, 0.58].forEach((d) => {
+          const hl = new THREE.BoxGeometry(0.06, 0.1, 0.36); hl.translate(hL - 0.05, 0.72, d); g.lamp.push(hl);
+          const tl = new THREE.BoxGeometry(0.05, 0.11, 0.38); tl.translate(-hL + 0.04, bootY - 0.12, d); g.tail.push(tl);
+          const mr = new THREE.BoxGeometry(0.16, 0.1, 0.12); mr.translate(hL - 1.02, beltF + 0.06, d * 1.62); g.paint.push(mr);
+        });
+        return g;
+      };
+      return [make(4.1, 0.96, 0.98, 0.42, 0.18, 1.48, 0.98), make(4.6, 0.92, 0.98, 0.62, 0.62, 1.44, 0.96)];
+    })();
     const sCar = (x, z, mk, dir) => {
-      const body = new THREE.BoxGeometry(4.35, 0.62, 1.76); body.translate(x, 0.62, z); put('site', mk, body);
-      const cab = new THREE.BoxGeometry(2.5, 0.52, 1.56); const p = cab.attributes.position;
-      for (let i = 0; i < p.count; i++) if (p.getY(i) > 0) { p.setX(i, p.getX(i) * 0.78 - dir * 0.12); p.setZ(i, p.getZ(i) * 0.86); }
-      cab.computeVertexNormals(); cab.translate(x - dir * 0.15, 1.19, z); put('site', 'carGlass', cab);
-      const roof = new THREE.BoxGeometry(1.86, 0.05, 1.32); roof.translate(x - dir * 0.27, 1.46, z); put('site', mk, roof);
-      [[-1.38, -0.8], [1.38, -0.8], [-1.38, 0.8], [1.38, 0.8]].forEach((d) => { const w = new THREE.CylinderGeometry(0.33, 0.33, 0.22, 18); w.rotateX(Math.PI / 2); w.translate(x + d[0], 0.33, z + d[1]); put('site', 'tyre', w); });
-      [-0.6, 0.6].forEach((d) => { box('site', 'carGlass', x + dir * 2.16, x + dir * 2.19, 0.66, 0.8, z + d - 0.2, z + d + 0.2); box('site', 'tail', x - dir * 2.19, x - dir * 2.16, 0.7, 0.82, z + d - 0.22, z + d + 0.22); });
+      const c = CARS[rnd() < 0.55 ? 0 : 1];
+      const place = (list, m) => list.forEach((gg) => { const q = gg.clone(); if (dir < 0) q.rotateY(Math.PI); q.translate(x, 0.0, z); put('site', m, q); });
+      place(c.paint, mk); place(c.glass, 'carGlass'); place(c.tyre, 'tyre'); place(c.rim, 'rim'); place(c.lamp, 'headL'); place(c.tail, 'tail');
     };
     const CARP = ['carB', 'carC', 'carE', 'carA', 'carB', 'carD', 'carC', 'carF', 'carG'];
     iso(913, () => {
