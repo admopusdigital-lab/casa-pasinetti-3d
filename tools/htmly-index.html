@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>Casa Pasinetti — Gobbi Consultoria</title><meta name="description" content="75 residências ao lado da Fondazione Prada, Milão: maquete 3D interativa, unidades, valores de pré-lançamento, áreas comuns e interiores. Apresentado por Gobbi Consultoria."><meta property="og:title" content="Casa Pasinetti · Milão"><meta name="theme-color" content="#F6F1E9">
+<link rel="preconnect" href="https://admopusdigital-lab.github.io" crossorigin>
+<link rel="preload" href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" type="image/png" href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/img/favicon.png">
+<style>
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400 900;font-display:swap;src:url(https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/fonts/bodoni-moda.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/fonts/instrument-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url(https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/fonts/instrument-sans-500.woff2) format('woff2')}
+body{margin:0;background:#F6F1E9}
+#pz-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:24px;background:#F6F1E9;color:#4B2A1D;transition:opacity .6s cubic-bezier(.16,1,.3,1),visibility .6s}
+#pz-splash .pz-in{display:grid;justify-items:center;width:min(300px,78vw);text-align:center;animation:pz-rise .8s cubic-bezier(.16,1,.3,1) both}
+#pz-splash.pz-cont .pz-in{animation:none}
+#pz-splash .pz-name{font:400 clamp(38px,10vw,52px)/1 'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;letter-spacing:-.015em;text-wrap:balance}
+#pz-splash .pz-sub{margin-top:12px;font:400 13px/1.4 'Instrument Sans',system-ui,-apple-system,sans-serif;color:#7A6656}
+#pz-splash .pz-bar{width:100%;height:2px;margin-top:36px;background:rgba(75,42,29,.14);border-radius:2px;overflow:hidden}
+#pz-splash .pz-fill{height:100%;background:#4B2A1D;border-radius:2px;transform:scaleX(0);transform-origin:0 50%;transition:transform .35s cubic-bezier(.16,1,.3,1);will-change:transform}
+#pz-splash .pz-meta{display:flex;justify-content:space-between;width:100%;margin-top:12px;font:500 12px/1 'Instrument Sans',system-ui,-apple-system,sans-serif;color:#7A6656;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+#pz-splash .pz-logo{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);width:104px;height:auto;opacity:.9}
+#pz-splash.pz-out{opacity:0;visibility:hidden}
+#pz-splash.pz-out .pz-in{transform:translateY(-8px);filter:blur(6px);transition:transform .6s cubic-bezier(.16,1,.3,1),filter .6s cubic-bezier(.16,1,.3,1)}
+html.pz-lock,html.pz-lock body{overflow:hidden}
+@keyframes pz-rise{from{opacity:0;transform:translateY(8px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){#pz-splash,#pz-splash .pz-in,#pz-splash .pz-fill{animation:none!important;transition:none!important}}
+</style></head><body>
+<div id="pz-splash" role="status" aria-live="polite"><div class="pz-in"><div class="pz-name">Casa Pasinetti</div><div class="pz-sub">Milão · ao lado da Fondazione Prada</div><div class="pz-bar"><div class="pz-fill"></div></div><div class="pz-meta"><span class="pz-lab">Carregando</span><span class="pz-pct">0%</span></div></div><img class="pz-logo" src="https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/assets/img/gobbi-internacional.png" alt="Gobbi Internacional" width="129" height="40"></div>
+
+<script>(function(){var el=document.getElementById('pz-splash');if(!el)return;document.documentElement.classList.add('pz-lock');
+var fill=el.querySelector('.pz-fill'),pct=el.querySelector('.pz-pct'),lab=el.querySelector('.pz-lab'),cur=0,out=false,shown=-1;
+if(window.__pzP){el.classList.add('pz-cont');cur=window.__pzP;fill.style.transition='none';fill.style.transform='scaleX('+cur+')';void fill.offsetWidth;fill.style.transition='';}
+var PZ=window.PZ={set:function(p,label,slow){if(out)return;p=Math.min(1,Math.max(cur,p));cur=p;fill.style.transitionDuration=(slow||.35)+'s';fill.style.transitionTimingFunction=slow?'cubic-bezier(.12,.6,.25,1)':'';fill.style.transform='scaleX('+p.toFixed(4)+')';if(label&&lab.textContent!==label)lab.textContent=label;},
+value:function(){return cur;},
+done:function(label){if(out)return;PZ.set(1,label||'Pronto');out=true;setTimeout(function(){el.classList.add('pz-out');document.documentElement.classList.remove('pz-lock');setTimeout(function(){el.remove();},700);},380);}};
+(function tick(){var m=getComputedStyle(fill).transform,v=0;if(m&&m!=='none')v=parseFloat(m.slice(m.indexOf('(')+1));var n=Math.min(100,Math.round(v*100));if(n!==shown){shown=n;pct.textContent=n+'%';}if(el.isConnected)requestAnimationFrame(tick);})();})();
+</script>
+<script>
+(function () {
+  // Loader for casapasinetti.htmly.com.br: fetches the page from GitHub Pages and its four scripts with real byte
+  // progress, then writes the page and runs the already-downloaded scripts in order (no second download).
+  var B = 'https://admopusdigital-lab.github.io/casa-pasinetti-3d/site/', PZ = window.PZ;
+  function get(url, cache, on) {
+    return fetch(url, { cache: cache }).then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      if (!r.body || !r.body.getReader || typeof TextDecoder === 'undefined') return r.text();
+      var rd = r.body.getReader(), dec = new TextDecoder(), out = '', n = 0;
+      return (function pump() { return rd.read().then(function (x) {
+        if (x.done) return out + dec.decode();
+        n += x.value.length; out += dec.decode(x.value, { stream: true }); on(n); return pump();
+      }); })();
+    });
+  }
+  function write(h) { document.open(); document.write(h); document.close(); }
+  function plain() { fetch(B + 'index.html', { cache: 'no-cache' }).then(function (r) { return r.text(); }).then(write); }
+  PZ.set(0.02, 'Carregando');
+  get(B + 'index.html', 'no-cache', function (n) { PZ.set(0.02 + 0.06 * Math.min(1, n / 90000)); }).then(function (html) {
+    var re = /<script src="([^"]+)" data-bytes="(\d+)"><\/script>/g, m, list = [], code = {}, T = 0;
+    while ((m = re.exec(html))) { list.push({ src: m[1], bytes: +m[2], got: 0 }); T += +m[2]; }
+    if (!list.length) { write(html); return; }
+    var upd = function () { var g = 0; list.forEach(function (s) { g += Math.min(s.got, s.bytes); }); PZ.set(0.08 + 0.77 * g / T, 'Baixando o 3D'); };
+    return Promise.all(list.map(function (s) {
+      return get(new URL(s.src, B).href, 'default', function (n) { s.got = n; upd(); }).then(function (t) { code[s.src] = t; });
+    })).then(function () {
+      window.__pzP = PZ.value();
+      window.__pzRun = function (u) { (0, eval)(code[u] + '\n//# sourceURL=' + new URL(u, B).href); };
+      write(html.replace(re, function (all, src) {
+        return '<script>window.__pzRun?__pzRun(' + JSON.stringify(src) + '):document.write(\'<script src="' + src + '"><\\/script>\')<\/script>';
+      }));
+    }, function () { write(html); });
+  }).catch(plain);
+})();
+</script>
+</body></html>

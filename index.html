@@ -2,10 +2,30 @@
 <html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex">
 <title>Casa Pasinetti Interiores 3D</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap">
+<link rel="preload" href="site/assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="site/assets/fonts/instrument-sans-500.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="dist/apartamento.js?v=9" as="fetch" crossorigin>
 <style>
+@font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400 900;font-display:swap;src:url(site/assets/fonts/bodoni-moda.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(site/assets/fonts/instrument-sans-400.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:500;font-display:swap;src:url(site/assets/fonts/instrument-sans-500.woff2) format('woff2')}
+@font-face{font-family:'Instrument Sans';font-style:normal;font-weight:600;font-display:swap;src:url(site/assets/fonts/instrument-sans-600.woff2) format('woff2')}
+#pz-splash{position:fixed;inset:0;z-index:2147483000;display:grid;place-items:center;padding:24px;background:#F6F1E9;color:#4B2A1D;transition:opacity .6s cubic-bezier(.16,1,.3,1),visibility .6s}
+#pz-splash .pz-in{display:grid;justify-items:center;width:min(300px,78vw);text-align:center;animation:pz-rise .8s cubic-bezier(.16,1,.3,1) both}
+#pz-splash.pz-cont .pz-in{animation:none}
+#pz-splash .pz-name{font:400 clamp(38px,10vw,52px)/1 'Bodoni Moda','Bodoni 72','Didot',Georgia,serif;letter-spacing:-.015em;text-wrap:balance}
+#pz-splash .pz-sub{margin-top:12px;font:400 13px/1.4 'Instrument Sans',system-ui,-apple-system,sans-serif;color:#7A6656}
+#pz-splash .pz-bar{width:100%;height:2px;margin-top:36px;background:rgba(75,42,29,.14);border-radius:2px;overflow:hidden}
+#pz-splash .pz-fill{height:100%;background:#4B2A1D;border-radius:2px;transform:scaleX(0);transform-origin:0 50%;transition:transform .35s cubic-bezier(.16,1,.3,1);will-change:transform}
+#pz-splash .pz-meta{display:flex;justify-content:space-between;width:100%;margin-top:12px;font:500 12px/1 'Instrument Sans',system-ui,-apple-system,sans-serif;color:#7A6656;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+#pz-splash .pz-logo{position:absolute;left:50%;bottom:max(28px,env(safe-area-inset-bottom));transform:translateX(-50%);width:104px;height:auto;opacity:.9}
+#pz-splash.pz-out{opacity:0;visibility:hidden}
+#pz-splash.pz-out .pz-in{transform:translateY(-8px);filter:blur(6px);transition:transform .6s cubic-bezier(.16,1,.3,1),filter .6s cubic-bezier(.16,1,.3,1)}
+html.pz-lock,html.pz-lock body{overflow:hidden}
+@keyframes pz-rise{from{opacity:0;transform:translateY(8px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@media (prefers-reduced-motion:reduce){#pz-splash,#pz-splash .pz-in,#pz-splash .pz-fill{animation:none!important;transition:none!important}}
+
+
 /* Layout: full-bleed 3D stage; brand top-left, room switcher docked at the bottom like a plan legend. Single cream theme (brand). */
 :root {
   --cream: #f1ebe2;
@@ -80,6 +100,16 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
 @media (prefers-reduced-motion: reduce) { .loader { transition: none; } }
 </style>
 </head><body>
+<div id="pz-splash" role="status" aria-live="polite"><div class="pz-in"><div class="pz-name">Casa Pasinetti</div><div class="pz-sub">Milão · ao lado da Fondazione Prada</div><div class="pz-bar"><div class="pz-fill"></div></div><div class="pz-meta"><span class="pz-lab">Carregando</span><span class="pz-pct">0%</span></div></div><img class="pz-logo" src="site/assets/img/gobbi-internacional.png" alt="Gobbi Internacional" width="129" height="40"></div>
+
+<script>(function(){var el=document.getElementById('pz-splash');if(!el)return;document.documentElement.classList.add('pz-lock');
+var fill=el.querySelector('.pz-fill'),pct=el.querySelector('.pz-pct'),lab=el.querySelector('.pz-lab'),cur=0,out=false,shown=-1;
+if(window.__pzP){el.classList.add('pz-cont');cur=window.__pzP;fill.style.transition='none';fill.style.transform='scaleX('+cur+')';void fill.offsetWidth;fill.style.transition='';}
+var PZ=window.PZ={set:function(p,label,slow){if(out)return;p=Math.min(1,Math.max(cur,p));cur=p;fill.style.transitionDuration=(slow||.35)+'s';fill.style.transitionTimingFunction=slow?'cubic-bezier(.12,.6,.25,1)':'';fill.style.transform='scaleX('+p.toFixed(4)+')';if(label&&lab.textContent!==label)lab.textContent=label;},
+value:function(){return cur;},
+done:function(label){if(out)return;PZ.set(1,label||'Pronto');out=true;setTimeout(function(){el.classList.add('pz-out');document.documentElement.classList.remove('pz-lock');setTimeout(function(){el.remove();},700);},380);}};
+(function tick(){var m=getComputedStyle(fill).transform,v=0;if(m&&m!=='none')v=parseFloat(m.slice(m.indexOf('(')+1));var n=Math.min(100,Math.round(v*100));if(n!==shown){shown=n;pct.textContent=n+'%';}if(el.isConnected)requestAnimationFrame(tick);})();})();
+</script>
 
 <div id="stage" aria-label="Interiores 3D da Casa Pasinetti"></div>
 <a class="back" href="https://casapasinetti.htmly.com.br/" style="position:fixed;z-index:5;top:calc(env(safe-area-inset-top,0px) + 18px);right:max(16px,env(safe-area-inset-right,0px));font:500 12px/1 var(--sans);color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:10px 14px;text-decoration:none">← Voltar ao prédio</a>
@@ -93,11 +123,37 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
     <span class="hint" id="hint">Arraste para girar a maquete</span>
   </div>
 </div>
-<div class="loader" id="loader"><p>Montando os interiores…</p></div>
+<div class="loader done" id="loader"><p>Montando os interiores…</p></div>
 
-<script src="dist/apartamento.js?v=8"></script>
 <script>
+// first entry: download the 3D bundle with real byte progress, then build, then wait for the textures
 (function () {
+  var SRC = 'dist/apartamento.js?v=9', BYTES = 1761165, PZ = window.PZ || { set: function () {}, done: function () {} };
+  window.__aptLoad = function (l, t, fin) { if (!fin && t) PZ.set(0.76 + 0.22 * (l / t), 'Aplicando acabamentos'); };
+  PZ.set(0.02, 'Baixando o 3D');
+  var started = false;
+  function start() {
+    if (started) return; started = true;
+    PZ.set(0.62, 'Montando o apartamento'); PZ.set(0.75, null, 4);
+    requestAnimationFrame(function () { requestAnimationFrame(function () {
+      pzInit();
+      var t0 = Date.now(), ld = document.getElementById('loader');
+      (function wait() { if ((window.ready && ld.classList.contains('done')) || Date.now() - t0 > 30000) PZ.done(); else setTimeout(wait, 120); })();
+    }); });
+  }
+  function inject(src) { var s = document.createElement('script'); s.src = src; s.onload = start; document.body.appendChild(s); }
+  fetch(SRC).then(function (r) {
+    if (!r.ok) throw new Error(r.status);
+    if (!r.body || !r.body.getReader || typeof TextDecoder === 'undefined') return r.text();
+    var rd = r.body.getReader(), dec = new TextDecoder(), out = '', n = 0;
+    return (function pump() { return rd.read().then(function (x) {
+      if (x.done) return out + dec.decode();
+      n += x.value.length; out += dec.decode(x.value, { stream: true }); PZ.set(0.02 + 0.58 * Math.min(1, n / BYTES), 'Baixando o 3D'); return pump();
+    }); })();
+  }).then(function (code) { inject(URL.createObjectURL(new Blob([code], { type: 'text/javascript' }))); })
+    .catch(function () { inject(SRC); });
+})();
+function pzInit() {
   var api = window.mountPasinettiApartment(document.getElementById('stage'), { assetBase: 'assets/' });
   var rooms = document.getElementById('rooms');
   var unitsEl = document.getElementById('units');
@@ -113,7 +169,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
     luxury: 'Unidade C6.1 · 6º andar recuado, ponta leste. Terraço em L voltado para a rua e para a lateral; sala e dois quartos abrem para ele.',
     gym: 'Fitness room do térreo, voltada para a rua. Equipamentos modelados em código, sem marcas. Espelho com reflexo real.',
     rooftop: 'Cobertura pela planta do projeto: piscina elevada entre os núcleos, degraus flutuantes com LED, deck com espreguiçadeiras, café e bar sob pérgola, lareiras nas varandas e jardim em todo o perímetro.',
-    garden: 'Pátio entre o prédio e a divisa norte, na cota do térreo: lounge sob pérgola com trepadeiras, café com mesas bistrô, coworking ao ar livre, área fitness com três estações, oliveiras, lavanda e luminárias globo.',
+    garden: 'Jardim interno entre o prédio e a divisa norte, na cota do térreo: pérgolas com trepadeiras, lounge com sofás, mesas no gramado, área fitness com três estações, oliveiras, lavanda e luminárias globo.',
     _: 'Medidas calibradas pela planta do arquiteto (KEYPLAN 1:100).'
   };
 
@@ -172,7 +228,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
   }
   window.addEventListener('hashchange', function () { go(location.hash.slice(1), false); });
   go(location.hash.slice(1) || 'maquete', false);
-})();
+}
 </script>
 
 </body></html>
