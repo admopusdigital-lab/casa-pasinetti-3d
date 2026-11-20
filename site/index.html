@@ -41,7 +41,22 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .pnav::-webkit-scrollbar{display:none}
 .pnav>a{flex:none;white-space:nowrap;padding:11px 0!important}
 }
-html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px}}
+html{scroll-padding-top:72px}@media (max-width:720px){html{scroll-padding-top:104px}}
+.ph{position:sticky;top:0;z-index:30;background:rgba(250,247,241,.66)!important;-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%);border-bottom:1px solid rgba(255,255,255,.6)!important;box-shadow:0 1px 0 rgba(75,42,29,.07),0 14px 30px -24px rgba(40,24,14,.35)}
+.p3d{padding:14px clamp(16px,3vw,32px) 18px;background:linear-gradient(180deg,#EFE7DC 0%,#F6F1E9 100%);border-top:1px solid #E3D9CC}
+.p3d-in{max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px;padding:14px 16px 14px 22px;border-radius:22px;background:linear-gradient(180deg,rgba(255,255,255,.78),rgba(255,253,248,.5));border:1px solid rgba(255,255,255,.75);box-shadow:inset 0 1px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(75,42,29,.05),0 18px 40px -26px rgba(40,24,14,.45);-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.p3d-txt{display:flex;flex-direction:column;gap:3px;min-width:0}
+.p3d-t{font:500 24px/1.1 'Bodoni Moda','Didot',Georgia,serif;color:#4B2A1D}
+.p3d-s{font:400 13px/1.4 'Instrument Sans',sans-serif;color:#715E4F}
+.p3d-btns{display:flex;flex-wrap:wrap;gap:8px}
+.pglass-btn{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:999px;font:500 14px/1 'Instrument Sans',sans-serif;text-decoration:none;color:#4B2A1D;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,.45));border:1px solid rgba(75,42,29,.18);box-shadow:inset 0 1px 0 #fff,0 6px 16px -10px rgba(40,24,14,.4);transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s cubic-bezier(.2,.8,.2,1)}
+.pglass-btn.is-dark{color:#FBF8F2;background:linear-gradient(180deg,#5d3a2b,#43251a);border-color:rgba(255,255,255,.18);box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -10px rgba(40,24,14,.6)}
+.pglass-btn:hover{transform:translateY(-1px);box-shadow:inset 0 1px 0 #fff,0 10px 22px -12px rgba(40,24,14,.5)}
+.pglass-btn.is-dark:hover{box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 12px 24px -12px rgba(40,24,14,.7)}
+::selection{background:#E7D3C2;color:#3A2418}
+@media (max-width:720px){.p3d-in{padding:14px;border-radius:18px}.p3d-btns{width:100%}.pglass-btn{flex:1 1 auto;justify-content:center;padding:0 12px}}
+@media (prefers-reduced-motion:reduce){.pglass-btn{transition:none}}
+
 </style>
 <noscript><style>#dc-root{display:none}</style></noscript>
 </head>
@@ -53,7 +68,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 
 <header class="ph" style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; padding: 14px clamp(16px, 3vw, 32px); border-bottom: 1px solid #E3D9CC">
 <div class="phl" style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px">
-<div class="plogo" style="display: flex; align-items: center; gap: 14px"><a href="#maquete" aria-label="Gobbi Consultoria" style="display: block; padding: 4px 0; line-height: 0"><img src="/_blob/d8f188a70a38fae9b526f1d81c229fd4" alt="Gobbi Consultoria" width="134" height="40" style="display: block; width: auto; height: 40px"></a><span style="align-self: stretch; width: 1px; margin: 6px 0; background: #D9CCBC"></span><span class="pex" style="font: 600 10px/1.35 'Instrument Sans', sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: #5C4636; max-width: 120px">{{t.presentedBy}}</span></div>
+<div class="plogo" style="display: flex; align-items: center; gap: 14px"><a href="#maquete" aria-label="Gobbi Internacional" style="display: block; padding: 4px 0; line-height: 0"><img src="assets/img/gobbi-internacional.png" alt="Gobbi Internacional" width="129" height="40" style="display: block; width: auto; height: 40px"></a><span style="align-self: stretch; width: 1px; margin: 6px 0; background: #D9CCBC"></span><span class="pex" style="font: 600 10px/1.35 'Instrument Sans', sans-serif; letter-spacing: 0.22em; text-transform: uppercase; color: #5C4636; max-width: 120px">{{t.presentedBy}}</span></div>
 <nav class="pnav" aria-label="{{t.navAria}}" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px 18px; font-size: 14px">
 <a href="#maquete" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navModel}}</a>
 <a href="#projeto" style="color: #56463A; text-decoration: none; padding: 12px 0">{{t.navProject}}</a>
@@ -103,7 +118,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <div role="dialog" aria-label="{{realV.title}}" style="position: absolute; inset: 0; z-index: 5; overflow: hidden; background: #EEE6DA; animation: preal 0.75s cubic-bezier(.2,.7,.2,1) 0.85s both">
 <img src="{{realV.src}}" alt="{{realV.alt}}" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; display: block">
 <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 9, 8, 0.45) 0%, rgba(10, 9, 8, 0) 26%, rgba(10, 9, 8, 0) 58%, rgba(10, 9, 8, 0.78) 100%); pointer-events: none"></span>
-<button type="button" onClick="{{realClose}}" style="position: absolute; top: clamp(14px, 2.2vw, 24px); right: clamp(14px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.92); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); font: 600 13px/1 'Instrument Sans', sans-serif; cursor: pointer; animation: prealui 0.5s ease 1.3s both"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"></path><path d="M3.3 7.5L12 12l8.7-4.5M12 12v9"></path></svg>{{t.realBack}}</button>
+<button type="button" onClick="{{realClose}}" style="position: absolute; top: clamp(14px, 2.2vw, 24px); right: clamp(14px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20;  font: 600 13px/1 'Instrument Sans', sans-serif; cursor: pointer; animation: prealui 0.5s ease 1.3s both"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"></path><path d="M3.3 7.5L12 12l8.7-4.5M12 12v9"></path></svg>{{t.realBack}}</button>
 <div style="position: absolute; left: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 2.6vw, 28px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px; animation: prealui 0.5s ease 1.3s both">
 <div style="display: flex; flex-direction: column; gap: 6px; max-width: 560px">
 <span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #F1E6D4">Casa Pasinetti · {{realV.count}}</span>
@@ -112,8 +127,8 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </div>
 <sc-if value="{{realV.multi}}" hint-placeholder-val="{{ true }}">
 <div style="display: flex; gap: 8px">
-<button type="button" aria-label="{{t.prev}}" onClick="{{realPrev}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.9); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
-<button type="button" aria-label="{{t.next}}" onClick="{{realNext}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(75, 42, 29, 0.14); background: rgba(251, 248, 242, 0.9); color: #3A2A20; box-shadow: 0 6px 18px rgba(40, 24, 14, 0.18); cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
+<button type="button" aria-label="{{t.prev}}" onClick="{{realPrev}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20;  cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg></button>
+<button type="button" aria-label="{{t.next}}" onClick="{{realNext}}" style="display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20;  cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"></path></svg></button>
 </div>
 </sc-if>
 </div>
@@ -140,7 +155,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <p style="margin: 2px 0 0; font-size: 14px; line-height: 1.5; color: {{ov.sub}}">{{t.sub}}</p>
 </sc-if>
 <sc-if value="{{hovInfo.on}}" hint-placeholder-val="{{ false }}">
-<div style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: rgba(251, 248, 242, 0.94); border: 1px solid #D2C4B3; font-size: 13px; color: #3A2A20">
+<div style="align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; margin-top: 6px; padding: 8px 12px; border-radius: 10px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); font-size: 13px; color: #3A2A20">
 <span style="width: 8px; height: 8px; border-radius: 50%; {{hovInfo.dot}}"></span>
 <span style="font: 500 17px/1 'Bodoni Moda', Georgia, serif">{{hovInfo.code}}</span>
 <span>{{hovInfo.line}}</span>
@@ -152,7 +167,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </div>
 
 <sc-if value="{{garageOn}}" hint-placeholder-val="{{ false }}">
-<div style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); width: min(340px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; border-radius: 16px; background: rgba(251, 248, 242, 0.95); border: 1px solid #D2C4B3; animation: prealui 0.5s ease 0.2s both">
+<div style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); width: min(340px, calc(100% - 32px)); display: flex; flex-direction: column; gap: 10px; padding: 18px 18px 16px; border-radius: 16px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); animation: prealui 0.5s ease 0.2s both">
 <span style="font: 600 11px/1.2 'Instrument Sans', sans-serif; letter-spacing: 0.2em; text-transform: uppercase; color: #6B4A35">−3,12 · −5,98</span>
 <span style="font: 500 26px/1.05 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D">{{t.garageTitle}}</span>
 <span style="font-size: 13px; line-height: 1.5; color: #625246">{{t.garageDesc}}</span>
@@ -160,16 +175,16 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </div>
 </sc-if>
 <sc-if value="{{focusOn}}" hint-placeholder-val="{{ false }}">
-<button type="button" onClick="{{exitFocus}}" style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.94); color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>{{t.backToBuilding}}</button>
+<button type="button" onClick="{{exitFocus}}" style="position: absolute; z-index: 2; right: clamp(16px, 3vw, 32px); top: clamp(16px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"></path></svg>{{t.backToBuilding}}</button>
 </sc-if>
 
 <div style="position: absolute; z-index: 2; left: clamp(16px, 3vw, 32px); right: clamp(16px, 3vw, 32px); bottom: clamp(16px, 2.4vw, 24px); display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 10px; pointer-events: none">
 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 8px">
 <sc-if value="{{wide}}" hint-placeholder-val="{{ true }}">
-<span aria-live="polite" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #E3D9CC; font-size: 12px; color: #56463A; font-variant-numeric: tabular-nums"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6B4A35" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>{{sunLine}}</span>
+<span aria-live="polite" style="display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 999px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); font-size: 12px; color: #56463A; font-variant-numeric: tabular-nums"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#6B4A35" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>{{sunLine}}</span>
 </sc-if>
 <sc-if value="{{showLegend}}" hint-placeholder-val="{{ false }}">
-<ul aria-label="{{t.legendAria}}" style="display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0; padding: 12px 16px; list-style: none; border-radius: 12px; background: rgba(251, 248, 242, 0.92); border: 1px solid #E3D9CC; font-size: 13px; color: #56463A">
+<ul aria-label="{{t.legendAria}}" style="display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 0; padding: 12px 16px; list-style: none; border-radius: 12px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); font-size: 13px; color: #56463A">
 <li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #D4B571"></span>{{t.disp}} <span style="color: #715E4F">{{counts.disp}}</span></li>
 <li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #8FA7C0"></span>{{t.res}} <span style="color: #715E4F">{{counts.res}}</span></li>
 <li style="display: flex; align-items: center; gap: 8px"><span style="width: 10px; height: 10px; border-radius: 2px; background: #8A857C"></span>{{t.vend}} <span style="color: #715E4F">{{counts.vend}}</span></li>
@@ -178,7 +193,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </sc-if>
 </div>
 <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; min-width: 0; max-width: 100%; pointer-events: auto">
-<div role="group" aria-label="{{t.lightAria}}" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 3px 14px 3px 3px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #D2C4B3; color: #3A2A20">
+<div role="group" aria-label="{{t.lightAria}}" style="display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 3px 14px 3px 3px; border-radius: 999px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); color: #3A2A20">
 <button type="button" onClick="{{togglePlay}}" aria-label="{{playLabel}}" title="{{playLabel}}" style="display: grid; place-items: center; flex: none; width: 38px; height: 38px; padding: 0; border: 0; border-radius: 50%; background: #4B2A1D; color: #FBF8F2; cursor: pointer">
 <sc-if value="{{notPlaying}}" hint-placeholder-val="{{ true }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5z"></path></svg></sc-if>
 <sc-if value="{{playing}}" hint-placeholder-val="{{ false }}"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M6 4.5h4.2v15H6zM13.8 4.5H18v15h-4.2z"></path></svg></sc-if>
@@ -192,7 +207,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <input type="range" min="4.5" max="23.5" step="0.25" value="{{hour}}" aria-label="{{t.hourAria}}" aria-valuetext="{{hourText}}" onInput="{{setHour}}" onChange="{{setHour}}" style="width: clamp(110px, 14vw, 170px); margin: 0; accent-color: #6B4A35; cursor: pointer">
 <span style="min-width: 42px; font: 600 13px/1 'Instrument Sans', sans-serif; font-variant-numeric: tabular-nums; color: #4B2A1D">{{hourText}}</span>
 </div>
-<div role="group" aria-label="{{t.viewAria}}" class="pviews" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(251, 248, 242, 0.92); border: 1px solid #D2C4B3; max-width: 100%; box-sizing: border-box; overflow-x: auto; pointer-events: auto">
+<div role="group" aria-label="{{t.viewAria}}" class="pviews" style="display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); border: 1px solid rgba(255, 255, 255, 0.62); max-width: 100%; box-sizing: border-box; overflow-x: auto; pointer-events: auto">
 <button type="button" onClick="{{realOpen}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; font: 600 13px/1 'Instrument Sans', sans-serif; white-space: nowrap; cursor: pointer"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>{{t.realBtn}}</button>
 <button type="button" onClick="{{viewStreet}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.street}}</button>
 <button type="button" onClick="{{viewGarden}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 999px; background: transparent; color: #3A2A20; font: 500 13px/1 'Instrument Sans', sans-serif; cursor: pointer">{{t.garden}}</button>
@@ -202,10 +217,10 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </div>
 <sc-if value="{{wide}}" hint-placeholder-val="{{ true }}">
 <div role="group" aria-label="{{t.rotAria}}" style="display: flex; gap: 6px">
-<button type="button" aria-label="{{t.rotL}}" onClick="{{rotL}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6"></path><path d="M4 4v4.5h4.5"></path></svg></button>
-<button type="button" aria-label="{{t.rotR}}" onClick="{{rotR}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v4.5h-4.5"></path></svg></button>
-<button type="button" aria-label="{{t.zoomOut}}" onClick="{{zoomOut}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
-<button type="button" aria-label="{{t.zoomIn}}" onClick="{{zoomIn}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid #D2C4B3; background: rgba(251, 248, 242, 0.92); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
+<button type="button" aria-label="{{t.rotL}}" onClick="{{rotL}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 1 0 2.3-5.6"></path><path d="M4 4v4.5h4.5"></path></svg></button>
+<button type="button" aria-label="{{t.rotR}}" onClick="{{rotR}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.3-5.6"></path><path d="M20 4v4.5h-4.5"></path></svg></button>
+<button type="button" aria-label="{{t.zoomOut}}" onClick="{{zoomOut}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"></path></svg></button>
+<button type="button" aria-label="{{t.zoomIn}}" onClick="{{zoomIn}}" style="display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, 0.62); background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); color: #3A2A20; cursor: pointer"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg></button>
 </div>
 </sc-if>
 </div>
@@ -320,6 +335,20 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 
 </aside>
 </main>
+<section class="p3d" aria-label="Interiores 3D">
+<div class="p3d-in">
+<div class="p3d-txt"><span class="p3d-t">Interiores 3D</span><span class="p3d-s">Entre nas plantas mobiliadas e nas áreas comuns</span></div>
+<div class="p3d-btns">
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#smart" target="_blank" rel="noopener" class="pglass-btn is-dark">Smart</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#maquete" target="_blank" rel="noopener" class="pglass-btn is-dark">Comfort</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#exclusive" target="_blank" rel="noopener" class="pglass-btn is-dark">Exclusive</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#luxury" target="_blank" rel="noopener" class="pglass-btn is-dark">Luxury</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#academia" target="_blank" rel="noopener" class="pglass-btn">Fitness</a>
+<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#rooftop" target="_blank" rel="noopener" class="pglass-btn">Rooftop</a>
+</div>
+</div>
+</section>
+
 
 <section id="projeto" aria-labelledby="projeto-t" style="border-top: 1px solid #E3D9CC; padding: clamp(48px, 7vw, 96px) clamp(16px, 3vw, 32px)">
 <div style="max-width: 1240px; margin: 0 auto; display: flex; flex-direction: column; gap: clamp(32px, 4vw, 56px)">
@@ -447,7 +476,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <button type="button" aria-label="{{am.aria}}" onClick="{{am.pick}}" style="position: relative; display: block; min-width: 0; padding: 0; border: 0; border-radius: 14px; overflow: hidden; background: #FFFDF8; cursor: zoom-in; text-align: left; font: inherit; color: inherit; {{am.cell}}">
 <img src="{{am.img}}" alt="" loading="lazy" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block">
 <span style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 9, 8, 0) 38%, rgba(10, 9, 8, 0.82) 100%)"></span>
-<span style="position: absolute; top: 14px; right: 14px; padding: 6px 10px; border-radius: 999px; background: rgba(251, 248, 242, 0.9); font: 600 11px/1 'Instrument Sans', sans-serif; letter-spacing: 0.06em; color: #3A2A20">{{am.count}}</span>
+<span style="position: absolute; top: 14px; right: 14px; padding: 6px 10px; border-radius: 999px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); font: 600 11px/1 'Instrument Sans', sans-serif; letter-spacing: 0.06em; color: #3A2A20">{{am.count}}</span>
 <span style="position: absolute; left: 18px; right: 18px; bottom: 16px; display: flex; flex-direction: column; gap: 6px">
 <span style="font: 500 26px/1.05 'Bodoni Moda', Georgia, serif; color: #FFFFFF">{{am.title}}</span>
 <span style="font-size: 13px; line-height: 1.45; color: #E6E1D8">{{am.desc}}</span>
@@ -493,17 +522,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 </div>
 <span style="font-size: 14px; color: #715E4F">{{styleNote}}</span>
 </div>
-<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; padding: 18px 20px; border: 1px solid #D2C4B3; border-radius: 16px; background: #FFFDF8">
-<span style="flex: 1 1 220px; font: 500 22px/1.15 'Bodoni Moda', Georgia, serif; color: #4B2A1D">Interiores 3D</span>
-<div style="display: flex; flex-wrap: wrap; gap: 8px">
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#smart" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Smart</a>
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#maquete" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Comfort</a>
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#exclusive" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Exclusive</a>
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#luxury" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; background: #4B2A1D; color: #F6F1E9; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Luxury</a>
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#academia" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #4B2A1D; color: #4B2A1D; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Fitness</a>
-<a href="https://admopusdigital-lab.github.io/casa-pasinetti-3d/#rooftop" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid #4B2A1D; color: #4B2A1D; font: 500 14px/1 'Instrument Sans', sans-serif; text-decoration: none">Rooftop</a>
-</div>
-</div>
+
 <div style="display: flex; flex-direction: column; gap: 22px; padding-top: clamp(20px, 3vw, 36px); border-top: 1px solid #E3D9CC">
 <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 10px 40px">
 <div style="display: flex; flex-direction: column; gap: 12px">
@@ -585,11 +604,11 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <sc-for list="{{poiDots}}" as="pd" hint-placeholder-count="5">
 <span style="position: absolute; display: flex; align-items: center; gap: 8px; {{pd.style}}">
 <span style="flex: none; display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: #EEE6DA; border: 1px solid #6B4A35; font: 600 11px/1 'Instrument Sans', sans-serif; color: #6B4A35">{{pd.n}}</span>
-<span style="padding: 2px 6px; border-radius: 6px; background: rgba(251, 248, 242, 0.92); font-size: 12px; color: #3A2A20; white-space: nowrap; {{pd.labelStyle}}">{{pd.short}}</span>
+<span style="padding: 2px 6px; border-radius: 6px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); font-size: 12px; color: #3A2A20; white-space: nowrap; {{pd.labelStyle}}">{{pd.short}}</span>
 </span>
 </sc-for>
 <span style="position: absolute; left: 44.29%; top: 82.14%; transform: translate(-50%, -50%); width: 16px; height: 16px; border-radius: 50%; background: #D46B3D; box-shadow: 0 0 0 6px rgba(212, 107, 61, 0.22), 0 0 0 14px rgba(212, 107, 61, 0.08)"></span>
-<span style="position: absolute; left: 44.29%; top: 82.14%; transform: translate(-50%, 16px); padding: 2px 6px; border-radius: 6px; background: rgba(251, 248, 242, 0.92); font: 500 14px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D; white-space: nowrap">{{t.you}}</span>
+<span style="position: absolute; left: 44.29%; top: 82.14%; transform: translate(-50%, 16px); padding: 2px 6px; border-radius: 6px; background: rgba(252, 250, 246, 0.52); -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 10px 28px -12px rgba(40, 24, 14, 0.32); font: 500 14px/1.1 'Bodoni Moda', Georgia, serif; color: #4B2A1D; white-space: nowrap">{{t.you}}</span>
 </div>
 </figure>
 <figure role="img" aria-label="{{t.insetAria}}" style="margin: 0; display: flex; flex-direction: column; gap: 8px">
@@ -639,7 +658,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <div style="flex: 1 1 480px; display: flex; flex-direction: column; gap: 12px; min-width: 0">
 <div style="display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 14px">
 <span style="font: 600 10px/1 'Instrument Sans', sans-serif; letter-spacing: 0.34em; text-transform: uppercase; color: #5C4636">{{t.presentedBy}}</span>
-<img src="/_blob/d8f188a70a38fae9b526f1d81c229fd4" alt="Gobbi Consultoria" width="161" height="48" style="display: block; width: auto; height: 48px">
+<img src="assets/img/gobbi-internacional.png" alt="Gobbi Internacional" width="155" height="48" style="display: block; width: auto; height: 48px">
 </div>
 <h2 id="cta-t" style="margin: 0; font: 500 clamp(30px, 3.6vw, 46px)/1.05 'Bodoni Moda', 'Didot', Georgia, serif; color: #4B2A1D; text-wrap: balance">{{t.ctaTitle}}</h2>
 <p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4F3E33">{{t.ctaText}}</p>
@@ -647,6 +666,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <div style="display: flex; flex-wrap: wrap; gap: 12px">
 <a href="{{visitHref}}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 999px; background: #4B2A1D; color: #FBF8F2; text-decoration: none; font: 600 15px/1 'Instrument Sans', sans-serif">{{t.ctaWa}}</a>
 <a href="#maquete" style="display: inline-flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 26px; border-radius: 999px; border: 1px solid #4B2A1D; color: #4B2A1D; text-decoration: none; font: 500 15px/1 'Instrument Sans', sans-serif">{{t.ctaUnits}}</a>
+<a href="https://casacomagobbi.com/" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 22px; border-radius: 999px; color: #4B2A1D; text-decoration: underline; text-underline-offset: 4px; font: 500 15px/1 'Instrument Sans', sans-serif">Ver outros imóveis da Gobbi<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"></path></svg></a>
 </div>
 </div>
 </section>
@@ -654,6 +674,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <footer style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding: 20px clamp(16px, 3vw, 32px); border-top: 1px solid #E3D9CC; font-size: 12px; line-height: 1.6; color: #735F50">
 <span>{{t.foot1}}</span>
 <span>{{t.foot2}}</span>
+<a href="https://casacomagobbi.com/" target="_blank" rel="noopener" style="color: inherit; text-underline-offset: 3px">casacomagobbi.com · outros imóveis</a>
 </footer>
 
 <sc-if value="{{lb.open}}" hint-placeholder-val="{{ false }}">
@@ -676,7 +697,7 @@ html{scroll-padding-top:0}@media (max-width:720px){html{scroll-padding-top:104px
 <script src="assets/js/config.js?v=52"></script>
 <script src="assets/js/three.min.js?v=49"></script>
 <script src="assets/js/runtime.js?v=49"></script>
-<script src="assets/js/casa-pasinetti.js?v=60"></script>
+<script src="assets/js/casa-pasinetti.js?v=61"></script>
 <script>document.addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;var id=a.getAttribute('href').slice(1);e.preventDefault();var el=id&&document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});else window.scrollTo({top:0,behavior:'smooth'});history.replaceState(null,'',location.pathname+location.search+(id?'#'+id:''));},true);</script>
 </body>
 </html>
