@@ -862,14 +862,40 @@ class Component extends DCLogic {
       speckle(g, w, h, 14000, ['rgba(0,0,0,.06)', 'rgba(255,255,255,.1)'], 0.7, 1.6);
       speckle(hg, w, h, 9000, [grey(185), grey(220)], 0.7, 1.4);
     }, 3);
-    // sidewalk concrete pavers
+    // sidewalk: 60 x 40 cm concrete slabs laid in running bond, two batches of slightly different grey, thin sanded joints,
+    // aggregate grain, a few chipped corners, gum spots and damp stains (the large-scale wear comes from the macro shader)
     const WLK = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#8a847a'; g.fillRect(0, 0, w, h);
-      hg.fillStyle = grey(80); hg.fillRect(0, 0, w, h);
-      blocks(g, hg, w, h, 6, 6, false, 3, () => { const t = 0.92 + rnd() * 0.1; return rgb(178 * t, 172 * t, 162 * t); }, 1);
-      tint(g, w, h, 16, 0.5, 100, 156);
-      speckle(g, w, h, 16000, ['rgba(0,0,0,.08)', 'rgba(255,255,255,.09)'], 0.7, 1.5);
-    }, 2.5);
+      g.fillStyle = '#6f6a63'; g.fillRect(0, 0, w, h);
+      hg.fillStyle = grey(70); hg.fillRect(0, 0, w, h);
+      blocks(g, hg, w, h, 6, 4, true, 2, () => { const t = 0.93 + rnd() * 0.09, c = rnd() < 0.55 ? [181, 176, 168] : [170, 168, 163]; return rgb(c[0] * t, c[1] * t, c[2] * t); }, 1);
+      tint(g, w, h, 24, 0.32, 104, 152);
+      speckle(g, w, h, 20000, ['rgba(60,56,52,.18)', 'rgba(250,248,242,.15)', 'rgba(120,114,106,.13)'], 0.6, 1.4);
+      speckle(hg, w, h, 10000, [grey(150), grey(205)], 0.6, 1.3);
+      for (let i = 0; i < 26; i++) { const x = rnd() * w, y = rnd() * h, r = 1.2 + rnd() * 2.2; g.fillStyle = 'rgba(52,48,44,' + (0.2 + rnd() * 0.25).toFixed(2) + ')'; g.beginPath(); g.ellipse(x, y, r, r * (0.7 + rnd() * 0.3), 0, 0, 6.283); g.fill(); }
+      for (let i = 0; i < 7; i++) { const x = rnd() * w, y = rnd() * h, r = 14 + rnd() * 30, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(80,72,62,.12)'); gr.addColorStop(1, 'rgba(80,72,62,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+      for (let i = 0; i < 10; i++) { const x = ((rnd() * 4) | 0) * w / 4 + (rnd() < 0.5 ? 2 : -2), y = ((rnd() * 6) | 0) * h / 6 + 2; g.fillStyle = 'rgba(90,86,80,.55)'; g.beginPath(); g.moveTo(x, y); g.lineTo(x + 5 + rnd() * 6, y); g.lineTo(x, y + 4 + rnd() * 5); g.fill(); hg.fillStyle = grey(95); hg.beginPath(); hg.moveTo(x, y); hg.lineTo(x + 5, y); hg.lineTo(x, y + 4); hg.fill(); }
+    }, 2.2);
+    // granite kerbs (cordoli in granito): light grey speckled stone, a joint every metre
+    const KRB = pbr(256, 256, (g, hg, w, h) => {
+      g.fillStyle = '#a7a59f'; g.fillRect(0, 0, w, h);
+      tint(g, w, h, 6, 0.3, 108, 148);
+      speckle(g, w, h, 15000, ['rgba(38,38,40,.42)', 'rgba(72,72,74,.32)', 'rgba(240,238,232,.4)', 'rgba(150,146,140,.3)'], 0.6, 1.5);
+      hg.fillStyle = grey(150); hg.fillRect(0, 0, w, h); speckle(hg, w, h, 8000, [grey(128), grey(176)], 0.6, 1.3);
+      g.fillStyle = 'rgba(58,56,52,.6)'; g.fillRect(0, 0, 2, h); g.fillRect(0, 0, w, 2);
+      hg.fillStyle = grey(70); hg.fillRect(0, 0, 2, h); hg.fillRect(0, 0, w, 2);
+    }, 1.6);
+    // courtyards of the neighbouring blocks: large grey concrete pavers, oil and rain stains, moss in some joints
+    const CRT = pbr(512, 512, (g, hg, w, h) => {
+      g.fillStyle = '#625e58'; g.fillRect(0, 0, w, h);
+      hg.fillStyle = grey(72); hg.fillRect(0, 0, w, h);
+      blocks(g, hg, w, h, 4, 4, false, 3, () => { const t = 0.9 + rnd() * 0.14; return rgb(150 * t, 147 * t, 141 * t); }, 1);
+      tint(g, w, h, 12, 0.42, 100, 156); tint(g, w, h, 36, 0.3, 106, 150);
+      speckle(g, w, h, 16000, ['rgba(50,48,44,.2)', 'rgba(235,232,225,.14)', 'rgba(110,106,98,.13)'], 0.6, 1.5);
+      speckle(hg, w, h, 8000, [grey(150), grey(205)], 0.6, 1.3);
+      for (let i = 0; i < 12; i++) { const x = rnd() * w, y = rnd() * h, r = 10 + rnd() * 34, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(40,36,32,.2)'); gr.addColorStop(1, 'rgba(40,36,32,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+      g.fillStyle = 'rgba(92,104,64,.45)';
+      for (let i = 0; i < 18; i++) { const vert = rnd() < 0.5, k = 1 + ((rnd() * 3) | 0), a = rnd() * (w - 60); if (vert) g.fillRect(k * w / 4 - 2, a, 4, 20 + rnd() * 40); else g.fillRect(a, k * h / 4 - 2, 20 + rnd() * 40, 4); }
+    }, 2.2);
     const ASP = pbr(512, 512, (g, hg, w, h) => {
       g.fillStyle = '#4b4845'; g.fillRect(0, 0, w, h);
       tint(g, w, h, 10, 0.6, 96, 160); tint(g, w, h, 40, 0.4, 100, 156);
@@ -912,6 +938,7 @@ class Component extends DCLogic {
     }, 4);
     T.plaster = PL.map; T.plasterN = PL.normal; T.stone = STN.map; T.stoneN = STN.normal; T.brick = BRK.map; T.brickN = BRK.normal;
     T.paving = PAV.map; T.pavingN = PAV.normal; T.walk = WLK.map; T.walkN = WLK.normal; T.asphalt = ASP.map; T.asphaltN = ASP.normal;
+    T.kerb = KRB.map; T.kerbN = KRB.normal; T.court = CRT.map; T.courtN = CRT.normal;
     T.grass = GRS.map; T.grassN = GRS.normal; T.context = CTX.map; T.contextN = CTX.normal; T.slab = SLB.map; T.slabN = SLB.normal;
     // olive / plane bark: grey-brown, deep twisting furrows, pale ridges, a little lichen; tiles around the trunk
     T.bark = tex(256, 512, (g, w, h) => {
@@ -1098,15 +1125,21 @@ class Component extends DCLogic {
     }, 1.6);
     T.gravel = GRV.map; T.gravelN = GRV.normal;
     // plane-tree bark: the camouflage of a platanus, olive-grey, cream and green-grey flakes
+    // plane-tree bark (platanus): smooth, pale; old grey-olive bark flakes off in jigsaw plates that uncover cream and
+    // light ochre underneath. Low contrast, plates taller than wide
     T.planeBark = tex(256, 512, (g, w, h) => {
-      g.fillStyle = '#b4ae96'; g.fillRect(0, 0, w, h);
-      const cols = ['#8c876a', '#a29b7c', '#cdc8b0', '#79785f', '#d9d3b9', '#95906f', '#6f7158'];
-      for (let i = 0; i < 170; i++) {
-        g.fillStyle = cols[(rnd() * cols.length) | 0];
-        const x = rnd() * w, y = rnd() * h, rx = 8 + rnd() * 26, ry = 10 + rnd() * 38, a = rnd() * 0.6;
-        [-w, 0, w].forEach((dx) => { g.beginPath(); g.ellipse(x + dx, y, rx, ry, a, 0, 6.283); g.fill(); });
-      }
-      speckle(g, w, h, 4000, ['rgba(40,36,28,.12)', 'rgba(255,255,240,.1)'], 0.8, 1.6);
+      g.fillStyle = '#c9c4b2'; g.fillRect(0, 0, w, h);
+      const plate = (x, y, rx, ry, col) => {
+        const n = 7 + ((rnd() * 4) | 0), pts = [];
+        for (let k = 0; k < n; k++) { const a = k / n * 6.283, rr = 0.72 + rnd() * 0.42; pts.push([Math.cos(a) * rx * rr, Math.sin(a) * ry * rr]); }
+        g.fillStyle = col;
+        [-w, 0, w].forEach((dx) => { g.beginPath(); pts.forEach((p, k) => (k ? g.lineTo : g.moveTo).call(g, x + dx + p[0], y + p[1])); g.closePath(); g.fill(); });
+      };
+      const under = ['#d8d2bd', '#d3caac', '#ddd8c6', '#cdc3a3'], old = ['#b8b49f', '#afab96', '#bfbaa5', '#a5a38e', '#b3af99'];
+      for (let i = 0; i < 70; i++) plate(rnd() * w, rnd() * h, 14 + rnd() * 26, 22 + rnd() * 44, under[(rnd() * under.length) | 0]);
+      for (let i = 0; i < 80; i++) plate(rnd() * w, rnd() * h, 12 + rnd() * 26, 20 + rnd() * 44, old[(rnd() * old.length) | 0]);
+      for (let i = 0; i < 14; i++) plate(rnd() * w, rnd() * h, 6 + rnd() * 10, 8 + rnd() * 16, 'rgba(120,120,100,.4)');
+      speckle(g, w, h, 5000, ['rgba(60,56,46,.1)', 'rgba(255,252,240,.1)'], 0.8, 1.6);
     });
     // warm lobby seen through the entrance glass (cam-06): chandeliers, timber walls, travertine floor
     T.lobby = tex(512, 512, (g, w, h) => {
@@ -1175,14 +1208,21 @@ class Component extends DCLogic {
       board: std({ color: 0xb9b3a9, roughness: 0.92 }),
       brass: std({ color: 0xc19d5f, roughness: 0.3, metalness: 1 }),
       curb: std({ color: 0xdcd7cf, roughness: 0.85 }),
-      carA: std({ color: 0x2c2f34, roughness: 0.28, metalness: 0.6 }),
-      carB: std({ color: 0xe9e8e4, roughness: 0.3, metalness: 0.35 }),
-      carC: std({ color: 0xa7abb0, roughness: 0.28, metalness: 0.65 }),
-      carD: std({ color: 0x1e2a45, roughness: 0.3, metalness: 0.55 }),
-      carE: std({ color: 0x121212, roughness: 0.25, metalness: 0.5 }),
-      carF: std({ color: 0x2f3c34, roughness: 0.3, metalness: 0.55 }),
-      carG: std({ color: 0x7a2a22, roughness: 0.3, metalness: 0.5 }),
-      carGlass: phy({ color: 0x161b22, roughness: 0.06, metalness: 0.9 }),
+      kerb: std({ map: T.kerb, normalMap: T.kerbN, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 0.74 }),
+      court: std({ map: T.court, normalMap: T.courtN, normalScale: new THREE.Vector2(0.7, 0.7), color: 0xdcd9d4, roughness: 0.9 }),
+      courtP: std({ map: T.court, normalMap: T.courtN, normalScale: new THREE.Vector2(0.7, 0.7), roughness: 0.88 }),
+      manhole: std({ color: 0x45423e, roughness: 0.5, metalness: 0.55 }),
+      // car paint: a metallic or solid base under a clear coat (sharp sky reflections on the roof and bonnet)
+      carA: phy({ color: 0x3a3d42, roughness: 0.38, metalness: 0.55, clearcoatRoughness: 0.05 }),
+      carB: phy({ color: 0xe6e5e1, roughness: 0.42, metalness: 0.0, clearcoatRoughness: 0.05 }),
+      carC: phy({ color: 0xa9adb2, roughness: 0.36, metalness: 0.7, clearcoatRoughness: 0.05 }),
+      carD: phy({ color: 0x1c2740, roughness: 0.38, metalness: 0.5, clearcoatRoughness: 0.05 }),
+      carE: phy({ color: 0x141414, roughness: 0.35, metalness: 0.3, clearcoatRoughness: 0.04 }),
+      carF: phy({ color: 0x5e6266, roughness: 0.36, metalness: 0.6, clearcoatRoughness: 0.05 }),
+      carG: phy({ color: 0x6e231d, roughness: 0.38, metalness: 0.45, clearcoatRoughness: 0.05 }),
+      // dark tinted glass: a dielectric, so it reads black head-on and picks up the sky only at grazing angles
+      carGlass: phy({ color: 0x0b0e12, roughness: 0.05, metalness: 0.0, clearcoat: 0 }),
+      trim: std({ color: 0x1d1e20, roughness: 0.62 }),
       tyre: std({ color: 0x1b1a19, roughness: 0.92 }),
       zebra: std({ color: 0xe8e5de, roughness: 0.8 }),
       alu: std({ color: 0x8c8f92, roughness: 0.38, metalness: 0.55 }),
@@ -1234,6 +1274,20 @@ class Component extends DCLogic {
     };
     // alpha-to-coverage: leaf cards and bar railings get soft, anti-aliased edges from the MSAA samples instead of stair-steps
     if (renderer.capabilities.isWebGL2) { MAT.fol.alphaToCoverage = true; MAT.rail.alphaToCoverage = true; }
+    // large-scale wear on the ground that never repeats: two octaves of world-space value noise (cells of roughly 8-16 m and
+    // 2-4 m) lighten and darken the tiled texture, so long roads, sidewalks, courtyards and lawns lose the visible texture repeat
+    const MACRO_GLSL = 'float pzH(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }\n' +
+      'float pzN(vec2 p){ vec2 i = floor(p), f = fract(p); f = f * f * (3.0 - 2.0 * f); return mix(mix(pzH(i), pzH(i + vec2(1.0, 0.0)), f.x), mix(pzH(i + vec2(0.0, 1.0)), pzH(i + vec2(1.0, 1.0)), f.x), f.y); }\n';
+    const macro = (m, amp, sc) => {
+      m.onBeforeCompile = (sh) => {
+        sh.uniforms.pzAmp = { value: amp }; sh.uniforms.pzSc = { value: sc };
+        sh.vertexShader = sh.vertexShader.replace('#include <common>', '#include <common>\nvarying vec2 vPzW;').replace('#include <begin_vertex>', '#include <begin_vertex>\nvPzW = (modelMatrix * vec4(transformed, 1.0)).xz;');
+        sh.fragmentShader = sh.fragmentShader.replace('#include <common>', '#include <common>\nvarying vec2 vPzW; uniform float pzAmp; uniform float pzSc;\n' + MACRO_GLSL)
+          .replace('#include <map_fragment>', '#include <map_fragment>\n{ float pzn = pzN(vPzW * pzSc) * 0.62 + pzN(vPzW * pzSc * 3.9 + 17.0) * 0.38; diffuseColor.rgb *= 1.0 + pzAmp * (pzn - 0.5) * 2.0; }');
+      };
+      m.customProgramCacheKey = () => 'pzMacro';   // one program for every ground material; strength and scale are uniforms
+    };
+    macro(MAT.asphalt, 0.12, 0.06); macro(MAT.walk, 0.09, 0.075); macro(MAT.court, 0.14, 0.065); macro(MAT.grass, 0.17, 0.12); macro(MAT.roofM, 0.1, 0.09); macro(MAT.courtP, 0.12, 0.065);
 
     // ---- windows: a real room behind every pane (interior mapping). The view ray is taken into the pane's own frame and
     // traced through a box room: back wall = the painted room of that atlas cell, side walls, oak floor, lit ceiling.
@@ -1281,8 +1335,8 @@ class Component extends DCLogic {
       m.customProgramCacheKey = () => 'pzRoomGlass';
     };
     ['glass', 'glassLit', 'glassLitB', 'glassLitC', 'glassDim'].forEach((k) => roomGlass(MAT[k]));
-    const TILE = { roofF: 3, roofM: 3, porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
-    const NO_SHADOW = { gLamp: 1, gExit: 1, gAisle: 1, gStripe: 1, tail: 1, water: 1, zebra: 1, rail: 1, light: 1, glassLit: 1, glassLitB: 1, glassLitC: 1, glassDim: 1, glass: 1, grass: 1, asphalt: 1, walk: 1, paving: 1, board: 1, plinth: 1, brass: 1 };
+    const TILE = { kerb: 1.0, court: 3.2, courtP: 3.2, roofF: 3, roofM: 3, porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
+    const NO_SHADOW = { kerb: 1, court: 1, courtP: 1, manhole: 1, gLamp: 1, gExit: 1, gAisle: 1, gStripe: 1, tail: 1, water: 1, zebra: 1, rail: 1, light: 1, glassLit: 1, glassLitB: 1, glassLitC: 1, glassDim: 1, glass: 1, grass: 1, asphalt: 1, walk: 1, paving: 1, board: 1, plinth: 1, brass: 1 };
 
     // ---------------------------------------------------------------- geometry buckets
     const GK = ['site', 'f0', 'f1', 'f2', 'f3', 'f4', 'f5', 'f6', 'roof', 'ctxN', 'ctxS', 'garage'];
@@ -2186,29 +2240,29 @@ class Component extends DCLogic {
     const RIP0 = 84, RIP1 = 106, GAL0 = -49.5, GAL1 = -41.5;
     // Via Antonio Pasinetti
     box('site', 'walk', xW(ZF) + 2.5, RIP0 - 2.5, -0.02, 0.15, ZF, 9.3);
-    box('site', 'curb', xW(9.3) - 0.1, RIP0 - 0.15, -0.02, 0.16, 9.3, 9.45);
+    box('site', 'kerb', xW(9.3) - 0.1, RIP0 - 0.15, -0.02, 0.16, 9.18, 9.45);
     quadY('site', 'asphalt', PX0, RIP1, 9.45, 17.6, 0.004);
-    for (let x = PX0 + 1.2; x < RIP0 - 2.4; x += 5) if (x + 2.4 < xW(13) - 13 || x > xW(13) + 1) box('site', 'curb', x, x + 2.4, 0.004, 0.014, 13.48, 13.58);
-    box('site', 'curb', PX0, RIP0, -0.02, 0.16, 17.6, 17.75);
+    for (let x = PX0 + 1.2; x < RIP0 - 2.4; x += 5) if (x + 2.4 < xW(13) - 13 || x > xW(13) + 1) box('site', 'zebra', x, x + 2.4, 0.004, 0.012, 13.48, 13.6);
+    box('site', 'kerb', PX0, RIP0, -0.02, 0.16, 17.6, 17.87);
     box('site', 'walk', PX0, RIP0, -0.02, 0.15, 17.75, 21.2);
     // Via Gallura (behind the block)
     quadY('site', 'asphalt', PX0, RIP1, GAL0, GAL1, 0.004);
     box('site', 'walk', xW(GAL1) + 2.5, RIP0 - 2.5, -0.02, 0.15, GAL1, GAL1 + 2.0);
-    box('site', 'curb', xW(GAL1), RIP0 - 0.15, -0.02, 0.16, GAL1 - 0.15, GAL1);
+    box('site', 'kerb', xW(GAL1), RIP0 - 0.15, -0.02, 0.16, GAL1 - 0.15, GAL1 + 0.12);
     box('site', 'walk', PX0, RIP0, -0.02, 0.15, GAL0 - 3.0, GAL0);
-    box('site', 'curb', PX0, RIP0, -0.02, 0.16, GAL0, GAL0 + 0.15);
+    box('site', 'kerb', PX0, RIP0, -0.02, 0.16, GAL0 - 0.12, GAL0 + 0.15);
     // Via Giuseppe Ripamonti: wide avenue with tram tracks and plane trees
     [[17.6, PZ1], [GAL1, 9.45], [PZ0, GAL0]].forEach((r) => {
       quadY('site', 'asphalt', RIP0, RIP1, r[0], r[1], 0.004);
-      box('site', 'curb', RIP0 - 0.15, RIP0, -0.02, 0.16, r[0], r[1]);
-      box('site', 'curb', RIP1, RIP1 + 0.15, -0.02, 0.16, r[0], r[1]);
+      box('site', 'kerb', RIP0 - 0.27, RIP0, -0.02, 0.16, r[0], r[1]);
+      box('site', 'kerb', RIP1, RIP1 + 0.27, -0.02, 0.16, r[0], r[1]);
     });
     [92.3, 93.75, 96.25, 97.7].forEach((x) => box('site', 'tram', x - 0.05, x + 0.05, 0.004, 0.03, PZ0, PZ1));
     box('site', 'walk', RIP0 - 2.5, RIP0 - 0.15, -0.02, 0.15, GAL1, 9.3);
     box('site', 'walk', RIP1 + 0.15, RIP1 + 3.5, -0.02, 0.15, PZ0, PZ1);
     // south side of Via Pasinetti and the diagonal street on the west
     along('site', 'walk', 17.75, PZ1, 0, 2.5, -0.02, 0.15);
-    along('site', 'curb', 17.75, PZ1, -0.15, 0, -0.02, 0.16);
+    along('site', 'kerb', 17.75, PZ1, -0.15, 0.12, -0.02, 0.16);
     box('site', 'walk', RIP0 - 2.5, RIP0 - 0.15, -0.02, 0.15, 17.75, 21.2);
     // zebra crossings at the corners
     const zebraX = (x0, x1, z0, z1) => { for (let z = z0; z < z1 - 0.3; z += 1.0) box('site', 'zebra', x0, x1, 0.004, 0.012, z, z + 0.5); };
@@ -2216,12 +2270,21 @@ class Component extends DCLogic {
     zebraX(RIP0 - 6.5, RIP0 - 3.5, 9.7, 17.4); zebraX(xW(13) + 3.2, xW(13) + 6.2, 9.7, 17.4);
     zebraZ(RIP0 + 0.6, RIP1 - 0.6, 18.4, 21.0); zebraZ(RIP0 + 0.6, RIP1 - 0.6, 6.0, 8.6);
     zebraX(RIP0 - 6.5, RIP0 - 3.5, GAL0 + 0.3, GAL1 - 0.3);
+    // road wear: cast-iron manhole covers in a dark ring, gutter drains along the kerbs
+    {
+      const disc = (x, z, r) => {
+        const g = new THREE.CircleGeometry(r, 20); g.rotateX(-Math.PI / 2); g.translate(x, 0.0075, z); put('site', 'manhole', g);
+        const rg = new THREE.RingGeometry(r, r + 0.06, 20); rg.rotateX(-Math.PI / 2); rg.translate(x, 0.007, z); put('site', 'trim', rg);
+      };
+      [[-62, 12.4], [-31, 14.6], [3, 12.2], [27, 14.9], [58, 12.6], [73, 15.0], [95, 2], [91, -20], [99, 30], [-30, -45.5], [20, -46], [60, -45.3]].forEach((q) => disc(q[0], q[1], 0.32));
+      for (let x = -70; x < 80; x += 19) { box('site', 'trim', x, x + 0.62, 0.004, 0.009, 9.47, 9.79); box('site', 'trim', x + 9, x + 9.62, 0.004, 0.009, 17.27, 17.58); }
+    }
     box('site', 'walk', RIP0 - 2.5, RIP0 - 0.15, -0.02, 0.15, 21.2, PZ1);
     box('site', 'walk', RIP0 - 2.5, RIP0 - 0.15, -0.02, 0.15, PZ0, GAL0 - 3.0);
     // Piazza Chiaradia side: street, sidewalks and the small park
     [[PZ1, 17.6], [9.45, GAL1], [GAL0, PZ0]].forEach((r) => along('site', 'asphalt', r[0], r[1], -12, 0, -0.01, 0.006));
     along('site', 'walk', 9.3, GAL1, 0, 2.5, -0.02, 0.15);
-    along('site', 'curb', 9.3, GAL1, -0.15, 0, -0.02, 0.16);
+    along('site', 'kerb', 9.3, GAL1, -0.15, 0.12, -0.02, 0.16);
     along('site', 'walk', 9.3, GAL1, -15, -12, -0.02, 0.15);
     along('site', 'grass', 9.3, GAL1, -27, -15, -0.02, 0.08);
     // ---- the rest of the block: refined white massing with muted terracotta roofs (Milan perimeter block)
@@ -2347,9 +2410,9 @@ class Component extends DCLogic {
     // south side of Via Pasinetti: shops stay (cut section), the storeys above fade when the camera is on the street side
     const SB = 21.4, SF = 33.4;
     // footprints stay on the plinth as a cut site model; the volumes fade when the camera is on the street side
-    const foot = (pts) => { prism('site', 'roofM', pts, -0.02, 0.3); pts.forEach((a, i) => segBox('site', 'slab', a, pts[(i + 1) % pts.length], 0.3, 0.46, 0.2)); };
+    const foot = (pts) => { prism('site', 'courtP', pts, -0.02, 0.28); pts.forEach((a, i) => segBox('site', 'kerb', a, pts[(i + 1) % pts.length], 0.26, 0.4, 0.22)); };
     // south side: a kept shop storey would hide the street and the project's base from the hero camera, so these neighbours
-    // stay cut at the ground as textured footprints (gravel slab with a low outline); the north side keeps its shop storey
+    // stay cut at the ground: each footprint is a paved pad a little lighter than the courtyards, edged in granite; the north side keeps its shop storey
     const south = (x0, x1, z0, z1, h, roof, mk) => { const pts = x0 === null ? W(z0, z1, x1) : R(x0, x1, z0, z1); foot(pts); bld('ctxS', pts, h, roof, { mk: mk }); };
     south(null, -24, SB, SF, 14.5, 'g', 'ctx1');
     south(-24, -6, SB, SF, 12.5, 'g', 'ctx0');
@@ -2369,10 +2432,24 @@ class Component extends DCLogic {
     box('site', 'walk', EX0, PX1, -0.02, 0.15, -16, -12);
     box('site', 'walk', EX0, PX1, -0.02, 0.15, -42, -38);
     // inner courtyards: paving and lawns
-    quadY('site', 'walk', xW(GAL1 + 2) + 2.5, RIP0 - 2.5, GAL1 + 2.0, -16.65, 0.004);
+    quadY('site', 'court', xW(GAL1 + 2) + 2.5, RIP0 - 2.5, GAL1 + 2.0, -16.65, 0.004);
     [[-36, -21, -38, -28], [-12, 8, -24, -17.6], [14, 34, -38.5, -30], [40, 60, -38.6, -29], [62, 80, -38, -28]].forEach((q) => quadY('site', 'grass', q[0], q[1], q[2], q[3], 0.012));
     quadY('site', 'paving', 50, 66, -26.5, -24.2, 0.01);
     quadY('site', 'grass', -10, 36, SF + 0.4, SF + 4.6, 0.01);
+    // south blocks seen from the street side: the volumes fade, so what stays is their ground. Paved courtyards under every
+    // footprint, lawns with clipped hedges, a residents' parking court, a few small ornamental trees at the back
+    prism('site', 'court', [[xW(21.2) + 2.5, 21.2], [RIP0 - 2.5, 21.2], [RIP0 - 2.5, PZ1 - 0.4], [xW(PZ1 - 0.4) + 2.5, PZ1 - 0.4]], -0.018, 0.002);
+    [[40, 64, SF + 0.8, SF + 3.6], [-14, 2.5, SF + 5.6, 45.6], [59, 65.4, SF + 5, 45.6], [-38, -17, SF + 0.8, SF + 3.4]].forEach((q) => quadY('site', 'grass', q[0], q[1], q[2], q[3], 0.01));
+    iso(4471, () => {
+      hedge('site', -10, 36, 0.01, 0.95, SF + 0.4, SF + 1.1);
+      hedge('site', 40, 64, 0.01, 0.9, SF + 0.8, SF + 1.45);
+      hedge('site', -14, 2.5, 0.01, 1.1, 45.0, 45.6);
+      hedge('site', 59, 65.4, 0.01, 1.1, 45.0, 45.6);
+      [[-9, 42.6], [-3.5, 40.4], [62.2, 41.5], [-30, SF + 2.1]].forEach((q) => tree('site', q[0], 0.01, q[1], 6.2 + rnd() * 1.2, 2.0, 'plane', true));
+      [[-12, 39.5], [0.5, 44], [60.5, 39], [44, SF + 2.6], [52, SF + 2.2], [-22, SF + 2.4]].forEach((q) => shrub('site', q[0], 0.01, q[1], 0.6 + rnd() * 0.3, 0.9 + rnd() * 0.4, 0.3));
+      for (let x = 24.4; x < 36.2; x += 2.5) box('site', 'zebra', x, x + 0.1, 0.002, 0.009, 39.2, 44.2);
+      box('site', 'zebra', 24.4, 36.3, 0.002, 0.009, 44.1, 44.2);
+    });
     // light trees: street rows, the Chiaradia park and the inner courtyards
     // street rows, the Chiaradia park and the courtyards: the same plane trees, with a lighter card budget
     const treeLite = (gk, x, y, z, h, r) => tree(gk, x, y, z, h, r, 'plane', true);
@@ -2527,43 +2604,103 @@ class Component extends DCLogic {
     [-56, 52, 84].forEach((x) => lamp(x, 9.0, 1));
     // street life on Via Pasinetti: parallel-parked cars on both curbs (kept clear of the entrance and the garage ramp),
     // plane trees in grated pits beyond the building, bollards along the building-side curb, bike racks by the entrance
-    // parked cars with a real silhouette: the side profile (bonnet, wheel arches, boot) extruded with rounded edges in the paint
-    // colour, a narrower glasshouse (tumblehome) in dark glass, a roof skin, tyres with light alloy rims, lamps and mirrors.
-    // Two body styles (hatchback, saloon) built once and placed by copy.
+    // parked cars, built once per body style and placed by copy. Side profile (bumpers, bonnet, wheel arches cut down to the
+    // sill, belt line, boot or tailgate) extruded with a two-step rounded edge and smoothed normals; the flanks lean in a little
+    // and the glasshouse leans in more (tumblehome), so the dark glass sits back from the shoulder. A painted roof skin, black
+    // B-pillars, door shut-lines, dark wheel wells behind the tyres, alloy rims, lamp clusters, grille and white number plates.
     const CARS = (() => {
-      const ext = (shape, depth, bev) => {
-        const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: bev, bevelSize: bev, bevelSegments: 1, curveSegments: 5 });
+      const ext = (shape, depth, bev, segs) => {
+        const g = new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: bev > 0, bevelThickness: bev, bevelSize: bev, bevelSegments: segs || 2, curveSegments: 6 });
         g.translate(0, 0, -depth / 2); return g;
       };
-      const make = (L, beltF, beltR, roofF, roofR, roofY, bootY) => {
-        const hL = L / 2, ax = hL - 0.82, wr = 0.33, ar = 0.4;
-        const body = new THREE.Shape();
-        body.moveTo(-hL + 0.06, 0.36); body.quadraticCurveTo(-hL - 0.02, 0.52, -hL + 0.01, 0.74); body.quadraticCurveTo(-hL + 0.04, bootY, -hL + 0.24, bootY + 0.02);
-        body.lineTo(hL - 0.95, beltF); body.quadraticCurveTo(hL - 0.25, beltF - 0.04, hL - 0.04, 0.72); body.quadraticCurveTo(hL + 0.03, 0.54, hL - 0.06, 0.36);
-        body.lineTo(ax + ar, 0.36); body.absarc(ax, wr, ar, 0, Math.PI, false); body.lineTo(-ax + ar, 0.36); body.absarc(-ax, wr, ar, 0, Math.PI, false); body.lineTo(-hL + 0.06, 0.36);
+      // linear lean-in with height: keeps the flat sides planar (only z changes, linearly in y)
+      const lean = (g, ya, yb, ka, kb) => { const p = g.attributes.position; for (let i = 0; i < p.count; i++) { const t = (p.getY(i) - ya) / (yb - ya); p.setZ(i, p.getZ(i) * (ka + (kb - ka) * t)); } return g; };
+      // smooth shading across the rounded edges, crisp where faces meet at more than `deg`
+      const smooth = (g, deg) => {
+        g.computeVertexNormals();
+        const p = g.attributes.position, n = g.attributes.normal, c = Math.cos(deg * Math.PI / 180), groups = new Map(), out = new Float32Array(p.count * 3);
+        for (let i = 0; i < p.count; i++) { const k = Math.round(p.getX(i) * 400) + '|' + Math.round(p.getY(i) * 400) + '|' + Math.round(p.getZ(i) * 400); let a = groups.get(k); if (!a) groups.set(k, a = []); a.push(i); }
+        groups.forEach((a) => a.forEach((i) => {
+          let sx = 0, sy = 0, sz = 0; const ax = n.getX(i), ay = n.getY(i), az = n.getZ(i);
+          a.forEach((j) => { const bx = n.getX(j), by = n.getY(j), bz = n.getZ(j); if (ax * bx + ay * by + az * bz >= c) { sx += bx; sy += by; sz += bz; } });
+          const l = Math.hypot(sx, sy, sz) || 1; out[i * 3] = sx / l; out[i * 3 + 1] = sy / l; out[i * 3 + 2] = sz / l;
+        }));
+        g.setAttribute('normal', new THREE.BufferAttribute(out, 3)); return g;
+      };
+      const bx = (x0, x1, y0, y1, z0, z1) => { const g = new THREE.BoxGeometry(x1 - x0, y1 - y0, z1 - z0); g.translate((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2); return g; };
+      const make = (o) => {
+        const L = o.L, W = o.W, H = o.H, wr = o.wr, sill = o.sill, belt = o.belt, beltR = o.beltR, bonY = o.bonY;
+        const xf = L / 2, xr = -L / 2, axF = xf - o.fo, axR = axF - o.WB, ar = wr + 0.075, d = Math.asin(Math.max(0, Math.min(0.9, (wr - sill) / ar)));
+        const xw = xf - o.bonL, xt = xw - o.rake, xrr = xr + o.roofR, boot = o.back === 'boot', xc = xr + (o.deck || 0);
+        // body side profile, from the rear bumper along the sill and over both wheels, up the nose, back along bonnet and belt
+        const s = new THREE.Shape();
+        s.moveTo(xr + 0.18, sill + 0.05);
+        s.lineTo(axR - ar * Math.cos(d), sill); s.absarc(axR, wr, ar, Math.PI + d, -d, true);
+        s.lineTo(axF - ar * Math.cos(d), sill); s.absarc(axF, wr, ar, Math.PI + d, -d, true);
+        s.lineTo(xf - 0.18, sill + 0.05);
+        s.quadraticCurveTo(xf - 0.02, sill + 0.07, xf, 0.45);
+        s.quadraticCurveTo(xf + 0.015, bonY - 0.1, xf - 0.09, bonY);
+        s.quadraticCurveTo(xf - o.bonL * 0.45, bonY + 0.09, xw, belt);
+        if (boot) { s.lineTo(xc + 0.06, beltR); s.quadraticCurveTo(xc - 0.05, o.bootY, xc - 0.2, o.bootY); s.lineTo(xr + 0.14, o.bootY - 0.01); s.quadraticCurveTo(xr - 0.02, o.bootY - 0.03, xr - 0.01, o.bootY - 0.28); }
+        else { s.lineTo(xr + 0.12, beltR); s.quadraticCurveTo(xr - 0.03, beltR - 0.02, xr - 0.015, beltR - 0.3); }
+        s.quadraticCurveTo(xr - 0.005, sill + 0.08, xr + 0.18, sill + 0.05);
+        // glasshouse
         const gh = new THREE.Shape();
-        gh.moveTo(-hL + roofR, beltR - 0.02); gh.quadraticCurveTo(-hL + roofR + 0.18, roofY - 0.06, -hL + roofR + 0.5, roofY); gh.lineTo(roofF, roofY + 0.01);
-        gh.quadraticCurveTo(roofF + 0.28, roofY - 0.04, hL - 0.98, beltF - 0.02); gh.lineTo(-hL + roofR, beltR - 0.02);
+        gh.moveTo(xw + 0.03, belt - 0.03);
+        gh.quadraticCurveTo(xw - o.rake * 0.5, belt + (H - belt) * 0.72, xt, H - 0.01);
+        gh.lineTo(xrr, H - 0.03);
+        if (boot) gh.quadraticCurveTo(xrr - 0.32, H - 0.07, xc + 0.02, o.bootY - 0.02);
+        else gh.quadraticCurveTo(xr + 0.1, H - 0.08, xr + 0.12, beltR - 0.03);
+        gh.lineTo(xw + 0.03, belt - 0.03);
+        // painted roof skin over the top of the glasshouse
         const rf = new THREE.Shape();
-        rf.moveTo(-hL + roofR + 0.46, roofY - 0.025); rf.lineTo(roofF + 0.02, roofY - 0.015); rf.lineTo(roofF + 0.02, roofY + 0.03); rf.lineTo(-hL + roofR + 0.46, roofY + 0.02); rf.lineTo(-hL + roofR + 0.46, roofY - 0.025);
-        const g = { paint: [ext(body, 1.7, 0.04), ext(rf, 1.44, 0.015)], glass: [ext(gh, 1.38, 0.05)], tyre: [], rim: [], lamp: [], tail: [] };
-        [[ax, 1], [-ax, 1], [ax, -1], [-ax, -1]].forEach((w) => {
-          const t = new THREE.CylinderGeometry(wr, wr, 0.22, 20); t.rotateX(Math.PI / 2); t.translate(w[0], wr, w[1] * 0.78); g.tyre.push(t);
-          const r = new THREE.CylinderGeometry(0.2, 0.2, 0.226, 14); r.rotateX(Math.PI / 2); r.translate(w[0], wr, w[1] * 0.78); g.rim.push(r);
+        rf.moveTo(xt + 0.05, H - 0.03); rf.lineTo(xrr + 0.03, H - 0.05); rf.lineTo(xrr + 0.03, H + 0.001); rf.lineTo(xt + 0.05, H + 0.021); rf.lineTo(xt + 0.05, H - 0.03);
+        const gLean = (g, extra) => lean(g, belt, H, 0.965 * extra, 0.78 * extra);
+        const bodyG = smooth(lean(ext(s, W - 0.08, 0.04, 2), sill, belt, 1.0, 0.965), 38);
+        const glassG = smooth(gLean(ext(gh, W - 0.24, 0.05, 2), 1), 38);
+        const roofG = smooth(gLean(ext(rf, W - 0.14, 0.025, 2), 1), 40);
+        const g = { paint: [bodyG, roofG], glass: [glassG], trim: [], tyre: [], rim: [], lamp: [], tail: [], plate: [] };
+        // pillars: black B-pillar, body-colour C-pillar (full-width bands, a few mm proud of the side glass); door shut-lines
+        const x1 = Math.min(xw + 0.05, axF - ar - 0.05), xb = x1 - (o.doors === 3 ? 1.15 : 0.99);
+        const band = (pts) => { const sh = new THREE.Shape(); sh.moveTo(pts[0][0], pts[0][1]); pts.slice(1).forEach((q) => sh.lineTo(q[0], q[1])); sh.lineTo(pts[0][0], pts[0][1]); return gLean(ext(sh, W - 0.14 + 0.012, 0, 1), 1); };
+        g.trim.push(band([[xb - 0.05, belt - 0.02], [xb + 0.05, belt - 0.02], [xb, H - 0.04], [xb - 0.1, H - 0.04]]));
+        if (boot) g.paint.push(band([[xc + 0.1, beltR - 0.02], [xc + 0.5, beltR - 0.02], [xrr + 0.2, H - 0.04], [xrr - 0.04, H - 0.04]]));
+        else g.paint.push(band([[xr + 0.22, beltR - 0.02], [xr + 0.62, beltR - 0.02], [xrr + 0.3, H - 0.04], [xrr + 0.04, H - 0.04]]));
+        [x1, xb - 0.02, o.doors === 3 ? null : axR + ar + 0.05].forEach((x) => { if (x === null) return; g.trim.push(lean(bx(x - 0.004, x + 0.004, sill + 0.09, belt - 0.05, -W / 2 - 0.003, W / 2 + 0.003), sill, belt, 1.0, 0.965)); });
+        // wheels: dark wheel wells, tyres, alloy rims standing a few mm proud of the sidewall
+        const zt = W / 2 - 0.125;
+        [axF, axR].forEach((ax) => {
+          g.trim.push(bx(ax - ar + 0.03, ax + ar - 0.03, wr - 0.02, wr + ar - 0.02, -(W / 2 - 0.07), W / 2 - 0.07));
+          [-1, 1].forEach((sd) => {
+            const t = new THREE.CylinderGeometry(wr, wr, 0.21, 20); t.rotateX(Math.PI / 2); t.translate(ax, wr, sd * zt); g.tyre.push(t);
+            const r = new THREE.CylinderGeometry(wr * 0.66, wr * 0.66, 0.216, 16); r.rotateX(Math.PI / 2); r.translate(ax, wr, sd * zt); g.rim.push(r);
+          });
         });
-        [-0.58, 0.58].forEach((d) => {
-          const hl = new THREE.BoxGeometry(0.06, 0.1, 0.36); hl.translate(hL - 0.05, 0.72, d); g.lamp.push(hl);
-          const tl = new THREE.BoxGeometry(0.05, 0.11, 0.38); tl.translate(-hL + 0.04, bootY - 0.12, d); g.tail.push(tl);
-          const mr = new THREE.BoxGeometry(0.16, 0.1, 0.12); mr.translate(hL - 1.02, beltF + 0.06, d * 1.62); g.paint.push(mr);
+        // lamps, grille, number plates, black mirror housings
+        [-1, 1].forEach((sd) => {
+          g.lamp.push(bx(xf - 0.12, xf + 0.055, bonY - 0.13, bonY - 0.04, sd * (W / 2 - 0.44), sd * (W / 2 - 0.1)));
+          const ty = boot ? o.bootY - 0.15 : beltR - 0.17;
+          g.tail.push(bx(xr - 0.075, xr + 0.08, ty - 0.06, ty + 0.06, sd * (W / 2 - 0.42), sd * (W / 2 - 0.09)));
+          g.trim.push(bx(xw - 0.17, xw - 0.07, belt + 0.04, belt + 0.12, sd * (W / 2 - 0.02), sd * (W / 2 + 0.1)));
         });
+        g.trim.push(bx(xf - 0.08, xf + 0.055, 0.36, 0.56, -0.42, 0.42));
+        g.plate.push(bx(xf + 0.055, xf + 0.067, 0.39, 0.5, -0.26, 0.26));
+        g.plate.push(bx(xr - 0.08, xr - 0.066, 0.5, 0.61, -0.26, 0.26));
         return g;
       };
-      return [make(4.1, 0.96, 0.98, 0.42, 0.18, 1.48, 0.98), make(4.6, 0.92, 0.98, 0.62, 0.62, 1.44, 0.96)];
+      return [
+        // five-door hatchback
+        make({ L: 4.2, W: 1.78, H: 1.46, wr: 0.32, sill: 0.24, belt: 0.97, beltR: 1.0, bonY: 0.79, fo: 0.86, WB: 2.62, bonL: 1.2, rake: 0.86, roofR: 0.42 }),
+        // saloon with a boot
+        make({ L: 4.65, W: 1.8, H: 1.44, wr: 0.33, sill: 0.25, belt: 0.95, beltR: 0.98, bonY: 0.77, fo: 0.9, WB: 2.74, bonL: 1.3, rake: 0.9, roofR: 1.25, back: 'boot', deck: 0.6, bootY: 1.0 }),
+        // small three-door city car, upright and short
+        make({ L: 3.65, W: 1.66, H: 1.53, wr: 0.3, sill: 0.25, belt: 0.98, beltR: 1.02, bonY: 0.82, fo: 0.68, WB: 2.3, bonL: 0.86, rake: 0.72, roofR: 0.3, doors: 3 })
+      ];
     })();
     const sCar = (x, z, mk, dir) => {
-      const c = CARS[rnd() < 0.55 ? 0 : 1];
-      const place = (list, m) => list.forEach((gg) => { const q = gg.clone(); if (dir < 0) q.rotateY(Math.PI); q.translate(x, 0.0, z); put('site', m, q); });
-      place(c.paint, mk); place(c.glass, 'carGlass'); place(c.tyre, 'tyre'); place(c.rim, 'rim'); place(c.lamp, 'headL'); place(c.tail, 'tail');
+      const r = rnd(), c = CARS[r < 0.45 ? 0 : r < 0.75 ? 1 : 2], yaw = (rnd() - 0.5) * 0.03, dz = (rnd() - 0.5) * 0.1;
+      const place = (list, m) => list.forEach((gg) => { const q = gg.clone(); q.rotateY((dir < 0 ? Math.PI : 0) + yaw); q.translate(x, 0.0, z + dz); put('site', m, q); });
+      place(c.paint, mk); place(c.glass, 'carGlass'); place(c.trim, 'trim'); place(c.tyre, 'tyre'); place(c.rim, 'rim'); place(c.lamp, 'headL'); place(c.tail, 'tail'); place(c.plate, 'zebra');
     };
     const CARP = ['carB', 'carC', 'carE', 'carA', 'carB', 'carD', 'carC', 'carF', 'carG'];
     iso(913, () => {
@@ -3313,7 +3450,7 @@ class Component extends DCLogic {
           'float hash(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233)) + seed) * 43758.5453); }' +
           'void main(){ vec3 c = texture2D(tScene, vUv).rgb; float ao = mix(1.0, texture2D(tAO, vUv).r, aoK * useAO); c *= ao;' +
           'c += texture2D(tBloom, vUv).rgb * bloomK; c *= tint;\n#ifdef TONE_MAPPING\nc = toneMapping(c);\n#endif\n' +
-          'float l = dot(c, vec3(0.2126, 0.7152, 0.0722)); c = mix(vec3(l), c, sat); c = clamp((c - 0.18) * con + 0.18, 0.0, 1.0);' +
+          'float l = dot(c, vec3(0.2126, 0.7152, 0.0722)); c = mix(vec3(l), c, sat); c = clamp(pow(max(c, vec3(0.0)) / 0.18, vec3(con)) * 0.18, 0.0, 1.0);' +   // contrast around mid-grey that keeps shadow detail (no black clip)
           'vec2 q = vUv - 0.5; c *= clamp(1.0 - vig * dot(q, q) * 2.2, 0.0, 1.0); c += (hash(gl_FragCoord.xy) - 0.5) * grain * (0.25 + dot(c, vec3(0.3333)));' +
           'gl_FragColor = linearToOutputTexel(vec4(c, 1.0)); }'
       });
