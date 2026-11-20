@@ -1108,6 +1108,7 @@ class Component extends DCLogic {
       glassLitB: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.15 }),
       glassLitC: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 1.0, roughness: 0.2, metalness: 0.15 }),
       glassDim: phy({ map: T.curtain, color: 0x120d09, emissive: 0xffffff, emissiveMap: T.interior, emissiveIntensity: 0.38, roughness: 0.15, metalness: 0.5 }),
+      soffit: std({ color: 0xb9b6b1, roughness: 0.95 }),
       light: std({ color: 0xfff0d8, emissive: 0xffd6a0, emissiveIntensity: 1.0, roughness: 1 }),
       rail: std({ color: 0x34363a, alphaMap: T.rail, alphaTest: 0.5, side: THREE.DoubleSide, roughness: 0.5, metalness: 0.5 }),
       paving: std({ map: T.paving, normalMap: T.pavingN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
@@ -1251,8 +1252,8 @@ class Component extends DCLogic {
       put(gk, mk, geo);
     };
     const FLW = ['flowerP', 'flowerW', 'flowerL', 'flowerW'];
-    const flowers = (gk, x, y, z, spread, n) => {
-      for (let i = 0; i < n; i++) blob(gk, FLW[(rnd() * FLW.length) | 0], x + (rnd() - 0.5) * spread, y + rnd() * 0.25, z + (rnd() - 0.5) * spread * 0.6, 0.13 + rnd() * 0.1, 0.9, 0);
+    const flowers = (gk, x, y, z, spread, n, det) => {
+      for (let i = 0; i < n; i++) blob(gk, FLW[(rnd() * FLW.length) | 0], x + (rnd() - 0.5) * spread, y + rnd() * 0.25, z + (rnd() - 0.5) * spread * 0.6, 0.13 + rnd() * 0.1, 0.9, det === undefined ? 1 : det);
     };
     const cyl = (gk, mk, x, y0, y1, z, r) => {
       const geo = new THREE.CylinderGeometry(r * 0.8, r, y1 - y0, 6);
@@ -1460,6 +1461,15 @@ class Component extends DCLogic {
         plantBed(gk, Math.max(x0, c - hl), Math.min(x1, c + hl), y, zc, 0.46, { h: 0.42, trail: dir, tall: 0.85, topiary: 0.2, flowers: 0.5, step: 0.34 });
       }
     };
+    const spill = (gk, x0, x1, ytop, z, dir) => {
+      let c = x0 + 0.2 + rnd() * 0.6;
+      while (c < x1 - 0.3) {
+        const hw = 0.22 + rnd() * 0.3, drop = 0.35 + rnd() * 0.55;
+        cards(gk, c, ytop - drop / 2, z + dir * 0.05, hw, drop / 2, 0.06, Math.round(18 + 40 * hw * drop), CELLS.leaf, 0.12, 0.24);
+        if (rnd() < 0.45) flowers(gk, c, ytop - drop * 0.4, z + dir * 0.07, hw * 1.4, 2 + ((rnd() * 3) | 0));
+        c += hw * 2 + 0.5 + rnd() * 1.4;
+      }
+    };
     const LIT = ['glassLit', 'glassLitB', 'glassLitC'];
     const loggia = (gk, x0, x1, yb, yt, fz, dir, mk, o) => {
       o = o || {};
@@ -1480,15 +1490,16 @@ class Component extends DCLogic {
         }
         box(gk, 'frame', x1 - 0.135, x1 - 0.065, yb + 0.2, yt - 0.62, Math.min(zb, zb + dir * 0.06), Math.max(zb, zb + dir * 0.06));
         rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.1, fz - dir * 0.05, dir);
-        if (rnd() < 0.88) pots(gk, x0 + 0.3, x1 - 0.3, yb + 0.2, zb + dir * 0.4, dir);
+        if (rnd() < 0.88) { pots(gk, x0 + 0.3, x1 - 0.3, yb + 0.2, zb + dir * 0.4, dir); if (rnd() < 0.6) spill(gk, x0 + 0.2, x1 - 0.2, yb + 1.1, fz, dir); }
         return;
       }
-      quadY(gk, 'light', x0 + 0.4, x1 - 0.4, Math.min(fz, zb) + 0.3, Math.max(fz, zb) - 0.3, yt - 0.345, true);
+      { const zc = (fz + zb) / 2, nd = Math.max(1, Math.round((x1 - x0) / 1.8)); for (let i = 0; i < nd; i++) { const cx = x0 + (i + 0.5) * (x1 - x0) / nd; quadY(gk, 'light', cx - 0.08, cx + 0.08, zc - 0.08, zc + 0.08, yt - 0.345, true); } }
+      box(gk, 'soffit', x0, x1, yt - 0.36, yt - 0.34, Math.min(fz, zb), Math.max(fz, zb));
       const n = Math.max(1, Math.round((x1 - x0) / 2.0));
       const pw = (x1 - x0) / n;
       for (let i = 0; i < n; i++) pane(gk, x0 + i * pw + 0.3, x0 + (i + 1) * pw - 0.3, yb + 0.22, yt - 0.62, zb + dir * 0.015, dir, { mull: 0.8 });
       rail(gk, x0 + 0.03, x1 - 0.03, yb + 0.2, yb + 1.2, fz - dir * 0.08, dir);
-      if (rnd() < 0.85) pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir);
+      if (rnd() < 0.85) { pots(gk, x0 + 0.25, x1 - 0.25, yb + 0.2, fz - dir * 0.42, dir); spill(gk, x0 + 0.2, x1 - 0.2, yb + 1.2, fz, dir); }
     };
     const surround = (gk, mk, x0, x1, y0, y1, fz, dir) => {
       const s = 0.13, o = 0.08, zz = fz + dir * 0.09;
@@ -1713,8 +1724,20 @@ class Component extends DCLogic {
           box(gk, wm, xa, xb, y0, y1 + 0.14, w[1] + 0.02, w[1] + 0.16);
           box(gk, wm, xa, xb, y1 + 0.02, y1 + 0.16, w[0] - 0.16, w[1] + 0.16);
           box(gk, 'slab', xa, xb + 0.06, y0 - 0.1, y0 - 0.02, w[0] - 0.12, w[1] + 0.12);
-          if (f >= 2) railX(gk, w[0], w[1], y0, yb + 1.1, xb + 0.02, 1);
+          if (f >= 2 && !(f <= 5 && w[0] === 0.6)) railX(gk, w[0], w[1], y0, yb + 1.1, xb + 0.02, 1);
         });
+        if (f >= 2 && f <= 5) {
+          const z0 = 0.05, z1 = 2.55, xo = X1 + 1.5;
+          box(gk, 'plaster', X1 + 0.05, xo, yb - 0.08, yb + 0.2, z0, z1);
+          box(gk, 'soffit', X1 + 0.05, xo - 0.05, yb - 0.1, yb - 0.08, z0 + 0.05, z1 - 0.05);
+          railX(gk, z0 + 0.03, z1 - 0.03, yb + 0.2, yb + 1.15, xo - 0.04, 1);
+          rail(gk, X1 + 0.06, xo - 0.04, yb + 0.2, yb + 1.15, z0 + 0.04, -1);
+          rail(gk, X1 + 0.06, xo - 0.04, yb + 0.2, yb + 1.15, z1 - 0.04, 1);
+          iso(f * 53 + 11, () => {
+            plantBed(gk, z0 + 0.2, z1 - 1.0, yb + 0.2, xo - 0.32, 0.4, { axis: 'z', h: 0.38, trail: 1, tall: 0.85, topiary: 0.2, flowers: 0.55, step: 0.3 });
+            const c = z0 + 0.45 + rnd() * 0.5; cards(gk, xo + 0.05, yb + 0.85, c, 0.06, 0.32, 0.3, 26, CELLS.leaf, 0.12, 0.24);
+          });
+        }
       }
     };
 
@@ -1906,7 +1929,7 @@ class Component extends DCLogic {
     const edgeGarden = { h: 0.3, tall: 0.95, flowers: 0.62, step: 0.3, topiary: 0.14, trail: 1 };
     for (let x = -25.6; x < 30.7; x += 4.6) {
       plantBed('roof', x, Math.min(30.7, x + 4.45), ROOF, 6.42, 0.8, edgeGarden);
-      for (let fx = x + 0.4; fx < Math.min(30.5, x + 4.3); fx += 0.7 + rnd() * 0.6) flowers('roof', fx, ROOF + 0.55 + rnd() * 0.25, 6.5, 0.6, 5 + ((rnd() * 5) | 0));
+      for (let fx = x + 0.4; fx < Math.min(30.5, x + 4.3); fx += 0.7 + rnd() * 0.6) flowers('roof', fx, ROOF + 0.55 + rnd() * 0.25, 6.5, 0.6, 5 + ((rnd() * 5) | 0), 0);
     }
     const lowBed = { h: 0.42, tall: 0.75, flowers: 0.5, step: 0.36, topiary: 0.22 };
     [[-19.9, -11.6, 4.3], [21.2, 28.6, 4.35], [-11.4, -3.0, 4.3], [3.8, 14.1, 4.3]].forEach((r) => plantBed('roof', r[0], r[1], ROOF, r[2], 0.6, lowBed));
