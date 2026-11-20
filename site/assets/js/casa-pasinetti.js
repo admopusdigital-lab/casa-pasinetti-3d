@@ -814,19 +814,18 @@ class Component extends DCLogic {
     };
     // light stone cladding / render with faint panel joints
     const PL = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#d9d9d6'; g.fillRect(0, 0, w, h);
-      tint(g, w, h, 5, 0.55, 96, 160); tint(g, w, h, 24, 0.45, 102, 154);
-      speckle(g, w, h, 20000, ['rgba(255,255,255,.12)', 'rgba(60,58,55,.07)', 'rgba(120,115,108,.07)'], 0.7, 1.6);
+      g.fillStyle = '#dad3c8'; g.fillRect(0, 0, w, h);
+      tint(g, w, h, 5, 0.5, 98, 158); tint(g, w, h, 24, 0.42, 102, 154);
+      speckle(g, w, h, 30000, ['rgba(255,252,245,.14)', 'rgba(70,62,52,.09)', 'rgba(140,128,112,.09)', 'rgba(110,100,88,.06)'], 0.8, 2.2);
       hg.fillStyle = grey(180); hg.fillRect(0, 0, w, h);
       noiseLayer(hg, w, h, 56, 0.55, 150, 210);
-      speckle(hg, w, h, 24000, [grey(150), grey(205)], 0.7, 1.5);
-      for (let r = 0; r < 2; r++) { g.fillStyle = 'rgba(90,88,84,.22)'; g.fillRect(0, r * h / 2, w, 1.2); hg.fillStyle = grey(110); hg.fillRect(0, r * h / 2, w, 1.4); }
-    }, 2.6);
+      speckle(hg, w, h, 34000, [grey(140), grey(212)], 0.8, 2.0);
+    }, 3.0);
     // grey speckled granite panels (ground and first floor, as in the official renders)
     const STN = pbr(512, 512, (g, hg, w, h) => {
-      g.fillStyle = '#7b7e80'; g.fillRect(0, 0, w, h);
+      g.fillStyle = '#7d766e'; g.fillRect(0, 0, w, h);
       hg.fillStyle = grey(60); hg.fillRect(0, 0, w, h);
-      blocks(g, hg, w, h, 4, 2, false, 3, () => { const t = 0.96 + rnd() * 0.06; return rgb(190 * t, 192 * t, 193 * t); }, 1);
+      blocks(g, hg, w, h, 4, 2, false, 3, () => { const t = 0.96 + rnd() * 0.06; return rgb(182 * t, 175 * t, 166 * t); }, 1);
       tint(g, w, h, 14, 0.3, 110, 146);
       speckle(g, w, h, 30000, ['rgba(60,58,56,.4)', 'rgba(90,88,86,.35)', 'rgba(250,250,250,.45)', 'rgba(160,150,140,.3)'], 0.6, 1.5);
       speckle(hg, w, h, 16000, [grey(185), grey(215)], 0.6, 1.3);
@@ -835,7 +834,7 @@ class Component extends DCLogic {
     const BRK = pbr(512, 512, (g, hg, w, h) => {
       g.fillStyle = '#aaa6a2'; g.fillRect(0, 0, w, h);
       hg.fillStyle = grey(60); hg.fillRect(0, 0, w, h);
-      const pal = [[112, 92, 87], [104, 85, 81], [121, 100, 94], [96, 79, 76], [109, 91, 87], [126, 106, 99], [91, 75, 72], [116, 96, 90]];
+      const pal = [[121, 88, 80], [112, 81, 75], [130, 96, 87], [104, 76, 70], [118, 87, 80], [136, 101, 91], [98, 72, 67], [125, 92, 83]];   // red-brown, as in the daylight render
       blocks(g, hg, w, h, 16, 3, true, 4, () => { const p = pal[(rnd() * pal.length) | 0], t = 0.9 + rnd() * 0.18; return rgb(p[0] * t, p[1] * t, p[2] * t); }, 2);
       tint(g, w, h, 28, 0.35, 104, 152);
       speckle(g, w, h, 12000, ['rgba(0,0,0,.12)', 'rgba(230,220,220,.05)', 'rgba(40,28,30,.1)'], 0.7, 1.6);
@@ -867,7 +866,7 @@ class Component extends DCLogic {
     const WLK = pbr(512, 512, (g, hg, w, h) => {
       g.fillStyle = '#8a847a'; g.fillRect(0, 0, w, h);
       hg.fillStyle = grey(80); hg.fillRect(0, 0, w, h);
-      blocks(g, hg, w, h, 6, 6, false, 3, () => { const t = 0.92 + rnd() * 0.1; return rgb(192 * t, 186 * t, 176 * t); }, 1);
+      blocks(g, hg, w, h, 6, 6, false, 3, () => { const t = 0.92 + rnd() * 0.1; return rgb(178 * t, 172 * t, 162 * t); }, 1);
       tint(g, w, h, 16, 0.5, 100, 156);
       speckle(g, w, h, 16000, ['rgba(0,0,0,.08)', 'rgba(255,255,255,.09)'], 0.7, 1.5);
     }, 2.5);
@@ -914,6 +913,19 @@ class Component extends DCLogic {
     T.plaster = PL.map; T.plasterN = PL.normal; T.stone = STN.map; T.stoneN = STN.normal; T.brick = BRK.map; T.brickN = BRK.normal;
     T.paving = PAV.map; T.pavingN = PAV.normal; T.walk = WLK.map; T.walkN = WLK.normal; T.asphalt = ASP.map; T.asphaltN = ASP.normal;
     T.grass = GRS.map; T.grassN = GRS.normal; T.context = CTX.map; T.contextN = CTX.normal; T.slab = SLB.map; T.slabN = SLB.normal;
+    // olive / plane bark: grey-brown, deep twisting furrows, pale ridges, a little lichen; tiles around the trunk
+    T.bark = tex(256, 512, (g, w, h) => {
+      g.fillStyle = '#76695c'; g.fillRect(0, 0, w, h);
+      const wob = (x, y) => x + Math.sin(y * 0.025 + x * 0.1) * 6 + Math.sin(y * 0.07) * 2;
+      for (let k = 0; k < 46; k++) {
+        const x0 = rnd() * w, dark = rnd() < 0.6;
+        g.strokeStyle = dark ? 'rgba(38,31,25,' + (0.45 + rnd() * 0.35).toFixed(2) + ')' : 'rgba(176,166,150,' + (0.25 + rnd() * 0.25).toFixed(2) + ')';
+        g.lineWidth = 1.5 + rnd() * 4; g.lineCap = 'round';
+        [-w, 0, w].forEach((dx) => { g.beginPath(); for (let y = -10; y <= h + 10; y += 8) { const x = wob(x0 + dx, y); if (y < 0) g.moveTo(x, y); else g.lineTo(x, y); } g.stroke(); });
+      }
+      for (let i = 0; i < 26; i++) { const x = rnd() * w, y = rnd() * h, r = 6 + rnd() * 16, gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(160,168,128,.28)'); gr.addColorStop(1, 'rgba(160,168,128,0)'); g.fillStyle = gr; g.fillRect(x - r, y - r, r * 2, r * 2); }
+      speckle(g, w, h, 5000, ['rgba(30,24,20,.18)', 'rgba(200,190,175,.12)'], 0.8, 1.6);
+    });
     T.leaf = LEAF.map; T.leafN = LEAF.normal; T.wood = WOOD.map; T.woodN = WOOD.normal; T.wal = WAL.map; T.walN = WAL.normal;
     // foliage atlas (4 x 2 cells, transparent): leaves dark/mid/light, pink, white, lavender, grasses, olive
     T.fol = (() => {
@@ -1110,7 +1122,7 @@ class Component extends DCLogic {
     const std = (o) => new THREE.MeshStandardMaterial(o);
     const phy = (o) => new THREE.MeshPhysicalMaterial(Object.assign({ ior: 1.52, clearcoat: 1, clearcoatRoughness: 0.03, specularIntensity: 1 }, o));
     const MAT = {
-      plaster: std({ color: 0xf1f1ef, map: T.plaster, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
+      plaster: std({ color: 0xf2eee8, map: T.plaster, normalMap: T.plasterN, normalScale: new THREE.Vector2(0.9, 0.9), roughness: 0.9 }),
       stone: std({ map: T.stone, normalMap: T.stoneN, normalScale: new THREE.Vector2(1.2, 1.2), roughness: 0.82 }),
       brick: std({ color: 0xf0eced, map: T.brick, normalMap: T.brickN, normalScale: new THREE.Vector2(1.6, 1.6), roughness: 0.9 }),
       inner: std({ color: 0xe6dccb, roughness: 0.92 }),
@@ -1129,13 +1141,13 @@ class Component extends DCLogic {
       asphalt: std({ map: T.asphalt, normalMap: T.asphaltN, normalScale: new THREE.Vector2(0.6, 0.6), roughness: 0.92 }),
       walk: std({ map: T.walk, normalMap: T.walkN, normalScale: new THREE.Vector2(0.8, 0.8), roughness: 0.93 }),
       fol: (() => {
-        const m = std({ map: T.fol, alphaTest: 0.42, side: THREE.DoubleSide, roughness: 0.82, metalness: 0, color: 0xd9e0cf });
+        const m = std({ map: T.fol, alphaTest: 0.42, side: THREE.DoubleSide, roughness: 0.82, metalness: 0, color: 0xc8cdb9 });
         m.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <normal_fragment_begin>', THREE.ShaderChunk.normal_fragment_begin.replace(/normal \*= faceDirection;/g, '')); };
         return m;
       })(),
       leaf: std({ map: T.leaf, normalMap: T.leafN, normalScale: new THREE.Vector2(1.4, 1.4), color: 0xf2f6ea, roughness: 0.85 }),
       leaf2: std({ map: T.leaf, normalMap: T.leafN, normalScale: new THREE.Vector2(1.4, 1.4), color: 0xc4d0b6, roughness: 0.85 }),
-      trunk: std({ color: 0x6b5a48, roughness: 1 }),
+      trunk: std({ map: T.bark, color: 0xffffff, roughness: 0.95 }),
       planter: std({ color: 0x48494b, roughness: 0.6, metalness: 0.3 }),
       context: std({ map: T.context, normalMap: T.contextN, normalScale: new THREE.Vector2(0.5, 0.5), roughness: 0.86 }),
       plinth: std({ color: 0xcdbdae, roughness: 0.78, metalness: 0 }),
@@ -1173,11 +1185,11 @@ class Component extends DCLogic {
       deck: std({ map: T.wood, normalMap: T.woodN, roughness: 0.75 }),
       cushion: std({ color: 0xece6db, roughness: 0.95 }),
       roofT: std({ normalMap: T.tilesN, normalScale: new THREE.Vector2(0.9, 0.9), color: 0xbab1a8, roughness: 0.9 }),
-      ctx0: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xeadcc4, roughness: 0.9 }),
-      ctx1: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe3bf95, roughness: 0.9 }),
-      ctx2: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xcfccc6, roughness: 0.9 }),
-      ctx3: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe6cfa9, roughness: 0.9 }),
-      ctx4: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd4a68a, roughness: 0.9 }),
+      ctx0: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xdacdb8, roughness: 0.92 }),
+      ctx1: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xcfb28c, roughness: 0.92 }),
+      ctx2: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xc3bfb8, roughness: 0.92 }),
+      ctx3: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd2bd99, roughness: 0.92 }),
+      ctx4: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xc1977f, roughness: 0.92 }),
       shop: std({ map: T.shop, roughness: 0.7 }),
       roofF: std({ color: 0xcfc9bf, roughness: 0.93 }),
       lobbyGlass: phy({ color: 0x0f0b08, emissive: 0xffffff, emissiveMap: T.lobby, emissiveIntensity: 0.95, roughness: 0.12, metalness: 0.35 }),
@@ -1195,6 +1207,55 @@ class Component extends DCLogic {
       tail: std({ color: 0x3a0806, emissive: 0xc0160c, emissiveIntensity: 0.55, roughness: 0.3 }),
       tram: std({ color: 0x77736d, roughness: 0.35, metalness: 0.7 })
     };
+    // alpha-to-coverage: leaf cards and bar railings get soft, anti-aliased edges from the MSAA samples instead of stair-steps
+    if (renderer.capabilities.isWebGL2) { MAT.fol.alphaToCoverage = true; MAT.rail.alphaToCoverage = true; }
+
+    // ---- windows: a real room behind every pane (interior mapping). The view ray is taken into the pane's own frame and
+    // traced through a box room: back wall = the painted room of that atlas cell, side walls, oak floor, lit ceiling.
+    // Sheer curtains sit on the glass plane; the glass itself is dark with Fresnel reflections of the sky (metalness 0).
+    const ROOM_GLSL = [
+      '#ifdef USE_EMISSIVEMAP',
+      '{',
+      '  vec2 auv = vEmissiveMapUv;',
+      '  vec2 cell = floor(auv * vec2(4.0, 2.0));',
+      '  vec2 luv = clamp((fract(auv * vec2(4.0, 2.0)) - 0.04) / 0.92, 0.0, 1.0);',
+      '  vec3 sp = -vViewPosition;',
+      '  vec3 q0 = dFdx(sp), q1 = dFdy(sp); vec2 s0 = dFdx(auv), s1 = dFdy(auv);',
+      '  float jd = s0.x * s1.y - s1.x * s0.y;',
+      '  vec3 dPdu = (q0 * s1.y - q1 * s0.y) / (abs(jd) < 1e-12 ? 1e-12 : jd);',
+      '  vec3 dPdv = (q1 * s0.x - q0 * s1.x) / (abs(jd) < 1e-12 ? 1e-12 : jd);',
+      '  float Wm = max(0.3, length(dPdu) * 0.23), Hm = max(0.3, length(dPdv) * 0.46);',
+      '  vec3 Tu = normalize(dPdu), Tv = normalize(dPdv), Nn = normalize(cross(Tu, Tv));',
+      '  if (dot(Nn, sp) > 0.0) Nn = -Nn;',
+      '  vec3 rr = normalize(sp);',
+      '  vec3 d = vec3(dot(rr, Tu) / Wm, dot(rr, Tv) / Hm, max(1e-3, -dot(rr, Nn)) / 3.4);',
+      '  float tx = abs(d.x) < 1e-5 ? 1e5 : (d.x > 0.0 ? (1.0 - luv.x) / d.x : -luv.x / d.x);',
+      '  float ty = abs(d.y) < 1e-5 ? 1e5 : (d.y > 0.0 ? (1.0 - luv.y) / d.y : -luv.y / d.y);',
+      '  float tz = 1.0 / d.z;',
+      '  float t = min(min(tx, ty), tz);',
+      '  vec3 hp = vec3(luv, 0.0) + d * t;',
+      '  vec2 cb = cell / vec2(4.0, 2.0);',
+      '  vec3 wallC = texture2D(emissiveMap, cb + vec2(0.08, 0.86) / vec2(4.0, 2.0)).rgb;',
+      '  vec3 room;',
+      '  if (t == tz) room = texture2D(emissiveMap, cb + (0.04 + clamp(hp.xy, 0.0, 1.0) * 0.92) / vec2(4.0, 2.0)).rgb;',
+      '  else if (t == ty) room = d.y > 0.0 ? wallC * vec3(1.08, 1.04, 0.98) * (1.0 - 0.35 * hp.z) : vec3(0.42, 0.29, 0.19) * (0.75 + 0.35 * hp.z);',
+      '  else room = wallC * (0.82 - 0.3 * hp.z);',
+      '  room *= mix(1.0, 0.6, hp.z);',
+      '  vec3 ct = texture2D(map, vMapUv).rgb;',
+      '  float cm = smoothstep(0.1, 0.32, dot(ct, vec3(0.2126, 0.7152, 0.0722)));',
+      '  diffuseColor.rgb = mix(vec3(0.012, 0.014, 0.016), ct * 0.82, cm * 0.55);',
+      '  vec3 glow = room * (1.0 - cm * 0.45) + cm * 0.25 * wallC;',
+      '  totalEmissiveRadiance *= glow;',
+      '}',
+      '#endif'
+    ].join('\n');
+    const roomGlass = (m) => {
+      m.metalness = 0; m.roughness = 0.04; m.clearcoat = 0;
+      if (!m.emissiveMap) { m.emissiveMap = T.interior; m.emissive = new THREE.Color(0xffffff); m.emissiveIntensity = 0.2; }
+      m.onBeforeCompile = (sh) => { sh.fragmentShader = sh.fragmentShader.replace('#include <emissivemap_fragment>', ROOM_GLSL); };
+      m.customProgramCacheKey = () => 'pzRoomGlass';
+    };
+    ['glass', 'glassLit', 'glassLitB', 'glassLitC', 'glassDim'].forEach((k) => roomGlass(MAT[k]));
     const TILE = { porc: 4.8, walnut: 2.4, stoneW: 3, stoneT: 2, water: 2.5, trav: 2, gFloor: 2, gConc: 2, deck: 1.6, plaster: 3, stone: 3.2, brick: 1.1, paving: 2.4, grass: 3, asphalt: 4, walk: 2.4, context: 4, slab: 2 };
     const NO_SHADOW = { gLamp: 1, gExit: 1, gAisle: 1, gStripe: 1, tail: 1, water: 1, zebra: 1, rail: 1, light: 1, glassLit: 1, glassLitB: 1, glassLitC: 1, glassDim: 1, glass: 1, grass: 1, asphalt: 1, walk: 1, paving: 1, board: 1, plinth: 1, brass: 1 };
 
@@ -1276,8 +1337,8 @@ class Component extends DCLogic {
       put(gk, mk, geo);
     };
     const FLW = ['flowerP', 'flowerW', 'flowerL', 'flowerW'];
-    const flowers = (gk, x, y, z, spread, n, det) => {
-      for (let i = 0; i < n; i++) blob(gk, FLW[(rnd() * FLW.length) | 0], x + (rnd() - 0.5) * spread, y + rnd() * 0.25, z + (rnd() - 0.5) * spread * 0.6, 0.13 + rnd() * 0.1, 0.9, det === undefined ? 1 : det);
+    const flowers = (gk, x, y, z, spread, n) => {
+      for (let i = 0; i < n; i++) cards(gk, x + (rnd() - 0.5) * spread, y + 0.08 + rnd() * 0.2, z + (rnd() - 0.5) * spread * 0.6, 0.16, 0.1, 0.12, 3, CELLS.flower, 0.16, 0.26);
     };
     const cyl = (gk, mk, x, y0, y1, z, r) => {
       const geo = new THREE.CylinderGeometry(r * 0.8, r, y1 - y0, 6);
@@ -1438,19 +1499,46 @@ class Component extends DCLogic {
       geo.translate(ax, ay, az);
       put(gk, mk, geo);
     };
-    const tree = (gk, x, y, z, h, r, kind) => {
-      const olive = kind === 'olive';
-      const th = h * (olive ? 0.38 : 0.55), tr = Math.max(0.08, r * 0.075);
-      limb(gk, 'trunk', x, y, z, x + (rnd() - 0.5) * 0.3, y + th, z + (rnd() - 0.5) * 0.3, tr, tr * 0.7);
-      const cy = y + th + (h - th) * 0.45;
-      const k = olive ? 4 : 5;
-      for (let i = 0; i < k; i++) {
-        const a = i / k * 6.283 + rnd() * 0.6, d = r * (0.35 + rnd() * 0.3), yy = cy + (rnd() - 0.3) * r * 0.5;
-        const bx = x + Math.cos(a) * d, bz = z + Math.sin(a) * d;
-        limb(gk, 'trunk', x, y + th * 0.9, z, bx, yy, bz, tr * 0.6, tr * 0.3);
-        cards(gk, bx, yy, bz, r * 0.62, r * 0.48, r * 0.62, Math.round(36 * r + 10), olive ? CELLS.olive : CELLS.leaf, r * 0.32, r * 0.55);
+    // tapered tube along a smooth path (trunks and limbs): the cross-section is lobed and twists as it rises, the foot flares
+    const V3 = (a, b, c) => new THREE.Vector3(a, b, c);
+    const tube = (gk, mk, pts, r0, r1, flute, flare, seg, rad) => {
+      const curve = new THREE.CatmullRomCurve3(pts, false, 'centripetal'), fr = curve.computeFrenetFrames(seg, false), L = curve.getLength();
+      const pos = [], uv = [], idx = [], ph = rnd() * 6.283, wrap = Math.max(1, Math.round(r0 * 14));
+      for (let i = 0; i <= seg; i++) {
+        const t = i / seg, P = curve.getPointAt(t), N = fr.normals[i], B = fr.binormals[i];
+        const r = (r0 + (r1 - r0) * Math.pow(t, 0.8)) * (1 + flare * Math.pow(1 - t, 7));
+        for (let j = 0; j <= rad; j++) {
+          const a = j / rad * 6.283185, k = 1 + flute * (0.6 * Math.sin(3 * a + t * 7 + ph) + 0.4 * Math.sin(5 * a - t * 11 + ph * 2));
+          const cx = Math.cos(a) * r * k, sx = Math.sin(a) * r * k;
+          pos.push(P.x + N.x * cx + B.x * sx, P.y + N.y * cx + B.y * sx, P.z + N.z * cx + B.z * sx); uv.push(j / rad * wrap, t * L / 0.9);
+        }
       }
-      cards(gk, x, cy + r * 0.25, z, r * 0.7, r * 0.5, r * 0.7, Math.round(30 * r + 8), olive ? CELLS.olive : CELLS.leaf, r * 0.32, r * 0.55);
+      for (let i = 0; i < seg; i++) for (let j = 0; j < rad; j++) { const a = i * (rad + 1) + j, b = a + rad + 1; idx.push(a, a + 1, b, b, a + 1, b + 1); }
+      const geo = new THREE.BufferGeometry();
+      geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); geo.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); geo.setIndex(idx); geo.computeVertexNormals();
+      put(gk, mk, geo);
+    };
+    // olive: short leaning trunk with a flared, furrowed foot, three curved limbs, a wide umbrella crown of silver clumps;
+    // plane / broadleaf: straight trunk, four limbs, a tall rounded crown
+    const tree = (gk, x, y, z, h, r, kind) => {
+      const olive = kind === 'olive', lean = rnd() * 6.283, lx = Math.cos(lean), lz = Math.sin(lean);
+      const th = h * (olive ? 0.32 : 0.46), tr0 = olive ? Math.max(0.07, h * 0.05) : Math.max(0.09, r * 0.085), tr1 = tr0 * (olive ? 0.66 : 0.72);
+      const off = olive ? 0.32 * h / 5 : 0.12;
+      const F = V3(x + lx * off, y + th, z + lz * off);
+      tube(gk, 'trunk', [V3(x, y - 0.05, z), V3(x + lx * off * 0.15 + (rnd() - 0.5) * 0.08, y + th * 0.35, z + lz * off * 0.15 + (rnd() - 0.5) * 0.08), V3(x + lx * off * 0.6, y + th * 0.72, z + lz * off * 0.6), F], tr0, tr1, olive ? 0.22 : 0.07, olive ? 0.55 : 0.35, 14, olive ? 10 : 8);
+      // crown = many small clumps with gaps between them (an irregular silhouette, not a ball): one at each limb end, two
+      // more around it, a crown top and a little inner fill; card normals point out of their own clump, so light varies
+      const k = olive ? 3 : 4, cells = olive ? CELLS.olive : CELLS.leaf, crownY = y + th + (h - th) * (olive ? 0.42 : 0.5);
+      const cl = (cx, cy, cz, rr) => cards(gk, cx, cy, cz, rr, rr * (olive ? 0.62 : 0.78), rr, Math.round(30 * rr + 8), cells, r * 0.26, r * 0.46);
+      for (let i = 0; i < k; i++) {
+        const a = lean + i / k * 6.283 + (rnd() - 0.5) * 0.7, ca = Math.cos(a), sa = Math.sin(a);
+        const E = V3(F.x + ca * r * 0.6, crownY + (rnd() - 0.4) * r * 0.35, F.z + sa * r * 0.6);
+        tube(gk, 'trunk', [F, F.clone().lerp(E, 0.5).add(V3(0, 0.22 * r, 0)), E], tr1 * 0.6, tr1 * 0.24, 0.08, 0, 8, 6);
+        cl(E.x, E.y + r * 0.06, E.z, r * 0.44);
+        for (let q = 0; q < 2; q++) { const b = a + (q ? 0.55 : -0.55) + (rnd() - 0.5) * 0.3, d = r * (0.42 + rnd() * 0.3); cl(F.x + Math.cos(b) * d, E.y + (rnd() - 0.3) * r * 0.45, F.z + Math.sin(b) * d, r * (0.3 + rnd() * 0.1)); }
+      }
+      cl(F.x + (rnd() - 0.5) * r * 0.3, y + h - r * (olive ? 0.42 : 0.55), F.z + (rnd() - 0.5) * r * 0.3, r * 0.48);
+      cards(gk, F.x, crownY, F.z, r * 0.45, r * 0.3, r * 0.45, Math.round(12 * r + 5), olive ? cells : CELLS.dark, r * 0.28, r * 0.46);   // inner fill
     };
     const hedge = (gk, x0, x1, y0, y1, z0, z1) => {
       box(gk, 'leaf2', x0 + 0.08, x1 - 0.08, y0, y1 - 0.12, z0 + 0.08, z1 - 0.08);
@@ -2588,14 +2676,15 @@ class Component extends DCLogic {
     scene.add(hemi);
     const sun = new THREE.DirectionalLight(0xffffff, 2);
     sun.castShadow = true;
-    const shN = (window.innerWidth || 1200) > 700 ? 4096 : 2048;
+    // shadow map rendered only when the sun or the scene changes (autoUpdate off), so a large map costs memory, not frame time
+    const shN = MOBILE ? 3072 : 4096;
     sun.shadow.mapSize.set(shN, shN);
     sun.shadow.radius = 3;
     const sc = sun.shadow.camera;
-    sc.left = -116; sc.right = 116; sc.top = 116; sc.bottom = -116; sc.near = 20; sc.far = 580;
+    sc.left = -92; sc.right = 92; sc.top = 92; sc.bottom = -92; sc.near = 20; sc.far = 580;   // tighter around the block: ~4.5 cm texels
     sun.shadow.bias = -0.0003;
     sun.shadow.normalBias = 0.035;
-    sun.target.position.set(24, 4, -5);
+    sun.target.position.set(14, 6, -4);
     scene.add(sun); scene.add(sun.target);
     const rim = new THREE.DirectionalLight(0xffffff, 0.5);
     rim.target.position.set(0, 8, 0);
@@ -2615,7 +2704,7 @@ class Component extends DCLogic {
     const PAL = {
       night: { zen: col('#04070f'), hor: col('#16203a'), gnd: col('#0b0d13'), gn: col('#15171c'), hs: col('#5d6d8c'), hg: col('#141210'), hi: 0.55, sb: col('#3c4660'), rc: col('#8fa6d4'), cl: col('#232c40'), cd: col('#0e131e') },
       dusk: { zen: col('#203765'), hor: col('#f1a56d'), gnd: col('#5a4f47'), gn: col('#5e5750'), hs: col('#c3cde0'), hg: col('#38312b'), hi: 1.25, sb: col('#d8bfa8'), rc: col('#c9d5ea'), cl: col('#f6c49c'), cd: col('#6e5f78') },
-      day: { zen: col('#1a57b3'), hor: col('#9fc3e8'), gnd: col('#d2c9bd'), gn: col('#d8cfc3'), hs: col('#d6e6ff'), hg: col('#8c8378'), hi: 0.38, sb: col('#c9d6e6'), rc: col('#ffffff'), cl: col('#ffffff'), cd: col('#b3c0d0') }
+      day: { zen: col('#3065ad'), hor: col('#c3d3e1'), gnd: col('#d2c9bd'), gn: col('#d8cfc3'), hs: col('#d6e6ff'), hg: col('#8c8378'), hi: 0.38, sb: col('#c9d6e6'), rc: col('#ffffff'), cl: col('#ffffff'), cd: col('#b3c0d0') }
     };
     const blend = (k, a, b) => PAL.night[k].clone().lerp(PAL.dusk[k], a).lerp(PAL.day[k], b);
     let orientDeg = 172;
@@ -2625,11 +2714,12 @@ class Component extends DCLogic {
       return new THREE.Vector3(Math.cos(e) * -Math.sin(d), Math.sin(e), Math.cos(e) * Math.cos(d));
     };
     const GLASS_OFF = col('#b4bcc4'), GLASS_ON = col('#120d09');
+    // daylight inside the rooms seen through the glass (unlit rooms), and the lit rooms on top of it after dusk
+    let DAYIN = 0.2;
     const litMat = (m, f, peak) => {
-      m.emissiveIntensity = 0.035 + f * (peak - 0.035);
+      m.emissiveIntensity = DAYIN + f * (peak - DAYIN);
       m.color.copy(GLASS_OFF).lerp(GLASS_ON, f);
-      m.metalness = 0.55 - 0.4 * f;
-      m.roughness = 0.06 + 0.14 * f;
+      m.metalness = 0; m.roughness = 0.04;
     };
     const ghostMat = new THREE.ShaderMaterial({
       uniforms: { color: { value: new THREE.Color(0xebe4d8) }, base: { value: 0.04 }, rim: { value: 0.34 }, op: { value: 0 } },
@@ -2728,6 +2818,7 @@ class Component extends DCLogic {
       }
       skyU.sunCol.value.copy(sun.color); skyU.sunAmt.value = sm(-5, 1, el) * (1.4 - 0.5 * b);
       const fA = sm(11, 5, el), fB = sm(6, 1, el), fC = sm(2, -3, el), fD = sm(5, 0, el);
+      DAYIN = 0.025 + 0.2 * b; MAT.glass.emissiveIntensity = DAYIN;
       litMat(MAT.glassLit, fA, 1.05); litMat(MAT.glassLitB, fB, 1.0); litMat(MAT.glassLitC, fC, 0.95); litMat(MAT.glassDim, fD, 0.36);
       MAT.light.emissiveIntensity = 0.1 + 0.85 * fB;
       MAT.water.emissiveIntensity = 0.55 * fB;
@@ -2740,8 +2831,8 @@ class Component extends DCLogic {
       tintSunViz(b); placeSunViz();
       const golden = sm(-3, 2, el) * (1 - sm(7, 20, el));
       setPostParams({
-        bloom: 0.12 + 0.5 * (1 - b) + 0.12 * (1 - a), thr: 1.25 - 0.35 * (1 - b), ao: 0.85, aoI: 1.2,
-        vig: 0.2 + 0.16 * (1 - b) + 0.06 * (1 - a), grain: 0.008 + 0.006 * (1 - b), sat: 1.02 + 0.04 * (1 - b), con: 1.05 + 0.02 * (1 - b),
+        bloom: 0.12 + 0.5 * (1 - b) + 0.12 * (1 - a), thr: 1.25 - 0.35 * (1 - b), ao: 0.92, aoI: 1.45,
+        vig: 0.2 + 0.16 * (1 - b) + 0.06 * (1 - a), grain: 0.008 + 0.006 * (1 - b), sat: 1.03 + 0.03 * (1 - b), con: 1.09 - 0.02 * (1 - b),
         tint: [1 + 0.03 * golden - 0.02 * (1 - a), 1 - 0.005 * golden - 0.005 * (1 - a), 1 - 0.04 * golden + 0.03 * (1 - a)]
       });
       renderer.shadowMap.needsUpdate = true;
@@ -3174,7 +3265,7 @@ class Component extends DCLogic {
       if (FADE.ctxS.op < 0.6) list.push(GROUPS.ctxS);
       return list;
     };
-    let frame = 0;
+    let frame = 0, drawMoving = false, wasMoving = false;
     const postResize = (w, h) => {
       if (!post) return;
       const dpr = renderer.getPixelRatio();
@@ -3190,7 +3281,7 @@ class Component extends DCLogic {
         post.down[i].setSize(dw, dh);
         if (i < 3) post.up[i].setSize(dw, dh);
       }
-      post.useAO = w >= 700;
+      post.useAO = true;   // phones too: ambient occlusion is computed on the settled frames (see draw)
     };
     const draw = () => {
       frame++;
@@ -3202,7 +3293,9 @@ class Component extends DCLogic {
         return;
       }
       const Pp = post;
-      if (Pp.useAO) {
+      // phones skip the AO prepass while the camera moves and get it back on the frame the camera settles
+      const aoNow = Pp.useAO && !(MOBILE && drawMoving);
+      if (aoNow) {
         const hid = prepassHide();
         const vis = hid.map((o) => o.visible);
         hid.forEach((o) => { o.visible = false; });
@@ -3240,7 +3333,7 @@ class Component extends DCLogic {
       upPass(Pp.up[1], Pp.down[0], Pp.up[0]);
       const cu = Pp.comp.uniforms;
       cu.tScene.value = Pp.scene.texture; cu.tBloom.value = Pp.up[0].texture; cu.tAO.value = Pp.ao2.texture;
-      cu.useAO.value = Pp.useAO ? 1 : 0; cu.seed.value = (frame % 61) * 0.37;
+      cu.useAO.value = aoNow ? 1 : 0; cu.seed.value = (frame % 61) * 0.37;
       pass(Pp.comp, null);
       camera.layers.set(2);
       renderer.autoClear = false;
@@ -3333,6 +3426,8 @@ class Component extends DCLogic {
         const d = CAM[k] - cur[k];
         if (Math.abs(d) > 1e-4) { cur[k] += d * kk; moving = true; } else cur[k] = CAM[k];
       });
+      if (!moving && wasMoving && MOBILE) needs = true;   // one refined frame (with AO) once the camera settles
+      wasMoving = moving; drawMoving = moving;
       if (moving || needs) {
         applyCam();
         draw();
