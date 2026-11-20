@@ -4,7 +4,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preload" href="site/assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="site/assets/fonts/instrument-sans-500.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="dist/apartamento.js?v=10" as="fetch" crossorigin>
+<link rel="preload" href="dist/apartamento.js?v=11" as="fetch" crossorigin>
 <style>
 @font-face{font-family:'Bodoni Moda';font-style:normal;font-weight:400 900;font-display:swap;src:url(site/assets/fonts/bodoni-moda.woff2) format('woff2')}
 @font-face{font-family:'Instrument Sans';font-style:normal;font-weight:400;font-display:swap;src:url(site/assets/fonts/instrument-sans-400.woff2) format('woff2')}
@@ -128,7 +128,7 @@ done:function(label){if(out)return;PZ.set(1,label||'Pronto');out=true;setTimeout
 <script>
 // first entry: download the 3D bundle with real byte progress, then build, then wait for the textures
 (function () {
-  var SRC = 'dist/apartamento.js?v=10', BYTES = 1766623, PZ = window.PZ || { set: function () {}, done: function () {} };
+  var SRC = 'dist/apartamento.js?v=11', BYTES = 1766843, PZ = window.PZ || { set: function () {}, done: function () {} };
   window.__aptLoad = function (l, t, fin) { if (!fin && t) PZ.set(0.76 + 0.22 * (l / t), 'Aplicando acabamentos'); };
   PZ.set(0.02, 'Baixando o 3D');
   var started = false;
