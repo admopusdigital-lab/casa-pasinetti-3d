@@ -94,7 +94,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
 </div>
 <div class="loader" id="loader"><p>Montando os interiores…</p></div>
 
-<script src="dist/apartamento.js?v=6"></script>
+<script src="dist/apartamento.js?v=7"></script>
 <script>
 (function () {
   var api = window.mountPasinettiApartment(document.getElementById('stage'), { assetBase: 'assets/' });
@@ -103,7 +103,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
   var hint = document.getElementById('hint');
   var unitText = {
     smart: 'Smart Living · ambiente único', comfort: 'Comfort Living · 1 quarto', exclusive: 'Exclusive Living · 2 quartos',
-    luxury: 'Luxury Living · 3 quartos', gym: 'Fitness studio · térreo', rooftop: 'Rooftop · piscina e bar'
+    luxury: 'Luxury Living · 3 quartos', gym: 'Fitness studio · térreo', rooftop: 'Rooftop · piscina e bar', garden: 'Jardim interno · térreo'
   };
   var noteText = {
     smart: 'Unidade A1.1 · 1º andar, lado do jardim interno. Portas de vidro levam a dois terraços com guarda-corpo e floreiras.',
@@ -112,6 +112,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
     luxury: 'Unidade C6.1 · 6º andar recuado, ponta leste. Terraço em L voltado para a rua e para a lateral; sala e dois quartos abrem para ele.',
     gym: 'Fitness room do térreo, voltada para a rua. Equipamentos modelados em código, sem marcas. Espelho com reflexo real.',
     rooftop: 'Cobertura pela planta do projeto: piscina elevada entre os núcleos, degraus flutuantes com LED, deck com espreguiçadeiras, café e bar sob pérgola, lareiras nas varandas e jardim em todo o perímetro.',
+    garden: 'Pátio entre o prédio e a divisa norte, na cota do térreo: lounge sob pérgola com trepadeiras, café com mesas bistrô, coworking ao ar livre, área fitness com três estações, oliveiras, lavanda e luminárias globo.',
     _: 'Medidas calibradas pela planta do arquiteto (KEYPLAN 1:100).'
   };
 
@@ -158,7 +159,7 @@ body { background: var(--cream); color: var(--ink); font-family: var(--sans); ov
       Object.keys(buttons).forEach(function (k) { buttons[k].setAttribute('aria-pressed', String(k === name)); });
       var v = api.views.filter(function (x) { return x.name === name; })[0];
       var overview = !!(v && v.overview);
-      walls.hidden = !overview || scene === 'rooftop';
+      walls.hidden = !overview || scene === 'rooftop' || scene === 'garden';
       hint.textContent = overview ? 'Arraste para girar a maquete' : 'Arraste para olhar em volta';
       document.getElementById('unit').textContent = unitText[scene];
       document.getElementById('note').textContent = noteText[scene] || noteText._;

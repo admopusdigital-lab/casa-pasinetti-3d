@@ -713,7 +713,13 @@ class Component extends DCLogic {
       if (hooks.onError) hooks.onError(err);
       return null;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
+    // phones (iPhone 14 Pro = DPR 3): start at 2x for crisp Retina edges; desktop up to 2x. A frame-time governor in the
+    // loop steps the ratio down while the camera moves if the GPU can't keep ~40 fps, so orbiting never stutters.
+    const MOBILE = (typeof matchMedia !== 'undefined' && matchMedia('(pointer: coarse)').matches) || (window.innerWidth || 1200) < 760;
+    const DPR_STEPS = MOBILE ? [2, 1.75, 1.5, 1.25] : [2, 1.6, 1.3, 1];
+    let dprIdx = 0;
+    const dprNow = () => Math.min(window.devicePixelRatio || 1, DPR_STEPS[dprIdx]);
+    renderer.setPixelRatio(dprNow());
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.0;
@@ -3094,7 +3100,7 @@ class Component extends DCLogic {
       const HDR = half ? THREE.HalfFloatType : THREE.UnsignedByteType;
       const rt = (o) => new THREE.WebGLRenderTarget(4, 4, Object.assign({ type: HDR, minFilter: THREE.LinearFilter, magFilter: THREE.LinearFilter, depthBuffer: false }, o || {}));
       const Pp = {};
-      Pp.scene = rt({ depthBuffer: true, samples: gl2 ? 8 : 0 });
+      Pp.scene = rt({ depthBuffer: true, samples: gl2 ? (MOBILE ? 4 : 8) : 0 });
       Pp.nrm = new THREE.WebGLRenderTarget(4, 4, { type: THREE.UnsignedByteType, minFilter: THREE.NearestFilter, magFilter: THREE.NearestFilter, depthBuffer: true });
       Pp.nrm.depthTexture = new THREE.DepthTexture(4, 4);
       Pp.nrm.depthTexture.type = THREE.UnsignedIntType;
@@ -3256,6 +3262,14 @@ class Component extends DCLogic {
     const CAM = { az: 0.6, el: 0.1, r: 97, tx: -2, ty: 12.5, tz: -1 };
     const cur = Object.assign({}, CAM, { az: 1.35, el: 0.62, r: 200 });
     let vel = 0, dragging = false, needs = true, raf = 0, alive = true;
+    // frame-time governor: average the moving frames in windows of 30; above 26 ms, drop one resolution step (never back up)
+    let gT = 0, gAcc = 0, gN = 0;
+    const govern = (t) => {
+      if (gT) { gAcc += Math.min(100, t - gT); gN++; } gT = t;
+      if (gN < 30) return;
+      const avg = gAcc / gN; gAcc = 0; gN = 0;
+      if (avg > 26 && dprIdx < DPR_STEPS.length - 1) { dprIdx++; renderer.setPixelRatio(dprNow()); resize(); }
+    };
     const near = (t) => t + TAU * Math.round((CAM.az - t) / TAU);
     const VIEWS = {
       rua: { az: 0.6, el: 0.1, r: 97, ty: 12.5, tx: -2 },
@@ -3277,14 +3291,16 @@ class Component extends DCLogic {
         if (Math.abs(op - F.op) < 0.01 && !((op === 1 || op === 0) && F.op !== op)) return;
         F.op = op;
         GROUPS[gk].visible = op > 0.03 && !S.garage;
+        let flip = false;
         GROUPS[gk].children.forEach((m) => {
           const mat = m.material, tr = op < 1;
           if (mat.transparent !== tr) { mat.transparent = tr; mat.needsUpdate = true; }
           mat.opacity = m.isLineSegments ? 0.75 * op : op;
           mat.depthWrite = !tr;
-          m.castShadow = !m.isLineSegments && op > 0.5 && !NO_SHADOW[m.userData.mk];
+          const cs = !m.isLineSegments && op > 0.5 && !NO_SHADOW[m.userData.mk];
+          if (m.castShadow !== cs) { m.castShadow = cs; flip = true; }
         });
-        renderer.shadowMap.needsUpdate = true;
+        if (flip) renderer.shadowMap.needsUpdate = true;
       });
     };
     let baseE9 = 0;
@@ -3321,6 +3337,7 @@ class Component extends DCLogic {
         applyCam();
         draw();
         needs = false;
+        if (moving) govern(now); else gT = 0;
       }
     };
 
