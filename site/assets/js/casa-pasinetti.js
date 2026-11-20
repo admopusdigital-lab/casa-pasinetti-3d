@@ -2407,8 +2407,8 @@ class Component extends DCLogic {
     };
     const CARP = ['carB', 'carC', 'carE', 'carA', 'carB', 'carD', 'carC', 'carF', 'carG'];
     iso(913, () => {
-      for (let x = -70; x < 82; x += 5.6 + rnd() * 1.6) if (rnd() < 0.72) sCar(x, 16.55, CARP[(rnd() * CARP.length) | 0], -1);
-      for (let x = -70; x < 82; x += 5.6 + rnd() * 1.6) { if ((x > -8 && x < 8) || (x > 28 && x < 40)) continue; if (rnd() < 0.62) sCar(x, 10.5, CARP[(rnd() * CARP.length) | 0], 1); }
+      for (let x = -58; x < 72; x += 6.2 + rnd() * 2.4) if (rnd() < 0.28) sCar(x, 16.55, CARP[(rnd() * CARP.length) | 0], -1);
+      for (let x = -58; x < 72; x += 6.2 + rnd() * 2.4) { if ((x > -10 && x < 10) || (x > 26 && x < 42)) continue; if (rnd() < 0.2) sCar(x, 10.5, CARP[(rnd() * CARP.length) | 0], 1); }
       [-74, -63, -52, -40, 40, 51, 62, 74].forEach((x) => {
         box('site', 'frame', x - 0.6, x + 0.6, 0.0, 0.03, 18.1, 19.3);
         tree('site', x, 0.03, 18.7, 7.5 + rnd() * 2, 2.4 + rnd() * 0.6, 'plane');
