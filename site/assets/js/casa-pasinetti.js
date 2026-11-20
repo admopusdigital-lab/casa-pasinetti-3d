@@ -1167,11 +1167,11 @@ class Component extends DCLogic {
       deck: std({ map: T.wood, normalMap: T.woodN, roughness: 0.75 }),
       cushion: std({ color: 0xece6db, roughness: 0.95 }),
       roofT: std({ normalMap: T.tilesN, normalScale: new THREE.Vector2(0.9, 0.9), color: 0xbab1a8, roughness: 0.9 }),
-      ctx0: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe4dfd7, roughness: 0.9 }),
-      ctx1: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xdcd5ca, roughness: 0.9 }),
-      ctx2: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd8d1c8, roughness: 0.9 }),
-      ctx3: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd5d2cc, roughness: 0.9 }),
-      ctx4: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe0dad0, roughness: 0.9 }),
+      ctx0: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xeadcc4, roughness: 0.9 }),
+      ctx1: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe3bf95, roughness: 0.9 }),
+      ctx2: std({ map: T.ctxF, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xcfccc6, roughness: 0.9 }),
+      ctx3: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xe6cfa9, roughness: 0.9 }),
+      ctx4: std({ map: T.ctxF2, normalMap: T.contextN, normalScale: new THREE.Vector2(0.4, 0.4), color: 0xd4a68a, roughness: 0.9 }),
       shop: std({ map: T.shop, roughness: 0.7 }),
       roofF: std({ color: 0xcfc9bf, roughness: 0.93 }),
       lobbyGlass: phy({ color: 0x0f0b08, emissive: 0xffffff, emissiveMap: T.lobby, emissiveIntensity: 0.95, roughness: 0.12, metalness: 0.35 }),
@@ -2394,6 +2394,28 @@ class Component extends DCLogic {
     };
     [-44, -22, 22, 44, 68].forEach((x) => lamp(x, 19.0, -1));
     [-56, 52, 84].forEach((x) => lamp(x, 9.0, 1));
+    // street life on Via Pasinetti: parallel-parked cars on both curbs (kept clear of the entrance and the garage ramp),
+    // plane trees in grated pits beyond the building, bollards along the building-side curb, bike racks by the entrance
+    const sCar = (x, z, mk, dir) => {
+      const body = new THREE.BoxGeometry(4.35, 0.62, 1.76); body.translate(x, 0.62, z); put('site', mk, body);
+      const cab = new THREE.BoxGeometry(2.5, 0.52, 1.56); const p = cab.attributes.position;
+      for (let i = 0; i < p.count; i++) if (p.getY(i) > 0) { p.setX(i, p.getX(i) * 0.78 - dir * 0.12); p.setZ(i, p.getZ(i) * 0.86); }
+      cab.computeVertexNormals(); cab.translate(x - dir * 0.15, 1.19, z); put('site', 'carGlass', cab);
+      const roof = new THREE.BoxGeometry(1.86, 0.05, 1.32); roof.translate(x - dir * 0.27, 1.46, z); put('site', mk, roof);
+      [[-1.38, -0.8], [1.38, -0.8], [-1.38, 0.8], [1.38, 0.8]].forEach((d) => { const w = new THREE.CylinderGeometry(0.33, 0.33, 0.22, 18); w.rotateX(Math.PI / 2); w.translate(x + d[0], 0.33, z + d[1]); put('site', 'tyre', w); });
+      [-0.6, 0.6].forEach((d) => { box('site', 'carGlass', x + dir * 2.16, x + dir * 2.19, 0.66, 0.8, z + d - 0.2, z + d + 0.2); box('site', 'tail', x - dir * 2.19, x - dir * 2.16, 0.7, 0.82, z + d - 0.22, z + d + 0.22); });
+    };
+    const CARP = ['carB', 'carC', 'carE', 'carA', 'carB', 'carD', 'carC', 'carF', 'carG'];
+    iso(913, () => {
+      for (let x = -70; x < 82; x += 5.6 + rnd() * 1.6) if (rnd() < 0.72) sCar(x, 16.55, CARP[(rnd() * CARP.length) | 0], -1);
+      for (let x = -70; x < 82; x += 5.6 + rnd() * 1.6) { if ((x > -8 && x < 8) || (x > 28 && x < 40)) continue; if (rnd() < 0.62) sCar(x, 10.5, CARP[(rnd() * CARP.length) | 0], 1); }
+      [-74, -63, -52, -40, 40, 51, 62, 74].forEach((x) => {
+        box('site', 'frame', x - 0.6, x + 0.6, 0.0, 0.03, 18.1, 19.3);
+        tree('site', x, 0.03, 18.7, 7.5 + rnd() * 2, 2.4 + rnd() * 0.6, 'plane');
+      });
+      for (let x = -30; x < 30; x += 2.4) { if (x > -6 && x < 6) continue; cyl('site', 'frame', x, 0.0, 0.85, 9.25, 0.07); }
+      [-7.2, 7.2].forEach((x) => [0, 0.7, 1.4].forEach((d) => { const g = new THREE.TorusGeometry(0.38, 0.025, 6, 20, Math.PI); g.translate(x + d * (x < 0 ? -1 : 1), 0.0, 8.7); put('site', 'frame', g); }));
+    });
     const bench = (x, z, rot) => {
       const a = rot ? [z - 0.9, z + 0.9, x - 0.22, x + 0.22] : [x - 0.9, x + 0.9, z - 0.22, z + 0.22];
       if (rot) { box('site', 'trunk', a[2], a[3], 1.62, 1.68, a[0], a[1]); [a[0] + 0.15, a[1] - 0.15].forEach((q) => box('site', 'frame', x - 0.2, x + 0.2, 1.2, 1.62, q - 0.03, q + 0.03)); }
